@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="Wedding Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+    Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
     <meta name='csrf-param' content='authenticity_token'>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -36,8 +36,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
             <div class="top_left">
                 <ul>
-                    <li class="top_link">Email:<a href="mailto:info@example.com">mail@example.com</a></li>|
-                    <li class="top_link"><a href="login.html">My Account</a></li>
+                    @if(!Auth::guest())
+                    <li class="top_link">Email:<a href="#" onclick="return false;">{{Auth::user()->email}}</a></li>|
+                    <li class="top_link"><a href="{{route("logout")}}">Cerrar Sesión</a></li>
+                    @else
+                    <li class="top_link"><a href="{{route("login")}}">Iniciar Sesión</a></li>
+                    @endif
                 </ul>
             </div>
             <div class="clearfix"> </div>
@@ -49,12 +53,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <div class="header-bottom">
         <div class="container">
             <div class="logo">
-                <a href="index.html"><h1>FacilFincaRaiz</h1></a>
+                <a href="{{route("home")}}"><h1>FacilFincaRaiz</h1></a>
             </div>
             <!---->
 
             <div class="top-nav">
-                <ul class="memenu skyblue"><li class="active"><a href="index.html">Home</a></li>
+                <ul class="memenu skyblue"><li class="active"><a href="{{route("home")}}">Home</a></li>
                     <li class="grid"><a href="#">Wedding</a>
                         <div class="mepanel">
                             <div class="row">
@@ -144,7 +148,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </div>
                     </li>
                     <li class="grid"><a href="typo.html">Typo</a></li>
-                    <li class="grid"><a href="contact.html">Contact</a></li>
+                    <li class="grid"><a href="{{route("contacto")}}">Contacto</a></li>
                 </ul>
                 <div class="clearfix"> </div>
             </div>

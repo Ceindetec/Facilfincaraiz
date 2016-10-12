@@ -16,6 +16,7 @@ class CreatePublicacionesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
             $table->bigInteger('articuli_id')->unsigned();
+            $table->enum("accion",["V","A","P"]);
             $table->string('titulo');
             $table->date('fecha');
             $table->text('descripcion');

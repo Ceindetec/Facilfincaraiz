@@ -62,4 +62,12 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    public function registroUser()
+    {
+        return view("auth.registroUser");
+    }
+
+
+
 }

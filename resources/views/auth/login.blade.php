@@ -9,7 +9,7 @@
 <div class="login_sec">
 	 <div class="container">
 		 <ol class="breadcrumb">
-		  <li><a href="index.html">Home</a></li>
+			 <li><a href="{{route("home")}}">Inicio</a></li>
 		  <li class="active">Login</li>
 		 </ol>
 		 <h2>Login</h2>
@@ -23,7 +23,7 @@
 				 {!! Form::password('password',[], 'required')!!}
 				 {!! Form::submit('Iniciar Sesión!',[]) !!}
 
-			 <a class="acount-btn" href="account.html">Create an Account</a>
+			 <a class="acount-btn" href="{{route("registroUser")}}">Create an Account</a>
 			 {!!Form::close()!!}
 				 <a href="#">Forgot Password ?</a>
 					

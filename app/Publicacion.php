@@ -8,4 +8,6 @@ class Publicacion extends Model
 {
     protected $table = 'publicaciones';
 
+    protected $fillable = ['titulo', 'fecha', "accion", 'descripcion', 'estado', 'destacado'];
+
 }

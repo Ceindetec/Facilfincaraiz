@@ -1345,7 +1345,7 @@ label {
 	color: #012231;
 	text-transform: uppercase;
 }
-.contact-form input[type="text"],.contact-form textarea{
+.contact-form input[type="text"],.contact-form input[type="email"],.contact-form textarea{
 		   padding: 10px;
 			display: block;
 			width: 98%;
