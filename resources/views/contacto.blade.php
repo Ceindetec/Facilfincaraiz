@@ -1,7 +1,11 @@
 @extends('layouts.principal')
 
 @section('style')
-
+	<style>
+		.cargando{
+			font-size: 16px;
+		}
+	</style>
 @endsection
 
 @section('content')
@@ -50,10 +54,19 @@
 						</div>
 						<div>
 							<span><label>Mensaje</label></span>
-							<span><textarea name="mansaje" required> </textarea></span>
+							<span><textarea name="mensaje" required> </textarea></span>
 						</div>
+					<div id="alertContacto" class="form-group ">
+
+
+					</div>
 						<div>
-							<span><input type="submit" class="mybutton" value="Enviar"></span>
+							{{--<span><input type="submit" class="mybutton" value="Enviar"></span>--}}
+
+							<button class="btn btn-primary mybutton" type="submit" id="submitForm">Enviar <i class="fa fa-spinner fa-pulse fa-3x fa-fw cargando hidden"></i>
+								<span class="sr-only">Loading...</span> </button>
+
+
 						</div>
 					{!! Form::close() !!}
 
@@ -73,6 +86,7 @@
 			var formContacto = $("#formContacto");
 			formContacto.submit(function(e){
 				e.preventDefault();
+				$(".cargando").removeClass("hidden");
 				//console.log(formContacto.serialize());
 				$.ajax({
 					type:"POST",
@@ -81,6 +95,16 @@
 					data:formContacto.serialize(),
 					success: function(data){
 						if (data=="exito") {
+							$(".cargando").addClass("hidden");
+							$("#alertContacto").empty();
+
+							html = '<div class="alert alert-success">'+
+									'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+
+									'<strong>Perfecto!</strong> el mensaje fue enviado'+
+									'</div>';
+
+
+							$("#alertContacto").append(html);
 
 						}
 						else {

@@ -35,7 +35,20 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         if ($this->auth->check()) {
-            return redirect('/');
+            switch($this->auth->user()->rol){
+
+                case 'superAdmin':
+                    return redirect('superAdmin');
+                    break;
+                case 'admin':
+                    return redirect('administrador');
+                    break;
+                case 'usuario':
+                    return redirect('/home');
+                    break;
+                default :
+                    return redirect('login');
+            }
         }
 
         return $next($request);

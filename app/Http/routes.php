@@ -16,15 +16,33 @@ Route::get('auth/login', 'Auth\AuthController@getLogin')->name('login');
 Route::post('auth/login', ['as' =>'login', 'uses' => 'Auth\AuthController@postLogin']);
 Route::get('auth/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
 
-Route::get('registro','Auth\AuthController@registroUser')->name('registroUser');
+Route::get('registro','usuarioController@registroUser')->name('registroUser');
+Route::post('registro','usuarioController@registroUserPost')->name('registroUserPost');
 Route::get('contacto','mainController@contacto')->name('contacto');
 
 
+Route::group(['middleware' => ['auth', 'superAdmin']], function () {
+
+
+});
+
+Route::group(['middleware' => ['auth', 'admin']], function () {
+    Route::post('eliminaBanner', 'AdministradorController@deleteImgBanner')->name('deleteImgBanner');
+    Route::get('admin', function () {
+        return 'Hello Admin o super ';
+    });
+});
+
+Route::group(['middleware' => ['auth', 'usuario']], function () {
+
+
+});
 
 Route::post('mail','MailController@enviar')->name('enviar');
 
 
 Route::get('administrar', 'AdministradorController@adminBanner')->name('adminBanner');
+
 Route::post('eliminaBanner', 'AdministradorController@deleteImgBanner')->name('deleteImgBanner');
 Route::get('password/email', 'Auth\PasswordController@getEmail')->name('getEmail');
 Route::post('password/email', 'Auth\PasswordController@postEmail')->name('postEmail');
@@ -33,6 +51,6 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset')->name('
 Route::post('password/reset/{token}', 'Auth\PasswordController@postReset')->name('postReset');
 
 
-Route::get('/', function () {
+Route::get('home', function () {
     return view('welcome');
 })->name('home');

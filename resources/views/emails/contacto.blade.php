@@ -30,8 +30,8 @@
 </div>--}}
 {{--<img src="http://ceindetec.org.co/img/ceind.jpg" alt="..." class="img-circle" style="width: 300px;height: 300px; display: block; margin-left: auto; margin-right: auto;">--}}
 
-<p><strong>Nombre :</strong>{!! $nombre !!}</p>
-<p><strong>Telefono</strong>{!! $telefono !!}</p>
-<p><strong>Mensaje </strong>{!! $mensaje !!}</p>
+<p><strong>Nombre : </strong>{!! $nombre !!}</p>
+<p><strong>Telefono: </strong>{!! $telefono !!}</p>
+<p><strong>Mensaje: </strong>{!! $mensaje !!}</p>
 </body>
 </html>

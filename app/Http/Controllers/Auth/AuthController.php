@@ -63,11 +63,4 @@ class AuthController extends Controller
         ]);
     }
 
-    public function registroUser()
-    {
-        return view("auth.registroUser");
-    }
-
-
-
 }

@@ -162,7 +162,7 @@
 
 @yield('content')
 
-<div class="footer">
+<footer class="footer">
     <div class="container">
         <div class="ftr-grids">
             <div class="col-md-3 ftr-grid">
@@ -211,7 +211,8 @@
             <div class="clearfix"></div>
         </div>
     </div>
-</div>
+
+</footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 {!!Html::script('js/jquery.js')!!}
 <!-- /start menu -->
