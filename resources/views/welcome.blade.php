@@ -15,8 +15,8 @@
 <!---->
 <div class="welcome">
     <div class="container">
-        <div class="col-md-12 welcome-left">
-            <h2>¿Qué estás buscando?</h2>
+        <div class="col-md-12 welcome-left ">
+            <h2 class="h2Josefin">¿Qué estás buscando?</h2>
         </div>
     </div>
 </div>
@@ -25,6 +25,7 @@
     <div class="container">
         <div class="col-md-4 bride-grid">
             <div class="content-grid l-grids">
+                <a href="">
                 <figure class="effect-bubba">
                     <img src="images/b1.jpg" alt=""/>
                     <figcaption>
@@ -32,32 +33,37 @@
                         <p>In sit amet sapien eros Integer in tincidunt labore et dolore magna aliqua</p>
                     </figcaption>
                 </figure>
+                </a>
                 <div class="clearfix"></div>
                 <h3 class="text-center">Inmuebles</h3>
             </div>
         </div>
         <div class="col-md-4 bride-grid">
             <div class="content-grid l-grids">
+                <a href="">
                 <figure class="effect-bubba">
                     <img src="images/b1.jpg" alt=""/>
                     <figcaption>
-                        <h4>Fincas </h4>
+                        <h4>Terrenos </h4>
                         <p>In sit amet sapien eros Integer in tincidunt labore et dolore magna aliqua</p>
                     </figcaption>
                 </figure>
+                </a>
                 <div class="clearfix"></div>
-                <h3 class="text-center">Fincas</h3>
+                <h3 class="text-center">Terrenos</h3>
             </div>
         </div>
         <div class="col-md-4 bride-grid">
             <div class="content-grid l-grids">
-                <figure class="effect-bubba">
-                    <img src="images/b3.jpg" alt=""/>
-                    <figcaption>
-                        <h4>Vehículos </h4>
-                        <p>In sit amet sapien eros Integer in tincidunt labore et dolore magna aliqua</p>
-                    </figcaption>
-                </figure>
+                <a href="">
+                    <figure class="effect-bubba">
+                        <img src="images/b3.jpg" alt=""/>
+                        <figcaption>
+                            <h4>Vehículos </h4>
+                            <p>In sit amet sapien eros Integer in tincidunt labore et dolore magna aliqua</p>
+                        </figcaption>
+                    </figure>
+                </a>
                 <div class="clearfix"></div>
                 <h3 class="text-center">Vehículos </h3>
             </div>

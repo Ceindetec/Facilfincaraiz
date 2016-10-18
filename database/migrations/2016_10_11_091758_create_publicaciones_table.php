@@ -16,13 +16,18 @@ class CreatePublicacionesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
             $table->bigInteger('articuli_id')->unsigned();
+            $table->enum("accion",["V","A","P"]);
             $table->string('titulo');
             $table->date('fecha');
             $table->text('descripcion');
             $table->enum('estado',['A','I','P']);
             $table->enum('destacado',['','x']);
+            $table->integer('municipio_id')->unsigned();
+            $table->string('direccion');
+            $table->string('geolocalizacion');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('municipio_id')->references('id')->on('municipios');
         });
     }
 

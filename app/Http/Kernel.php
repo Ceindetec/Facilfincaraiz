@@ -3,6 +3,9 @@
 namespace facilfincaraiz\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use facilfincaraiz\Http\Middleware\SuperAdmin;
+use facilfincaraiz\Http\Middleware\Usuario;
+use facilfincaraiz\Http\Middleware\Admin;
 
 class Kernel extends HttpKernel
 {
@@ -29,5 +32,9 @@ class Kernel extends HttpKernel
         'auth' => \facilfincaraiz\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \facilfincaraiz\Http\Middleware\RedirectIfAuthenticated::class,
+
+        'superAdmin'=>SuperAdmin::class,
+        'admin'=>Admin::class,
+        'usuario'=>Usuario::class,
     ];
 }

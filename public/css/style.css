@@ -214,8 +214,13 @@ h1.b1,h2.b2,h3.b3 {
 .welcome{
 	padding:4em 0;
 }
-.welcome-left h2{
+.h2Josefin{
 	font-size:3em;
+	color:#00a0dc;
+	font-family: 'JosefinSans-Bold';
+}
+.h3Josefin{
+
 	color:#00a0dc;
 	font-family: 'JosefinSans-Bold';
 }
@@ -544,6 +549,7 @@ li.nbs-flexisel-item a:hover{
 .footer{
 	padding:4em 0 2em;
 	background-color: #eee;
+
 }
 .ftr-grid h4 {
   color: #646464;
@@ -1138,6 +1144,7 @@ display:inline-block;
 	color:#fff;
 	text-decoration:none;
 }
+
 .log a{
 text-decoration:underline;
 font-size:0.85em;
@@ -1256,7 +1263,7 @@ label {
 	outline: none;
 	color: #333333;
 	-webkit-appearance: none;
-	text-transform: capitalize;
+/*	text-transform: capitalize;*/
 	background: #FFFFFF;
 	border: 1px solid rgb(231, 231, 231);
 	font-weight: normal;
@@ -1345,7 +1352,7 @@ label {
 	color: #012231;
 	text-transform: uppercase;
 }
-.contact-form input[type="text"],.contact-form textarea{
+.contact-form input[type="text"],.contact-form input[type="email"],.contact-form textarea{
 		   padding: 10px;
 			display: block;
 			width: 98%;
@@ -1360,7 +1367,7 @@ label {
 		resize:none;
 		height:120px;		
 }
-.contact-form input[type="submit"]{
+.mybutton{
 	background:#00a0dc;
 	color: #fff;
 	padding: 12px 30px;
@@ -1373,7 +1380,7 @@ label {
 	cursor:pointer;
 	border:2px solid #00a0dc;
 }
-.contact-form input[type="submit"]:hover{
+.mybutton:hover{
 	background: transparent;
 	color: #00a0dc;
 	border:2px solid #00a0dc;

@@ -9,7 +9,7 @@
 <div class="login_sec">
 	 <div class="container">
 		 <ol class="breadcrumb">
-		  <li><a href="index.html">Home</a></li>
+			 <li><a href="{{route("home")}}">Inicio</a></li>
 		  <li class="active">Login</li>
 		 </ol>
 		 <h2>Login</h2>
@@ -21,11 +21,22 @@
 				 {!!Form::email('email',null,[], 'required')!!}
 						 <h5>Password:</h5>
 				 {!! Form::password('password',[], 'required')!!}
+			 @if (count($errors) > 0)
+				 <div class="alert alert-danger">
+					 <a href="#" class="close" data-dismiss="alert" aria-label="close" style="text-decoration: none; color: #000;">&times;</a>
+					 <strong>Ups!</strong> Favor corregir los siguientes errores.<br><br>
+					 <ul class="text-left">
+						 @foreach ($errors->all() as $error)
+							 <li>{{ $error }}</li>
+						 @endforeach
+					 </ul>
+				 </div>
+			 @endif
 				 {!! Form::submit('Iniciar Sesión!',[]) !!}
 
-			 <a class="acount-btn" href="account.html">Create an Account</a>
+			 <a class="acount-btn" href="{{route("registroUser")}}">Crear una Cuenta</a>
 			 {!!Form::close()!!}
-				 <a href="#">Forgot Password ?</a>
+				 <a href="{{route("getEmail")}}">Olvide mi Contraseña</a>
 					
 		 </div>	
 				
