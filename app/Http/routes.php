@@ -46,7 +46,7 @@ Route::post('mail','MailController@enviar')->name('enviar');
 
 
 Route::get('administrar', 'AdministradorController@adminBanner')->name('adminBanner');
-
+Route::get("binmuebles","busquedasController@buscarinmuebles")->name("binmuebles");
 Route::post('eliminaBanner', 'AdministradorController@deleteImgBanner')->name('deleteImgBanner');
 Route::post('administrador/subirimagen', 'AdministradorController@subirImagen')->name('subirImagen');
 Route::get('password/email', 'Auth\PasswordController@getEmail')->name('getEmail');
