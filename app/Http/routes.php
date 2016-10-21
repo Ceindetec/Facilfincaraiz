@@ -55,6 +55,7 @@ Route::post('password/email', 'Auth\PasswordController@postEmail')->name('postEm
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset')->name('getReset');
 Route::post('password/reset/{token}', 'Auth\PasswordController@postReset')->name('postReset');
 
+Route::get('/home', 'AdministradorController@index', 'index');
 
 Route::get('/', function () {
     return view('welcome');

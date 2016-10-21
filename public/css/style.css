@@ -206,8 +206,8 @@ h1.b1,h2.b2,h3.b3 {
 }
 /*----*/
 .banner{
-	background:url(../images/ban2.jpg) no-repeat 0px 0px;
-	background-size:cover;
+	/*background:url(../images/ban2.jpg) no-repeat 0px 0px;*/
+	/*background-size:cover;*/
 	min-height:700px;
 }
 /*--welcome--*/
