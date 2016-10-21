@@ -17,8 +17,7 @@ class AdministradorController extends Controller
      */
     public function index()
     {
-        $imageSlider = GaleriaPortada::where('tipo', 'S')->get();
-        return view('welcome', compact('imageSlider'));
+        //
     }
 
     /**
@@ -67,7 +66,6 @@ class AdministradorController extends Controller
      */
     public function subirImagen(Request $request)
     {
-//        dd($request->all());
         $fotos = $request->file('inputGalery');
 
         if ($fotos != null) {
@@ -76,7 +74,7 @@ class AdministradorController extends Controller
             $extension = explode(".", $fotos->getClientOriginalName());
             $cantidad = count($extension) - 1;
             $extension = $extension[$cantidad];
-            $nombre = time(). $request->file_id. "." . $extension;
+            $nombre = time(). "." . $extension;
 
             $fotos->move('images/admin', utf8_decode($nombre));
 
