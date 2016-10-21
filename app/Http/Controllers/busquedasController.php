@@ -2,6 +2,7 @@
 
 namespace facilfincaraiz\Http\Controllers;
 
+use facilfincaraiz\Tipo;
 use Illuminate\Http\Request;
 
 use facilfincaraiz\Http\Requests;
@@ -12,7 +13,7 @@ class busquedasController extends Controller
 {
 
     /////////////////////////////////////////////////////////////////////////////////
-    //////// BUSQUEDA DE INMUEBLES //////////////////////////////////////////////////
+    ///////////////////////// BUSQUEDA DE VEHICULOS /////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -22,12 +23,22 @@ class busquedasController extends Controller
     {
 
         $datas = Departamento::all(["id","departamento"]);
+
         $items = array();
         foreach ($datas as $data)
         {
             $items[$data->id] = $data->departamento;
         }
         return view("busquedas.Inmuebles.index", compact("items"));
+    }
+
+    public function buscarVehiculos()
+    {
+        $departamentos = Departamento::all(["id","departamento"]);
+        $tiposV = Tipo::select('id', 'tipo')->where('categoria', 'V');
+        $data["departamentos"]=$departamentos;
+        $data["tipos"]=$tiposV;
+        return view('busquedas.Vehiculos.index', $data);
     }
 
 

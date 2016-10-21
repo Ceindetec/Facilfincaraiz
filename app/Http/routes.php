@@ -33,30 +33,37 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('admin', function () {
         return 'Hello Admin o super ';
     });
+
+    Route::get('administrar', 'AdministradorController@adminBanner')->name('adminBanner');
+    Route::post('eliminaBanner', 'AdministradorController@deleteImgBanner')->name('deleteImgBanner');
+    Route::post('administrador/subirimagen', 'AdministradorController@subirImagen')->name('subirImagen');
 });
 
 Route::group(['middleware' => ['auth', 'usuario']], function () {
 
     Route::get('publicar','usuarioController@publicar')->name('publicar');
     Route::get('publicar/{categoria}','usuarioController@publicarXCategoria')->name('publicarXCategoria');
+    Route::post('marcas','usuarioController@getMarcas')->name('marcas');
+    Route::post('publicarInmueble','usuarioController@publicarInmueble')->name('publicarInmueble');
+    Route::post('publicarVehiculo','usuarioController@publicarVehiculo')->name('publicarVehiculo');
+
+
+
 
 });
 
 Route::post('mail','MailController@enviar')->name('enviar');
 
 
-Route::get('administrar', 'AdministradorController@adminBanner')->name('adminBanner');
+
+
 Route::get("binmuebles","busquedasController@buscarinmuebles")->name("binmuebles");
-Route::post('eliminaBanner', 'AdministradorController@deleteImgBanner')->name('deleteImgBanner');
-Route::post('administrador/subirimagen', 'AdministradorController@subirImagen')->name('subirImagen');
+Route::get("vehiculos","busquedasController@buscarVehiculos")->name("buscarVehiculos");
+
 Route::get('password/email', 'Auth\PasswordController@getEmail')->name('getEmail');
 Route::post('password/email', 'Auth\PasswordController@postEmail')->name('postEmail');
 
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset')->name('getReset');
 Route::post('password/reset/{token}', 'Auth\PasswordController@postReset')->name('postReset');
 
-Route::get('/home', 'AdministradorController@index', 'index');
-
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', 'mainController@index', 'index')->name('home');

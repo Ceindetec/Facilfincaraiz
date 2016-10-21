@@ -17,8 +17,7 @@ class AdministradorController extends Controller
      */
     public function index()
     {
-        $imageSlider = GaleriaPortada::where('tipo', 'S')->get();
-        return view('welcome', compact('imageSlider'));
+
     }
 
     /**
