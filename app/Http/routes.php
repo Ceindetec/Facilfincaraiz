@@ -67,3 +67,10 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset')->name('
 Route::post('password/reset/{token}', 'Auth\PasswordController@postReset')->name('postReset');
 
 Route::get('/', 'mainController@index', 'index')->name('home');
+
+
+
+/*************************************************** PRUEBAAAAAAAAAAAAAAASSSSSS ****************************************************/
+
+Route::get("imagencargaprueba","purebasController@imagencarga");
+Route::post("postcargaimagen","purebasController@postcargaimagen")->name("postcargaimagen");
