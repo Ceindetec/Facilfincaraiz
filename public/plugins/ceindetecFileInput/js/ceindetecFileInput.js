@@ -11,16 +11,14 @@
 
 
         this.each(function () {
-            $(this).hide();
-            var arrayError = new Array();
+
             var elementoprimario = $(this);
             var contenedorTotal = document.createElement("div");
             contenedorTotal.setAttribute("class", "div-container-fileinput");
             var customInput= document.createElement('div');
             customInput.setAttribute("class", "custom-input-file");
             elementoprimario.after(customInput);
-            var inputtextlabel = document.createElement("input");
-            inputtextlabel.setAttribute("type","text");
+            var inputtextlabel = document.createElement("div");
             inputtextlabel.setAttribute("class", "input-text-label form-control");
             var cargar = document.createElement("span");
             cargar.setAttribute("class", "cargar");
@@ -50,16 +48,19 @@
                     contenPreviw.setAttribute("class", "div-contenPreviw-inputfile");
                     $(this).parent(".custom-input-file").before(contenPreviw);
                     contenPreviw.innerHTML = "";
+                    var totalArchivos=0;
                     if(files.length <= opc.maxlength){
+                        var arrayError = new Array();
                         for (var i = 0, f; f = files[i]; i++) {
                             // Only process image files.
                             if (!f.type.match('image.*')) {
                                 continue;
                             }
                             if((opc.maxfilesize*1024) < f.size){
-                                arrayError.push('El peso de la ima imagen "'+f.name+'" supera el peso permitido '+opc.maxfilesize+'KB');
+                                arrayError.push('El peso de la imagen "'+f.name+'" supera el peso permitido '+opc.maxfilesize+'KB');
                                 continue;
                             }
+                            totalArchivos++;
                             f.key =i;
                             f.elemento = $(this).attr("id");
                             filesArray = $(this).data("files");
@@ -109,6 +110,9 @@
                     $(error).append(ullisError);
                     $(contenPreviw).append(error);
                 }
+                if(totalArchivos>0){
+                    inputtextlabel.innerHTML='<i class="fa fa-file" aria-hidden="true"></i> '+totalArchivos+' archivos selecionado(s)';
+                }
             })
         })
         return this;
@@ -126,6 +130,12 @@
                 break;
             }
         }
+        if(files.length>0){
+            $("#"+fileinput).siblings(".input-text-label").html('<i class="fa fa-file" aria-hidden="true"></i> '+files.length+' archivos selecionado(s)')
+        }else{
+            $("#"+fileinput).siblings(".input-text-label").html('');
+        }
+
         $("#"+fileinput).val("");
         $("#"+fileinput).data("files",files);
     }
