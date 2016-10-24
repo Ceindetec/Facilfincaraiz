@@ -2,12 +2,18 @@
 
 namespace facilfincaraiz\Http\Controllers;
 
+use facilfincaraiz\Galeria;
+use facilfincaraiz\Inmueble;
 use facilfincaraiz\Marca;
+use facilfincaraiz\Publicacion;
 use facilfincaraiz\Tipo;
 use facilfincaraiz\User;
+use facilfincaraiz\Vehiculo;
 use Illuminate\Http\Request;
 use facilfincaraiz\Departamento;
 use facilfincaraiz\Municipio;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use facilfincaraiz\Http\Requests;
 use facilfincaraiz\Http\Controllers\Controller;
@@ -119,7 +125,46 @@ class usuarioController extends Controller
      */
     public function publicarInmueble(Request $request){
 
-        return $request->all();
+        DB::beginTransaction();
+        try{
+            $string="";
+            if($request->adicinales)
+                foreach ($request->adicinales as $adicial){
+                    $string=$string.$adicial.",";
+                }
+            $inmueble = new Inmueble($request->all());
+            $inmueble->adicionales=trim($string, ',');
+            $inmueble->save();
+
+            $publicacion = new Publicacion($request->all());
+            $publicacion->user_id=Auth::user()->id;
+            $publicacion->articulo_id=$inmueble->id;
+            $publicacion->tipo= "I";
+            $publicacion->save();
+
+
+            foreach ($request->imagenes as $index => $imagene){
+
+                $type=explode("/", $imagene->getMimeType())[0];
+
+                if($type=="image"){
+                    $nombre = time().$index.$imagene->getClientOriginalName();
+                    $imagene->move('images/publicaciones', utf8_decode($nombre));
+
+                    $galeria = new Galeria();
+                    $galeria->publicacion_id=$publicacion->id;
+                    $galeria->ruta = $nombre;
+                    $galeria->save();
+                }
+
+            }
+            DB::commit();
+            $data=["estado"=>true,"mensaje"=>"exito"];
+        }catch (\Exception $e){
+            DB::rollBack();
+            $data=["estado"=>false,"mensaje"=>"error en la transaccion, intentar nuevamente."];
+        }
+        return $data;
     }
 
     /**
@@ -129,7 +174,51 @@ class usuarioController extends Controller
      */
     public function publicarVehiculo(Request $request){
 
-        return $request->all();
+        DB::beginTransaction();
+        try{
+        $string="";
+        if($request->adicinales)
+            foreach ($request->adicinales as $adicial){
+                $string=$string.$adicial.",";
+            }
+
+        $vehiculo = new Vehiculo($request->all());
+        $vehiculo->adicionales=trim($string, ',');
+        $vehiculo->save();
+
+        $publicacion = new Publicacion($request->all());
+        $publicacion->user_id=Auth::user()->id;
+        $publicacion->articulo_id=$vehiculo->id;
+        $publicacion->tipo= "V";
+        $publicacion->save();
+
+        foreach ($request->imagenes as $index => $imagene){
+
+            $type=explode("/", $imagene->getMimeType())[0];
+
+            if($type=="image"){
+                $nombre = time().$index.$imagene->getClientOriginalName();
+                $imagene->move('images/publicaciones', utf8_decode($nombre));
+
+                $galeria = new Galeria();
+                $galeria->publicacion_id=$publicacion->id;
+                $galeria->ruta = $nombre;
+                $galeria->save();
+            }
+
+        }
+            DB::commit();
+        $data=["estado"=>true,"mensaje"=>"exito"];
+
+        }catch (\Exception $e){
+
+            DB::rollBack();
+            $data=["estado"=>false,"mensaje"=>"error en la transaccion, intentar nuevamente."];
+        }
+
+        return $data;
+
+
     }
 
 }

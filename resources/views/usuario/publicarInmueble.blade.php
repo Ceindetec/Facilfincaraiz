@@ -1,7 +1,7 @@
 @extends('layouts.principal')
 
 @section('style')
-
+	{!!Html::style('plugins/ceindetecFileInput/css/ceindetecFileInput.css')!!}
 	<style>
 		#map {
 			width: 100%;
@@ -26,7 +26,7 @@
 
 <div class="bride-grids">
 	<div class="container">
-		{!!Form::open(['id'=>'formInmueble','class'=>'form-horizontal','autocomplete'=>'off'])!!}
+		{!!Form::open(['id'=>'formInmueble','files' => true,'class'=>'form-horizontal','autocomplete'=>'off'])!!}
 
 			<div class="row">
 				<div class="col-sm-offset-2 col-sm-8">
@@ -38,13 +38,25 @@
 					</div>
 				</div>
 			</div>
+		<div class="row">
+			<div class="col-sm-offset-2 col-sm-8">
+				<h3 class="h3Josefin text-center" style="margin-bottom: 20px;">Cargar las imeges para la publicación.</h3>
+
+				<div class="form-group">
+					<label for="titulo" class="col-sm-2 control-label">Imagenes</label>
+					<div class="col-sm-10">
+						<input type="file" id="files" name="files[]"  multiple />
+					</div>
+				</div>
+			</div>
+		</div>
 
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="categorias" class="col-sm-4 control-label">Categorias</label>
+						<label for="tipo_id" class="col-sm-4 control-label">Categorias</label>
 						<div class="col-sm-8">
-							{!!Form::select('categorias',$arrayCategorias, null, ['class'=>"form-control",'placeholder' => 'Seleccione una categoria'])!!}
+							{!!Form::select('tipo_id',$arrayCategorias, null, ['class'=>"form-control",'placeholder' => 'Seleccione una categoria'])!!}
 						</div>
 					</div>
 				</div>
@@ -63,15 +75,15 @@
 					<div class="form-group">
 						<label for="precio" class="col-sm-4 control-label">Precio</label>
 						<div class="col-sm-8">
-							{!!Form::text('precio',null,['class'=>'form-control','placeholder'=>"precio del inmueble", 'required'])!!}
+							{!!Form::text('precio',null,['class'=>'form-control','placeholder'=>"precio del inmueble", 'required' , 'onkeypress'=>'return justNumbers(event)'])!!}
 						</div>
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="strato" class="col-sm-4 control-label">Estrato</label>
+						<label for="estrato" class="col-sm-4 control-label">Estrato</label>
 						<div class="col-sm-8">
-							{!!Form::select('strato',['1'=>'Estrato 1','2'=>'Estrato 2','3'=>'Estrato 3','4'=>'Estrato 4','5'=>'Estrato 5','6'=>'Estrato 6'], null, ['class'=>"form-control"])!!}
+							{!!Form::select('estrato',['1'=>'Estrato 1','2'=>'Estrato 2','3'=>'Estrato 3','4'=>'Estrato 4','5'=>'Estrato 5','6'=>'Estrato 6'], null, ['class'=>"form-control"])!!}
 						</div>
 					</div>
 				</div>
@@ -124,7 +136,7 @@
 					<div class="form-group">
 						<label for="frente" class="col-sm-4 control-label">Frente (m)</label>
 						<div class="col-sm-8">
-							{!!Form::text('frente',null,['class'=>'form-control','placeholder'=>"metros de frente", 'required'])!!}
+							{!!Form::text('frente',null,['id'=>'frente','class'=>'form-control','placeholder'=>"metros de frente", 'required', 'onkeypress'=>'return justNumbers(event)'])!!}
 						</div>
 					</div>
 				</div>
@@ -132,7 +144,7 @@
 					<div class="form-group">
 						<label for="fondo" class="col-sm-4 control-label">Fondo (m)</label>
 						<div class="col-sm-8">
-							{!!Form::text('fondo',null,['class'=>'form-control','placeholder'=>"metros de fondo", 'required'])!!}
+							{!!Form::text('fondo',null,['id'=>'fondo','class'=>'form-control','placeholder'=>"metros de fondo", 'required', 'onkeypress'=>'return justNumbers(event)'])!!}
 						</div>
 					</div>
 				</div>
@@ -142,7 +154,7 @@
 					<div class="form-group">
 						<label for="area" class="col-sm-4 control-label">Area total (m<sup>2</sup>)</label>
 						<div class="col-sm-8">
-							{!!Form::text('area',null,['class'=>'form-control','placeholder'=>"area total metros cuadrados", 'required'])!!}
+							{!!Form::text('area',null,['id'=>'area','class'=>'form-control','placeholder'=>"area total metros cuadrados", 'required', 'onkeypress'=>'return justNumbers(event)'])!!}
 						</div>
 					</div>
 				</div>
@@ -159,25 +171,25 @@
 					<div class="form-group" style="margin-top: 20px;">
 						{!! Form::label('departamento', 'Departamento (*)',['class'=>'col-sm-4 control-label']) !!}
 						<div class="col-sm-8">
-							{!!Form::select('departamento', $arrayDepartamento, null, ['class'=>"form-control",'placeholder' => 'Seleccione un Departamento'])!!}
+							{!!Form::select('departamento', $arrayDepartamento, null, ['class'=>"form-control",'placeholder' => 'Seleccione un Departamento', 'required'])!!}
 						</div>
 					</div>
 					<div class="form-group" id="divMinucipio">
 						{!! Form::label('municipio_id', 'Municipio (*)',['class'=>'col-sm-4 control-label']) !!}
 						<div class="col-sm-8">
-							{!!Form::select('municipio_id', [], null, ['class'=>"form-control",'placeholder' => 'Selecionar un Municipio'])!!}
+							{!!Form::select('municipio_id', [], null, ['class'=>"form-control",'placeholder' => 'Selecionar un Municipio', 'required'])!!}
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="direccion" class="col-sm-4 control-label">Dirección</label>
 						<div class="col-sm-8">
-							{!!Form::text('direccion',null,['class'=>'form-control','placeholder'=>"calle 24A No.15 - 30", 'required'])!!}
+							{!!Form::text('direccion',null,['class'=>'form-control','placeholder'=>"calle 24A No.15 - 30"])!!}
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="coords" class="col-sm-4 control-label">Geolocalización</label>
 						<div class="col-sm-8">
-							{!!Form::text('coords',null,['class'=>'form-control','id'=>'coords','required','disabled'])!!}
+							{!!Form::text('coords',null,['class'=>'form-control','id'=>'coords','disabled'])!!}
 						</div>
 					</div>
 				</div>
@@ -198,17 +210,17 @@
 				<div class="col-sm-4">
 					<div class="checkbox">
 						<label>
-							{!! Form::checkbox('name', 'agua') !!} Agua
+							{!! Form::checkbox('adicinales[]', 'agua') !!} Agua
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							{!! Form::checkbox('name', 'luz') !!} Luz
+							{!! Form::checkbox('adicinales[]', 'luz') !!} Luz
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							{!! Form::checkbox('name', 'gas') !!} Gas
+							{!! Form::checkbox('adicinales[]', 'gas') !!} Gas
 						</label>
 					</div>
 
@@ -216,34 +228,34 @@
 				<div class="col-sm-4">
 					<div class="checkbox">
 						<label>
-							{!! Form::checkbox('name', 'alcantarillado') !!} Alcantarillado
+							{!! Form::checkbox('adicinales[]', 'alcantarillado') !!} Alcantarillado
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							{!! Form::checkbox('name', 'balcon') !!} Balcon
+							{!! Form::checkbox('adicinales[]', 'balcon') !!} Balcon
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							{!! Form::checkbox('name', 'terraza') !!} Terraza
+							{!! Form::checkbox('adicinales[]', 'terraza') !!} Terraza
 						</label>
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="checkbox">
 						<label>
-							{!! Form::checkbox('name', 'patio') !!} Patio
+							{!! Form::checkbox('adicinales[]', 'patio') !!} Patio
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							{!! Form::checkbox('name', 'cocina_integral') !!} Cocina Integral
+							{!! Form::checkbox('adicinales[]', 'cocina_integral') !!} Cocina Integral
 						</label>
 					</div>
 					<div class="checkbox">
 						<label>
-							{!! Form::checkbox('name', 'conjunto_cerrado') !!} Conjunto Cerrado
+							{!! Form::checkbox('adicinales[]', 'conjunto_cerrado') !!} Conjunto Cerrado
 						</label>
 					</div>
 				</div>
@@ -259,10 +271,22 @@
 			</div>
 
 
+		<div class="row" style="margin-top: 20px;">
+			<div class="col-sm-offset-2 col-sm-8">
+				<div id="alert">
 
-			<div class="form-group" style="margin-top: 30px;">
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-8">
-					<button type="submit" class="mybutton center-block">Publicar</button>
+					<button type="submit" class="mybutton center-block" id="submit">Publicar</button>
 				</div>
 			</div>
 		</form>
@@ -273,12 +297,24 @@
 @endsection
 
 @section('scripts')
+
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA1AUmEiXssHdvD3yAjE4VTh_pWQENfNUM&sensor=true"></script>
 	<script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
-		{!!Html::script('js/gmaps.js')!!}
-	<script>
+	{!!Html::script('plugins/ceindetecFileInput/js/ceindetecFileInput.js')!!}
+	{!!Html::script('js/gmaps.js')!!}
+
+	<script charset="utf-8">
 		var map;
 		$(function(){
+
+			$("#files").inputFileImage({
+				maxlength:8,
+				width:120,
+				height: 140,
+				maxfilesize:1024
+			});
+
+
 			CKEDITOR.replace('infoAdicional', {removeButtons:'Image'});
 			$("#tipoArticulo").change(function(){
 				console.log($(this).val());
@@ -333,6 +369,67 @@
 				lng: -77.028333
 			});
 
+			$("#frente").change(function () {
+				if(($(this).val()!=""&&$(this).val()>0)&&($("#fondo")!=""&&$("#fondo").val()>0)){
+					console.log($(this).val()*$("#fondo").val());
+					$("#area").val($(this).val()*$("#fondo").val());
+					$("#umedida").val("m");
+				}
+			});
+
+			$("#fondo").change(function () {
+				if(($(this).val()!=""&&$(this).val()>0)&&($("#frente")!=""&&$("#frente").val()>0)){
+					console.log($(this).val()*$("#frente").val());
+					$("#area").val($(this).val()*$("#frente").val());
+					$("#umedida").val("m");
+				}
+			});
+
+
+
+			var formulario = $("#formInmueble");
+			formulario.submit(function(e){
+				e.preventDefault();
+				//var contenido = encodeURIComponent(CKEDITOR.instances.infoAdicional.getData().split("\n").join(""));
+				var contenido = CKEDITOR.instances.infoAdicional.getData().split("\n").join("");
+				//console.log($("#files").data("files"));
+				var formData = new FormData($(this)[0]);
+				var files = $("#files").data("files");
+				for(i=0;i<files.length;i++){
+					formData.append("imagenes[]", files[i]);
+				}
+				formData.append("descripcion", contenido);
+
+				$.ajax({
+					url: "{!! route('publicarInmueble') !!}",
+					type: "POST",
+					data: formData,
+					processData: false,  // tell jQuery not to process the data
+					contentType: false,   // tell jQuery not to set contentType
+					success: function (result) {
+
+						if(result.estado){
+							$("#submit").attr("disabled", true);
+							alert("success","Perfecto","Su publicacion fue enviada con exito","<i class='fa fa-check' aria-hidden='true'></i>");
+							/*$("#formInmueble")[0].reset();*/
+							setTimeout(function(){
+								window.location="../publicar";
+							}, 3000);
+
+
+						}else{
+							alert("danger","Ups","algo salio mal por favor intentar nuevamente","<i class='fa fa-ban' aria-hidden='true'></i>");
+						}
+
+					},
+					error: function (error) {
+						alert("danger","Ups","algo salio mal por favor intentar nuevamente","<i class='fa fa-ban' aria-hidden='true'></i>");
+						console.log(error);
+					}
+				});
+
+
+			});
 
 		});
 
@@ -362,6 +459,23 @@
 		});
 	}
 
+		function justNumbers(e)
+		{
+			var keynum = window.event ? window.event.keyCode : e.which;
+			if (keynum == 8)
+				return true;
+			return /\d/.test(String.fromCharCode(keynum));
+		}
+
+
+		function alert(tipo,titulo,mensaje,icono) {
+			$("#alert").empty();
+			var html ="<div class='alert alert-"+tipo+"'>"+
+					"<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+					icono+"<strong>"+titulo+"!</strong> "+mensaje+
+					"</div>";
+			$("#alert").append(html)
+		}
 
 	</script>
 @endsection

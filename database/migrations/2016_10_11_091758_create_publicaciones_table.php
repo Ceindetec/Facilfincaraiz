@@ -16,11 +16,12 @@ class CreatePublicacionesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
             $table->bigInteger('articuli_id')->unsigned();
+            $table->enum("tipo",["I","V"]);
             $table->enum("accion",["V","A","P"]);
             $table->string('titulo');
             $table->date('fecha');
             $table->text('descripcion');
-            $table->enum('estado',['A','I','P']);
+            $table->enum('estado',['A','I','P']); //Activo Inactivo y Pendiente
             $table->enum('destacado',['','x']);
             $table->integer('municipio_id')->unsigned();
             $table->string('direccion');

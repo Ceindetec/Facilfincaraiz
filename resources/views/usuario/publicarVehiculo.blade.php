@@ -2,6 +2,7 @@
 
 @section('style')
     {!!Html::style('plugins/datepicker/datepicker3.css')!!}
+	{!!Html::style('plugins/ceindetecFileInput/css/ceindetecFileInput.css')!!}
 	<style>
 		#map {
 			width: 100%;
@@ -30,7 +31,7 @@
 	<div class="bride-grids">
 		<div class="container">
 
-            {!!Form::open(['id'=>'formVehiculo','class'=>'form-horizontal','autocomplete'=>'off'])!!}
+            {!!Form::open(['id'=>'formVehiculo','files' => true,'class'=>'form-horizontal','autocomplete'=>'off'])!!}
 
 				<div class="row">
 					<div class="col-sm-offset-2 col-sm-8">
@@ -42,13 +43,24 @@
 						</div>
 					</div>
 				</div>
+			<div class="row">
+				<div class="col-sm-offset-2 col-sm-8">
+					<h3 class="h3Josefin text-center" style="margin-bottom: 20px;">Cargar las imeges para la publicación.</h3>
 
+					<div class="form-group">
+						<label for="titulo" class="col-sm-2 control-label">Imagenes</label>
+						<div class="col-sm-10">
+							<input type="file" id="files" name="files[]"  multiple />
+						</div>
+					</div>
+				</div>
+			</div>
 				<div class="row">
 					<div class="col-sm-6">
 						<div class="form-group">
-							<label for="categorias" class="col-sm-4 control-label">Categorias</label>
+							<label for="tipo_id" class="col-sm-4 control-label">Categorias</label>
 							<div class="col-sm-8">
-								{!!Form::select('categorias',$arrayCategorias, null, ['id'=>'categorias','class'=>"form-control",'placeholder' => 'Seleccione una categoria'])!!}
+								{!!Form::select('tipo_id',$arrayCategorias, null, ['id'=>'categorias','class'=>"form-control",'placeholder' => 'Seleccione una categoria'])!!}
 							</div>
 						</div>
 					</div>
@@ -65,9 +77,9 @@
 				<div class="row">
 					<div class="col-sm-6">
 						<div class="form-group">
-							<label for="precio" class="col-sm-4 control-label">Precio</label>
+							<label for="valor" class="col-sm-4 control-label">Precio</label>
 							<div class="col-sm-8">
-								{!!Form::text('precio',null,['id'=>'precio','class'=>'form-control','placeholder'=>"precio del inmueble", 'required'])!!}
+								{!!Form::text('valor',null,['id'=>'valor','class'=>'form-control','placeholder'=>"precio del inmueble", 'required', 'onkeypress'=>'return justNumbers(event)'])!!}
 							</div>
 						</div>
 					</div>
@@ -81,9 +93,9 @@
 					</div>
                     <div class="col-sm-6 hidden" id="col-numPuertas">
                         <div class="form-group">
-                            <label for="cant_banos" class="col-sm-4 control-label">Número Puertas</label>
+                            <label for="cant_puertas" class="col-sm-4 control-label">Número Puertas</label>
                             <div class="col-sm-8">
-                                {!!Form::select('cant_banos',['0'=>'0','1'=>'1','2'=>'2','3'=>'3','4'=>'4+'], null, ['id'=>'cant_banos','class'=>"form-control"])!!}
+                                {!!Form::select('cant_puertas',['0'=>'0','1'=>'1','2'=>'2','3'=>'3','4'=>'4+'], null, ['id'=>'cant_puertas','class'=>"form-control"])!!}
                             </div>
                         </div>
                     </div>
@@ -91,9 +103,9 @@
 				<div class="row">
 					<div class="col-sm-6">
 						<div class="form-group">
-							<label for="marca" class="col-sm-4 control-label">Marca</label>
+							<label for="marca_id" class="col-sm-4 control-label">Marca</label>
 							<div class="col-sm-8">
-								{!!Form::select('marca',[], null, ['id'=>'marca','class'=>"form-control",'placeholder' => 'Seleccione una marca'])!!}
+								{!!Form::select('marca_id',[], null, ['id'=>'marca_id','class'=>"form-control",'placeholder' => 'Seleccione una marca'])!!}
 							</div>
 						</div>
 					</div>
@@ -177,7 +189,7 @@
 						<div class="form-group">
 							<label for="direccion" class="col-sm-4 control-label">Dirección</label>
 							<div class="col-sm-8">
-								{!!Form::text('direccion',null,['id'=>'direccion','class'=>'form-control','placeholder'=>"calle 24A No.15 - 30", 'required'])!!}
+								{!!Form::text('direccion',null,['id'=>'direccion','class'=>'form-control','placeholder'=>"calle 24A No.15 - 30"])!!}
 							</div>
 						</div>
 					</div>
@@ -192,17 +204,17 @@
 					<div class="col-sm-4">
 						<div class="checkbox">
 							<label>
-								{!! Form::checkbox('name', 'edicion_especial') !!} Edicion Especial
+								{!! Form::checkbox('adicinales[]', 'edicion_especial') !!} Edicion Especial
 							</label>
 						</div>
 						<div class="checkbox noMoto">
 							<label>
-								{!! Form::checkbox('name', 'aire_acondicionado') !!} Aire Acondicionado
+								{!! Form::checkbox('adicinales[]', 'aire_acondicionado') !!} Aire Acondicionado
 							</label>
 						</div>
 						<div class="checkbox noMoto">
 							<label>
-								{!! Form::checkbox('name', 'air_bags') !!} Air Bags
+								{!! Form::checkbox('adicinales[]', 'air_bags') !!} Air Bags
 							</label>
 						</div>
 
@@ -210,34 +222,34 @@
 					<div class="col-sm-4">
 						<div class="checkbox">
 							<label>
-								{!! Form::checkbox('name', 'full_equipo') !!} Full equipo
+								{!! Form::checkbox('adicinales[]', 'full_equipo') !!} Full equipo
 							</label>
 						</div>
 						<div class="checkbox noMoto">
 							<label>
-								{!! Form::checkbox('name', 'planta_de_sonido') !!} Planta de sonido
+								{!! Form::checkbox('adicinales[]', 'planta_de_sonido') !!} Planta de sonido
 							</label>
 						</div>
 						<div class="checkbox noMoto">
 							<label>
-								{!! Form::checkbox('name', 'convertible') !!} Convertible
+								{!! Form::checkbox('adicinales[]', 'convertible') !!} Convertible
 							</label>
 						</div>
 					</div>
 					<div class="col-sm-4">
 						<div class="checkbox">
 							<label>
-								{!! Form::checkbox('name', 'alarma') !!} Alarma
+								{!! Form::checkbox('adicinales[]', 'alarma') !!} Alarma
 							</label>
 						</div>
 						<div class="checkbox noMoto">
 							<label>
-								{!! Form::checkbox('name', 'bloqueo_central') !!} Bloqueo Central
+								{!! Form::checkbox('adicinales[]', 'bloqueo_central') !!} Bloqueo Central
 							</label>
 						</div>
 						<div class="checkbox noMoto">
 							<label>
-								{!! Form::checkbox('name', 'vidrios_electricos') !!} Vidrios Electricos
+								{!! Form::checkbox('adicinales[]', 'vidrios_electricos') !!} Vidrios Electricos
 							</label>
 						</div>
 					</div>
@@ -252,11 +264,18 @@
 					<textarea id='infoAdicional' name='infoAdicional' rows='10' cols='30' style='height:440px'></textarea>
 				</div>
 
+			<div class="row" style="margin-top: 20px;">
+				<div class="col-sm-offset-2 col-sm-8">
+					<div id="alert">
 
 
-				<div class="form-group" style="margin-top: 30px;">
+					</div>
+				</div>
+			</div>
+
+				<div class="form-group" >
 					<div class="col-sm-offset-2 col-sm-8">
-						<button type="submit" class="mybutton center-block">Publicar</button>
+						<button type="submit" class="mybutton center-block" id="submit">Publicar</button>
 					</div>
 				</div>
 			</form>
@@ -268,11 +287,20 @@
 
 @section('scripts')
     {!!Html::script('plugins/datepicker/bootstrap-datepicker.js')!!}
+	{!!Html::script('plugins/ceindetecFileInput/js/ceindetecFileInput.js')!!}
 	<script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
 	{!!Html::script('js/gmaps.js')!!}
-	<script>
+	<script charset="utf-8">
 		var map;
 		$(function(){
+
+			$("#files").inputFileImage({
+				maxlength:8,
+				width:120,
+				height: 140,
+				maxfilesize:1024
+			});
+
 			CKEDITOR.replace('infoAdicional', {removeButtons:'Image'});
 			$("#tipoArticulo").change(function(){
 				console.log($(this).val());
@@ -350,38 +378,80 @@ console.log($("#categorias option:selected").text());
                 }
             });
 
-            var formulario = $("#formVehiculo");
-            formulario.submit(function(e){
-                e.preventDefault();
-                $.ajax({
-                    type:"POST",
-                    context: document.body,
-                    url: '{{route('publicarInmueble')}}',
-                    data:formulario.serialize(),
-                    success: function(data){
-                        console.log(data);
-                        if (data=="exito") {
+			var formulario = $("#formVehiculo");
+			formulario.submit(function(e){
+				e.preventDefault();
+				//var contenido = encodeURIComponent(CKEDITOR.instances.infoAdicional.getData().split("\n").join(""));
+				var contenido = CKEDITOR.instances.infoAdicional.getData().split("\n").join("");
+				//console.log($("#files").data("files"));
+				var formData = new FormData($(this)[0]);
+				var files = $("#files").data("files");
+				for(i=0;i<files.length;i++){
+					formData.append("imagenes[]", files[i]);
+				}
+				formData.append("descripcion", contenido);
 
-                        }
-                        else {
+				$.ajax({
+					url: "{!! route('publicarVehiculo') !!}",
+					type: "POST",
+					data: formData,
+					processData: false,  // tell jQuery not to process the data
+					contentType: false,   // tell jQuery not to set contentType
+					success: function (result) {
+						if(result.estado){
+							$("#submit").attr("disabled", true);
+							alert("success","Perfecto","Su publicacion fue enviada con exito","<i class='fa fa-check' aria-hidden='true'></i>");
+							setTimeout(function(){
+								window.location="../publicar";
+							}, 3000);
 
-                        }
-                    },
-                    error: function(data){
-                        var respuesta =JSON.parse(data.responseText);
-                        var arr = Object.keys(respuesta).map(function(k) { return respuesta[k] });
-                        var error='<ul>';
-                        for (var i=0; i<arr.length; i++)
-                            error += "<li>"+arr[i][0]+"</li>";
-                        error += "</ul>";
-                        $("#error").html('<div class="alert alert-danger">' +
-                                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-                                '<strong>Error!</strong> Corrige los siguientes errores para continuar el registro:' +
-                                '<p>'+error+'</p>' +
-                                '</div>');
-                    }
-                });
-            });
+
+						}else{
+							alert("danger","Ups","algo salio mal por favor intentar nuevamente","<i class='fa fa-ban' aria-hidden='true'></i>");
+						}
+
+					},
+					error: function (error) {
+						alert("danger","Ups","algo salio mal por favor intentar nuevamente","<i class='fa fa-ban' aria-hidden='true'></i>");
+						console.log(error);
+					}
+				});
+
+			});
+
+            {{--var formulario = $("#formVehiculo");--}}
+            {{--formulario.submit(function(e){--}}
+                {{--e.preventDefault();--}}
+				{{--var contenido = encodeURIComponent(CKEDITOR.instances.infoAdicional.getData().split("\n").join(""));--}}
+                {{--$.ajax({--}}
+                    {{--type:"POST",--}}
+                    {{--context: document.body,--}}
+                    {{--url: '{{route('publicarVehiculo')}}',--}}
+					{{--data:formulario.serialize()+"&descripcion="+contenido,--}}
+                    {{--success: function(data){--}}
+                        {{--console.log(data);--}}
+                        {{--if (data=="exito") {--}}
+
+                        {{--}--}}
+                        {{--else {--}}
+
+                        {{--}--}}
+                    {{--},--}}
+                    {{--error: function(data){--}}
+                        {{--var respuesta =JSON.parse(data.responseText);--}}
+                        {{--var arr = Object.keys(respuesta).map(function(k) { return respuesta[k] });--}}
+                        {{--var error='<ul>';--}}
+                        {{--for (var i=0; i<arr.length; i++)--}}
+                            {{--error += "<li>"+arr[i][0]+"</li>";--}}
+                        {{--error += "</ul>";--}}
+                        {{--$("#error").html('<div class="alert alert-danger">' +--}}
+                                {{--'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +--}}
+                                {{--'<strong>Error!</strong> Corrige los siguientes errores para continuar el registro:' +--}}
+                                {{--'<p>'+error+'</p>' +--}}
+                                {{--'</div>');--}}
+                    {{--}--}}
+                {{--});--}}
+            {{--});--}}
 
 
 
@@ -396,9 +466,9 @@ console.log($("#categorias option:selected").text());
                 url: '{{route('marcas')}}',
                 data: { 'tipo' : tipo},
                 success: function (data) {
-                    $("#marca").empty();
+                    $("#marca_id").empty();
                     $.each(data,function (index,valor) {
-                        $("#marca").append('<option value='+index+'>'+valor+'</option>');
+                        $("#marca_id").append('<option value='+index+'>'+valor+'</option>');
                     });
                 },
                 error: function (data) {
@@ -406,6 +476,21 @@ console.log($("#categorias option:selected").text());
             });
         }
 
+		function justNumbers(e)
+		{
+			var keynum = window.event ? window.event.keyCode : e.which;
+			if (keynum == 8)
+				return true;
+			return /\d/.test(String.fromCharCode(keynum));
+		}
+		function alert(tipo,titulo,mensaje,icono) {
+			$("#alert").empty();
+			var html ="<div class='alert alert-"+tipo+"'>"+
+					"<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
+					icono+"<strong>"+titulo+"!</strong> "+mensaje+
+					"</div>";
+			$("#alert").append(html)
+		}
 	</script>
 	{{--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1AUmEiXssHdvD3yAjE4VTh_pWQENfNUM&callback=initMap"></script>--}}
 @endsection

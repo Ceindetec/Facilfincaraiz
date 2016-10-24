@@ -8,7 +8,7 @@ class Vehiculo extends Model
 {
     protected $table = 'vehiculos';
 
-    protected $fillable = ['marca_id', 'tipo_id', 'modelo', 'color', 'kilometraje', 'combustible', 'valor', 'cilindraje', 'adicionales'];
+    protected $fillable = ['marca_id', 'tipo_id', 'modelo', 'color', 'kilometraje', 'combustible', 'valor', 'cilindraje', 'adicionales', 'cant_puertas'];
 
 
 }

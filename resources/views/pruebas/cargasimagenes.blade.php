@@ -41,10 +41,10 @@
         $(function () {
             $("#files").inputFileImage({
                 maxlength:20,
-                maxfilesize:1024
+                maxfilesize:80
             });
 
-        })
+        });
 
         $("form").submit(function (event) {
             event.preventDefault();
@@ -70,7 +70,7 @@
             });
 
 
-        })
+        });
 
 
     </script>
