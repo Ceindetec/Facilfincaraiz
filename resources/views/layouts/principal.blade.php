@@ -147,20 +147,44 @@
                             </div>
                         </div>
                     </li>
-                    <li class="grid"><a href="{{route("publicar")}}">Publicar</a>
-                        <div class="mepanel">
-                            <div class="row">
-                                <div class="col1 me-one">
-                                    <h4>Shop</h4>
-                                    <ul>
-                                        <li><a href="product.html">Inmueble</a></li>
-                                        <li><a href="product.html">Terreno</a></li>
-                                        <li><a href="product.html">Vehículo</a></li>
-                                    </ul>
+                    @if(!Auth::guest())
+                            @if(Auth::user()->rol=="superAdmin")
+                            <li class="grid"><a href="{{route("registroAdmins")}}">Registrar</a>
+
+                            </li>
+
+                            @elseif(Auth::user()->rol=="admin")
+                            <li class="grid"><a href="#" onclick="return false;">Publicaciones</a>
+                                <div class="mepanel">
+                                    <div class="row" style="margin: 0 auto;">
+                                        <div class="col3 me-one">
+                                            {{--<h4 class="text-center">Publicar</h4>--}}
+                                            <ul>
+                                                <li><a href="{{route("publicarXCategoria","Inmuebles")}}" class="center-block">Pendientes</a></li>
+                                                <li><a href="{{route("publicarXCategoria","Terrenos")}}" class="center-block">Aprobadas</a></li>
+                                                <li><a href="{{route("publicarXCategoria","Vehiculos")}}" class="center-block">Inactivas</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </li>
+                            </li>
+                            @elseif(Auth::user()->rol=="usuario")
+                            <li class="grid"><a href="{{route("publicar")}}">Publicar</a>
+                                <div class="mepanel">
+                                    <div class="row" style="margin: 0 auto;">
+                                        <div class="col3 me-one">
+                                            {{--<h4 class="text-center">Publicar</h4>--}}
+                                            <ul>
+                                                <li><a href="{{route("publicarXCategoria","Inmuebles")}}" class="center-block">Inmueble</a></li>
+                                                <li><a href="{{route("publicarXCategoria","Terrenos")}}" class="center-block">Terreno</a></li>
+                                                <li><a href="{{route("publicarXCategoria","Vehiculos")}}" class="center-block">Vehículo</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        @endif
+                    @endif
                     <li class="grid"><a href="{{route("contacto")}}">Contacto</a></li>
                 </ul>
                 <div class="clearfix"> </div>

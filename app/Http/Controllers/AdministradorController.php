@@ -3,7 +3,7 @@
 namespace facilfincaraiz\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use facilfincaraiz\User;
 use facilfincaraiz\Http\Requests;
 use facilfincaraiz\Http\Controllers\Controller;
 use facilfincaraiz\GaleriaPortada;
@@ -21,14 +21,33 @@ class AdministradorController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * esta funcion es la encargada de lanzar la vista para crear el registro de nuevos administradores
      *
-     * @return \Illuminate\Http\Response
+     * @return view
      */
-    public function create()
-    {
-        //
+    public function registroAdmins(){
+        return view('superAdmin.registroAdmins');
+
     }
+
+
+    /**
+     * esta vista es la encargada de realizar el resgitro en base de datos de los administradores
+     * @param $request
+     * @return array
+     */
+    public function registroAdminsPost(Request $request){
+
+        $user = new User($request->all());
+        $user->password= bcrypt($request->password);
+        $user->rol="admin";
+        $user->save();
+        return "exito";
+
+
+    }
+
+
 
     /**
      * Devuelve vista de administracion de imagenes del banner
@@ -112,4 +131,20 @@ class AdministradorController extends Controller
     {
         //
     }
+
+
+    /**
+     * @return string
+     */
+    public function publicPendientes()
+    {
+        return $this->validatesRequestErrorBag;
+    }
+
+
+
+
+
+
+
 }

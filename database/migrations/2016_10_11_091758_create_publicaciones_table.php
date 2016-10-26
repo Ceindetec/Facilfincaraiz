@@ -15,7 +15,7 @@ class CreatePublicacionesTable extends Migration
         Schema::create('publicaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
-            $table->bigInteger('articuli_id')->unsigned();
+            $table->bigInteger('articulo_id')->unsigned();
             $table->enum("tipo",["I","V"]);
             $table->enum("accion",["V","A","P"]);
             $table->string('titulo');

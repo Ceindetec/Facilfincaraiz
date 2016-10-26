@@ -25,7 +25,8 @@ Route::post('municipios','usuarioController@getMunicipios')->name('municipios');
 
 Route::group(['middleware' => ['auth', 'superAdmin']], function () {
 
-
+    Route::get('registroAdmins','AdministradorController@registroAdmins')->name('registroAdmins');
+    Route::post('registroAdminsPost','AdministradorController@registroAdminsPost')->name('registroAdminsPost');
 });
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
@@ -43,7 +44,6 @@ Route::group(['middleware' => ['auth', 'usuario']], function () {
 
     Route::get('publicar','usuarioController@publicar')->name('publicar');
     Route::get('publicar/{categoria}','usuarioController@publicarXCategoria')->name('publicarXCategoria');
-    Route::post('marcas','usuarioController@getMarcas')->name('marcas');
     Route::post('publicarInmueble','usuarioController@publicarInmueble')->name('publicarInmueble');
     Route::post('publicarVehiculo','usuarioController@publicarVehiculo')->name('publicarVehiculo');
 
@@ -59,6 +59,8 @@ Route::post('mail','MailController@enviar')->name('enviar');
 
 Route::get("binmuebles","busquedasController@buscarinmuebles")->name("binmuebles");
 Route::get("vehiculos","busquedasController@buscarVehiculos")->name("buscarVehiculos");
+Route::post('marcas','usuarioController@getMarcas')->name('marcas');
+Route::post('filtroVehiculos','busquedasController@getVehiculos')->name('getVehiculos');
 
 Route::get('password/email', 'Auth\PasswordController@getEmail')->name('getEmail');
 Route::post('password/email', 'Auth\PasswordController@postEmail')->name('postEmail');

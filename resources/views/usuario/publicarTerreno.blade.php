@@ -35,7 +35,7 @@
 				</div>
 			<div class="row">
 				<div class="col-sm-offset-2 col-sm-8">
-					<h3 class="h3Josefin text-center" style="margin-bottom: 20px;">Cargar las imeges para la publicación.</h3>
+					<h3 class="h3Josefin text-center" style="margin-bottom: 20px;">Cargar las Imagenes para la publicación.</h3>
 
 					<div class="form-group">
 						<label for="titulo" class="col-sm-2 control-label">Imagenes</label>
