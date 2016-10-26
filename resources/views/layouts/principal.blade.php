@@ -160,7 +160,7 @@
                                         <div class="col3 me-one">
                                             {{--<h4 class="text-center">Publicar</h4>--}}
                                             <ul>
-                                                <li><a href="{{route("publicarXCategoria","Inmuebles")}}" class="center-block">Pendientes</a></li>
+                                                <li><a href="{{route("publicPendientes")}}" class="center-block">Pendientes</a></li>
                                                 <li><a href="{{route("publicarXCategoria","Terrenos")}}" class="center-block">Aprobadas</a></li>
                                                 <li><a href="{{route("publicarXCategoria","Vehiculos")}}" class="center-block">Inactivas</a></li>
                                             </ul>

@@ -38,6 +38,11 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('administrar', 'AdministradorController@adminBanner')->name('adminBanner');
     Route::post('eliminaBanner', 'AdministradorController@deleteImgBanner')->name('deleteImgBanner');
     Route::post('administrador/subirimagen', 'AdministradorController@subirImagen')->name('subirImagen');
+
+    Route::get('publicPendientes', 'AdministradorController@publicPendientes')->name('publicPendientes');
+    Route::get('pendientes', 'AdministradorController@pendientes')->name('pendientes');
+
+
 });
 
 Route::group(['middleware' => ['auth', 'usuario']], function () {
