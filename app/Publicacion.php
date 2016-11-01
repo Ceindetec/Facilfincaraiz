@@ -3,12 +3,13 @@
 namespace facilfincaraiz;
 
 use Illuminate\Database\Eloquent\Model;
+use facilfincaraiz\Galeria;
 
 class Publicacion extends Model
 {
     protected $table = 'publicaciones';
 
-    protected $fillable = ['titulo', 'fecha', "accion", 'descripcion','municipio_id', 'estado', 'destacado'];
+    protected $fillable = ['titulo', 'fecha', 'precio', "accion", 'descripcion','municipio_id', 'estado', 'destacado','direccion','geolocalizacion'];
 
     public function filtroVehiculos($idPublicacion, $categorias, $marca, $modelo, $departamento, $municipio_id){
         $sql = "";
@@ -29,6 +30,26 @@ class Publicacion extends Model
         $publicaciones = \DB::select(\DB::raw($sql));
         return $publicaciones;
     }
+
+
+    public function getGaleria()
+    {
+        return $this->hasMany('facilfincaraiz\Galeria');
+    }
+
+    public function getUsuario()
+    {
+        return $this->belongsTo('facilfincaraiz\User',"user_id");
+    }
+
+
+
+    public function galeria()
+    {
+        return $this->hasMany('facilfincaraiz\Galeria');
+    }
+
+
 
 }
 

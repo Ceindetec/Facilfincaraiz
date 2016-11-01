@@ -6,7 +6,8 @@
             width: 214,
             height: 250,
             maxlength: 10,
-            maxfilesize:5120
+            maxfilesize:5120,
+            minType:[],
         }, option);
 
 
@@ -59,6 +60,13 @@
                             if((opc.maxfilesize*1024) < f.size){
                                 arrayError.push('El peso de la imagen "'+f.name+'" supera el peso permitido '+opc.maxfilesize+'KB');
                                 continue;
+                            }
+                            if(opc.minType.length>0){
+                                var type = f.type.split("/");
+                                if(opc.minType.indexOf(type[1])==-1){
+                                    arrayError.push('El formato de la imagen "'+f.name+'" no es un formato valido');
+                                    continue;
+                                }
                             }
                             totalArchivos++;
                             f.key =i;

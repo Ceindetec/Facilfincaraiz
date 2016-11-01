@@ -187,9 +187,9 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="coords" class="col-sm-4 control-label">Geolocalización</label>
+						<label for="geolocalizacion" class="col-sm-4 control-label">Geolocalización</label>
 						<div class="col-sm-8">
-							{!!Form::text('coords',null,['class'=>'form-control','id'=>'coords','disabled'])!!}
+							{!!Form::text('geolocalizacion',null,['class'=>'form-control','id'=>'geolocalizacion','disabled'])!!}
 						</div>
 					</div>
 				</div>
@@ -279,10 +279,6 @@
 				</div>
 			</div>
 		</div>
-
-
-
-
 
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-8">
@@ -399,6 +395,7 @@
 					formData.append("imagenes[]", files[i]);
 				}
 				formData.append("descripcion", contenido);
+                formData.append("geolocalizacion", $("#geolocalizacion").val());
 
 				$.ajax({
 					url: "{!! route('publicarInmueble') !!}",
@@ -449,7 +446,7 @@
 							var lat = e.latLng.lat();
 							var lng = e.latLng.lng();
 							map.setCenter(lat, lng);
-							document.getElementById("coords").value = lat+","+ lng;
+							document.getElementById("geolocalizacion").value = lat+","+ lng;
 							//alert('dragend '+lat+"->"+lng);
 							//console.log(e);
 						}

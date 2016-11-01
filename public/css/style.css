@@ -272,7 +272,7 @@ h1.b1,h2.b2,h3.b3 {
 	height: 100%;
 }
 figure.effect-bubba {
-	  background-color:#e8573e;
+	  background-color: #a2a2a2;
 }
 figure.effect-bubba:hover img {
 	opacity: 0.3;
@@ -365,7 +365,7 @@ figure.effect-bubba:hover p {
 	margin-top:1em;
 }
 .arrival-info h4{
-	color:#caccce;
+	color:#e8573e;
 	font-size:0.9em;
 	font-family: 'JosefinSans-Bold';
 	text-transform:uppercase;
@@ -504,7 +504,7 @@ li.nbs-flexisel-item a:hover{
 }
 .shpng-grid p{
 	  color:rgba(189, 0, 0, 0.8);
-  font-size: 1.6em;
+    font-size: 1.6em;
 	text-transform:uppercase;
 	font-family: 'JosefinSans-Light';
 	padding-top:5px;

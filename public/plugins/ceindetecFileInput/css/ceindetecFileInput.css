@@ -31,7 +31,7 @@
     border: 1px solid #C7C7C7;
     padding: 10px 10px;
     margin-bottom: 10px;
-
+    text-align: center;
 }
 
 .custom-input-file {
@@ -107,5 +107,10 @@
     padding: 5px;
     background-color: #a94442;
     display: block;
+    text-align: left;
     width: 100%;
+}
+
+.ul-list-errores-flieinput li{
+    text-align: left;
 }

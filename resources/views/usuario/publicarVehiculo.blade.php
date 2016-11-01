@@ -7,11 +7,9 @@
 		#map {
 			width: 100%;
 			height: 200px;
-
 		}
 		.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
 			 cursor: pointer;
-
 		}
 	</style>
 
@@ -50,7 +48,7 @@
 					<div class="form-group">
 						<label for="titulo" class="col-sm-2 control-label">Imagenes</label>
 						<div class="col-sm-10">
-							<input type="file" id="files" name="files[]"  multiple />
+							<input type="file" id="files" name="files[]"  multiple  required />
 						</div>
 					</div>
 				</div>
@@ -60,7 +58,7 @@
 						<div class="form-group">
 							<label for="tipo_id" class="col-sm-4 control-label">Categorias</label>
 							<div class="col-sm-8">
-								{!!Form::select('tipo_id',$arrayCategorias, null, ['id'=>'categorias','class'=>"form-control",'placeholder' => 'Seleccione una categoria'])!!}
+								{!!Form::select('tipo_id',$arrayCategorias, null, ['id'=>'categorias','class'=>"form-control",'placeholder' => 'Seleccione una categoria', 'required'])!!}
 							</div>
 						</div>
 					</div>
@@ -79,7 +77,7 @@
 						<div class="form-group">
 							<label for="valor" class="col-sm-4 control-label">Precio</label>
 							<div class="col-sm-8">
-								{!!Form::text('valor',null,['id'=>'valor','class'=>'form-control','placeholder'=>"precio del inmueble", 'required', 'onkeypress'=>'return justNumbers(event)'])!!}
+                                {!!Form::text('precio',null,['class'=>'form-control','placeholder'=>"precio del inmueble", 'required' , 'onkeypress'=>'return justNumbers(event)'])!!}
 							</div>
 						</div>
 					</div>

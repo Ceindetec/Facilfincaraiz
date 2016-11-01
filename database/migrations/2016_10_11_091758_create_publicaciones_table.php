@@ -16,9 +16,10 @@ class CreatePublicacionesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
             $table->bigInteger('articulo_id')->unsigned();
-            $table->enum("tipo",["I","V"]);
+            $table->enum("tipo",["I","V","T"]);
             $table->enum("accion",["V","A","P"]);
             $table->string('titulo');
+            $table->integer('precio');
             $table->date('fecha');
             $table->text('descripcion');
             $table->enum('estado',['A','I','P']); //Activo Inactivo y Pendiente

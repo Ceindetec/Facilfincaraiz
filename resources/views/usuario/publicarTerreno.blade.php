@@ -69,7 +69,7 @@
 						<div class="form-group">
 							<label for="precio" class="col-sm-4 control-label">Precio</label>
 							<div class="col-sm-8">
-								{!!Form::text('precio',null,['class'=>'form-control','placeholder'=>"precio del terreno", 'required', 'onkeypress'=>'return justNumbers(event)'])!!}
+								{!!Form::text('precio',null,['class'=>'form-control','placeholder'=>"precio del inmueble", 'required' , 'onkeypress'=>'return justNumbers(event)'])!!}
 							</div>
 						</div>
 					</div>
@@ -94,7 +94,7 @@
 						<div class="form-group">
 							<label for="frente" class="col-sm-4 control-label">Frente (m)</label>
 							<div class="col-sm-8">
-								{!!Form::text('frente',null,['id'=>'frente','class'=>'form-control','placeholder'=>"metros de frente", 'required'])!!}
+								{!!Form::text('frente',null,['id'=>'frente','class'=>'form-control','placeholder'=>"metros de frente"])!!}
 							</div>
 						</div>
 					</div>
@@ -102,7 +102,7 @@
 						<div class="form-group">
 							<label for="fondo" class="col-sm-4 control-label">Fondo (m)</label>
 							<div class="col-sm-8">
-								{!!Form::text('fondo',null,['id'=>'fondo','class'=>'form-control','placeholder'=>"metros de fondo", 'required'])!!}
+								{!!Form::text('fondo',null,['id'=>'fondo','class'=>'form-control','placeholder'=>"metros de fondo"])!!}
 							</div>
 						</div>
 					</div>
@@ -112,7 +112,7 @@
 						<div class="form-group">
 							<label for="area" class="col-sm-4 control-label">Area total</label>
 							<div class="col-xs-8 col-sm-6">
-								{!!Form::text('area',null,['id'=>"area",'class'=>'form-control','placeholder'=>"area total metros cuadrados", 'required'])!!}
+								{!!Form::text('area',null,['id'=>"area",'class'=>'form-control','placeholder'=>"area total metros cuadrados"])!!}
 							</div>
                             <div class="col-xs-4 col-sm-2">
                                 {!!Form::select('umedida', ['m'=>'m2','h'=>'hta'], null, ['class'=>"form-control",'id'=>"umedida"])!!}
@@ -148,9 +148,9 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="coords" class="col-sm-4 control-label">Geolocalización</label>
+							<label for="geolocalizacion" class="col-sm-4 control-label">Geolocalización</label>
 							<div class="col-sm-8">
-								{!!Form::text('coords',null,['class'=>'form-control','id'=>'coords','disabled'])!!}
+								{!!Form::text('geolocalizacion',null,['class'=>'form-control','id'=>'geolocalizacion','disabled'])!!}
 							</div>
 						</div>
 					</div>
@@ -383,7 +383,7 @@
 					formData.append("imagenes[]", files[i]);
 				}
 				formData.append("descripcion", contenido);
-
+				formData.append("geolocalizacion", $("#geolocalizacion").val());
 				$.ajax({
 					url: "{!! route('publicarInmueble') !!}",
 					type: "POST",
@@ -430,7 +430,7 @@
 								var lat = e.latLng.lat();
 								var lng = e.latLng.lng();
 								map.setCenter(lat, lng);
-								document.getElementById("coords").value = lat+","+ lng;
+								document.getElementById("geolocalizacion").value = lat+","+ lng;
 								//alert('dragend '+lat+"->"+lng);
 								//console.log(e);
 							}

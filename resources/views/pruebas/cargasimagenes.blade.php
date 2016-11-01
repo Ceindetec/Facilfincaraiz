@@ -41,7 +41,7 @@
         $(function () {
             $("#files").inputFileImage({
                 maxlength:20,
-                maxfilesize:80
+                minType:['png', 'jpeg'],
             });
 
         });

@@ -22,7 +22,6 @@ class CreateInmueblesTable extends Migration
             $table->integer('frente');
             $table->integer('fondo');
             $table->integer('area');
-            $table->integer('precio');
             $table->integer('estrato');
             $table->string('adicionales');
             $table->timestamps();

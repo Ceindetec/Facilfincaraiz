@@ -16,6 +16,7 @@ class CreateGaleriasTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('publicacion_id')->unsigned();
             $table->string('ruta');
+            $table->string('mimeType');
             $table->timestamps();
             $table->foreign('publicacion_id')->references('id')->on('publicaciones')->onDelete('cascade');
         });

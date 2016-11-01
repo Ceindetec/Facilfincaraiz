@@ -40,8 +40,20 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::post('administrador/subirimagen', 'AdministradorController@subirImagen')->name('subirImagen');
 
     Route::get('publicPendientes', 'AdministradorController@publicPendientes')->name('publicPendientes');
-    Route::get('pendientes', 'AdministradorController@pendientes')->name('pendientes');
+    Route::get('publicAprobadas', 'AdministradorController@publicAprobadas')->name('publicAprobadas');
+    Route::get('publicInactivas', 'AdministradorController@publicInactivas')->name('publicInactivas');
 
+    Route::post('pendientes', 'AdministradorController@pendientes')->name('pendientes');
+    Route::post('aprobadas', 'AdministradorController@aprobadas')->name('aprobadas');
+    Route::post('inactivas', 'AdministradorController@inactivas')->name('inactivas');
+
+    Route::get('validarPublicVehiculo/{id}', 'AdministradorController@validarPublicVehiculo')->name('validarPublicVehiculo');
+    Route::get('validarPublicInmueble/{id}', 'AdministradorController@validarPublicInmueble')->name('validarPublicInmueble');
+    Route::get('validarPublicTerreno/{id}', 'AdministradorController@validarPublicTerreno')->name('validarPublicTerreno');
+
+    Route::post('subirPublic', 'AdministradorController@subirPublic')->name('subirPublic');
+    Route::post('subirPublicInmueble', 'AdministradorController@subirPublicInmueble')->name('subirPublicInmueble');
+    Route::post('subirPublicTerreno', 'AdministradorController@subirPublicTerreno')->name('subirPublicTerreno');
 
 });
 

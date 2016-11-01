@@ -52,8 +52,8 @@
 <div class="header-top">
     <div class="header-bottom">
         <div class="container">
-            <div class="logo">
-                <a href="{{route("home")}}"><h1>FacilFincaRaiz</h1></a>
+            <div class="logo" style="width: 20%">
+                <a href="{{route("home")}}"><img src="{{ URL::to('images/logo.png') }}"></a>
             </div>
             <!---->
 
@@ -161,8 +161,8 @@
                                             {{--<h4 class="text-center">Publicar</h4>--}}
                                             <ul>
                                                 <li><a href="{{route("publicPendientes")}}" class="center-block">Pendientes</a></li>
-                                                <li><a href="{{route("publicarXCategoria","Terrenos")}}" class="center-block">Aprobadas</a></li>
-                                                <li><a href="{{route("publicarXCategoria","Vehiculos")}}" class="center-block">Inactivas</a></li>
+                                                <li><a href="{{route("publicAprobadas")}}" class="center-block">Aprobadas</a></li>
+                                                <li><a href="{{route("publicInactivas")}}" class="center-block">Inactivas</a></li>
                                             </ul>
                                         </div>
                                     </div>
