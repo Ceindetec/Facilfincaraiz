@@ -11,24 +11,81 @@ class Publicacion extends Model
 
     protected $fillable = ['titulo', 'fecha', 'precio', "accion", 'descripcion','municipio_id', 'estado', 'destacado','direccion','geolocalizacion'];
 
-    public function filtroVehiculos($idPublicacion, $categorias, $marca, $modelo, $departamento, $municipio_id){
-        $sql = "";
-//        dd("dlkflksdfnlksd");
-        if ($idPublicacion != "")
-            $sql ="SELECT * FROM vehiculos, publicaciones WHERE publicaciones.id=".$idPublicacion." AND publicaciones.articulo_id=vehiculos.id";
-        else {
-            $sql = "Select * FROM publicaciones, departamentos, municipios, vehiculos, galerias WHERE publicaciones.tipo='V' AND publicaciones.estado='A' AND departamentos.id=" . $departamento . " AND departamentos.id=municipios.id_dpto AND municipios.id=publicaciones.municipio_id AND publicaciones.id=galerias.publicacion_id";
-            if ($municipio_id != "")
-                $sql = $sql . " AND publicaciones.municipio_id=" . $municipio_id;
-            $sql = $sql . " AND publicaciones.articulo_id=vehiculos.id AND vehiculos.tipo_id=" . $categorias;
-            if ($marca != "")
-                $sql = $sql . " AND vehiculos.marca_id=" . $marca;
-            if ($modelo != "")
-                $sql = $sql . " AND vehiculos.modelo=" . $modelo;
-            $sql = $sql . " GROUP BY publicaciones.id";
+    /**
+     * Obtiene listado de publicaciones que correspondan a criterios especificados en filtros
+     */
+    public function filtrarVehiculos($categorias, $marca, $modelo, $departamento, $municipio_id, $pagina){
+        $from = " FROM publicaciones p, departamentos d , municipios m, vehiculos v";
+        $where = " WHERE p.tipo='V' AND p.estado='A' AND d.id=" . $departamento . " AND d.id=m.id_dpto AND m.id=p.municipio_id";
+        if ($municipio_id != "")
+            $where = $where . " AND p.municipio_id=" . $municipio_id;
+        $where = $where . " AND p.articulo_id=v.id AND v.tipo_id=" . $categorias;
+        if ($marca != "")
+            $where = $where . " AND v.marca_id=" . $marca;
+        if ($modelo != "")
+            $where = $where . " AND v.modelo>=" . $modelo;
+        $cantidadP = \DB::select(\DB::raw("Select COUNT(*) AS total ".$from.$where));
+
+        if ($cantidadP[0]->total != 0){
+            $data["cantidad"]=$cantidadP[0]->total;
+            $from = $from .", galerias g, marcas mar, tipos t";
+            $where = $where . " AND  p.id=g.publicacion_id AND v.marca_id=mar.id AND v.tipo_id=t.id";
+            $listado = \DB::select(\DB::raw("Select p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
+            $data["resultados"]=$listado;
+            $data["mensaje"]="coincidencias exactas";
         }
-        $publicaciones = \DB::select(\DB::raw($sql));
-        return $publicaciones;
+        else{
+            $data["mensaje"]="sugerencias";
+            $from = " FROM publicaciones p, departamentos d , municipios m, vehiculos v";
+            $where = " WHERE p.tipo='V' AND p.estado='A' AND d.id=" . $departamento . " AND d.id=m.id_dpto AND m.id=p.municipio_id AND p.articulo_id=v.id AND v.tipo_id=" . $categorias;
+            $cantidadP = \DB::select(\DB::raw("Select COUNT(*) AS total ".$from.$where));
+            if ($cantidadP[0]->total != 0){
+                $data["cantidad"]=$cantidadP[0]->total;
+                $from = $from .", galerias g, marcas mar, tipos t";
+                $where = $where . " AND  p.id=g.publicacion_id AND v.marca_id=mar.id AND v.tipo_id=t.id";
+                $listado = \DB::select(\DB::raw("Select p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
+                $data["resultados"]=$listado;
+////                $data["mensaje"]="solo dpto y categoria";
+            }
+            else{
+                $from = " FROM publicaciones p, vehiculos v";
+                $where = " WHERE p.tipo='V' AND p.estado='A' AND p.articulo_id=v.id AND v.tipo_id=" . $categorias;
+                if ($marca != "")
+                    $where = $where . " AND v.marca_id=" . $marca;
+                if ($modelo != "")
+                    $where = $where . " AND v.modelo>=" . $modelo;
+                $cantidadP = \DB::select(\DB::raw("Select COUNT(*) AS total ".$from.$where));
+                if ($cantidadP[0]->total != 0){
+                    $data["cantidad"]=$cantidadP[0]->total;
+                    $from = $from .", galerias g, departamentos d , municipios m, marcas mar, tipos t";
+                    $where = $where . " AND p.id=g.publicacion_id AND d.id=m.id_dpto AND m.id=p.municipio_id AND v.marca_id=mar.id AND v.tipo_id=t.id";
+                    $listado = \DB::select(\DB::raw("Select p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
+                    $data["resultados"]=$listado;
+//                    $data["mensaje"]="exacto sin dpto";
+                }
+                else{
+                    $from = " FROM publicaciones p, vehiculos v";
+                    $where = " WHERE p.tipo='V' AND p.estado='A' AND p.articulo_id=v.id AND v.tipo_id=" . $categorias;
+                    $cantidadP = \DB::select(\DB::raw("Select COUNT(*) AS total ".$from.$where));
+                    if ($cantidadP[0]->total != 0){
+                        $data["cantidad"]=$cantidadP[0]->total;
+                        $from = $from .", galerias g, departamentos d , municipios m, marcas mar, tipos t";
+                        $where = $where . " AND  p.id=g.publicacion_id AND d.id=m.id_dpto AND m.id=p.municipio_id";
+                        $listado = \DB::select(\DB::raw("Select p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
+                        $data["resultados"]=$listado;
+//                        $data["mensaje"]="solo categoria";
+                    }
+                    else{
+                        $from = " FROM publicaciones p, vehiculos v, galerias g, departamentos d , municipios m, marcas mar, tipos t";
+                        $where = " WHERE p.tipo='V' AND p.estado='A' AND p.articulo_id=v.id AND  p.id=g.publicacion_id AND d.id=m.id_dpto AND m.id=p.municipio_id AND v.marca_id=mar.id AND v.tipo_id=t.id";
+                        $listado = \DB::select(\DB::raw("Select p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
+                        $data["cantidad"] = count($listado);
+                        $data["resultados"] = $listado;
+                    }
+                }
+            }
+        }
+        return $data;
     }
 
 

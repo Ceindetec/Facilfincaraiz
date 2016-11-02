@@ -115,15 +115,15 @@
             });
         });
 
-        $(".feature-grids").on('click', '.eliminar', function(){
-            $(this).confirmation({
-                onConfirm: function () {
-                    ajaxEliminarImagen($(this).parent().parent());
-                    totalGaleria--;
-                    validarUpload(totalGaleria);
-                }
-            });
-        });
+//        $(".feature-grids").on('click', '.eliminar', function(){
+//            $(this).confirmation({
+//                onConfirm: function () {
+//                    ajaxEliminarImagen($(this).parent().parent());
+//                    totalGaleria--;
+//                    validarUpload(totalGaleria);
+//                }
+//            });
+//        });
 
         function validarUpload($cantImagenes) {
             if($cantImagenes != 6) {

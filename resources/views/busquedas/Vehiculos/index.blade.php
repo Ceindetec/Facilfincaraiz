@@ -27,7 +27,7 @@
             <h3>fácil, rápido y seguro</h3>
         </div>
 
-        {!!Form::open(['id'=>'formVehiculo','autocomplete'=>'off'])!!}
+        {!!Form::open(['route'=>'getVehiculos','id'=>'formVehiculo','autocomplete'=>'off'])!!}
         <div class="row">
             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4">
                 <div class="form-group">
@@ -60,7 +60,7 @@
             </div>
             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
                 <div class="form-group">
-                    {!!Form::select('municipio_id', [], null, ['class'=>"form-control",'placeholder' => 'Seleciona un municipio', 'id'=>'municipio_id'])!!}
+                    {!!Form::select('municipio_id', [], null, ['class'=>"form-control",'placeholder' => 'Selecciona un municipio', 'id'=>'municipio_id'])!!}
                 </div>
             </div>
         </div>
@@ -101,7 +101,8 @@
                 minView: "year",
                 minViewMode: "years",
                 language: 'es',
-                endDate:''+(new Date().getFullYear()+1)
+                endDate:''+(new Date().getFullYear()+1),
+                startDate: ''+(new Date().getFullYear()-50)
             });
 
             $("#departamento").change(function () {
@@ -118,7 +119,7 @@
                         success: function (data) {
 
                             $("#municipio_id").empty();
-                            $("#municipio_id").append("<option value=''>Selecciona un municipio</option>");
+                            $("#municipio_id").append("<option value=''>Cualquier municipio</option>");
                             $.each(data,function (index,valor) {
                                 $("#municipio_id").append('<option value='+index+'>'+valor+'</option>');
                             });
@@ -140,42 +141,6 @@
                     llenarMarca("C");
             });
 
-            var formulario = $("#formVehiculo");
-            formulario.submit(function(e){
-                e.preventDefault();
-                if ($("#categorias").val()!="" && $("#departamento").val()!="") {
-                    $.ajax({
-                        type: "POST",
-                        context: document.body,
-                        url: '{{route('getVehiculos')}}',
-                        data: formulario.serialize(),
-                        success: function (data) {
-                            if (data == "exito") {
-
-                            }
-                            else {
-
-                            }
-                        },
-                        error: function (data) {
-                            var respuesta = JSON.parse(data.responseText);
-                            var arr = Object.keys(respuesta).map(function (k) {
-                                return respuesta[k]
-                            });
-                            var error = '<ul>';
-                            for (var i = 0; i < arr.length; i++)
-                                error += "<li>" + arr[i][0] + "</li>";
-                            error += "</ul>";
-                            $("#error").html('<div class="alert alert-danger">' +
-                                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
-                                    '<strong>Error!</strong> Corrige los siguientes errores para continuar el registro:' +
-                                    '<p>' + error + '</p>' +
-                                    '</div>');
-                        }
-                    });
-                }
-            });
-
         });
 
         function llenarMarca(tipo) {
@@ -190,7 +155,7 @@
                     data: {'tipo': tipo},
                     success: function (data) {
                         $("#marca").empty();
-                        $("#marca").append("<option value=''>Selecciona una marca</option>");
+                        $("#marca").append("<option value=''>Cualquier marca</option>");
                         $.each(data, function (index, valor) {
                             $("#marca").append('<option value=' + index + '>' + valor + '</option>');
                         });

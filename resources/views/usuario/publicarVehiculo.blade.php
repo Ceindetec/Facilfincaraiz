@@ -323,7 +323,8 @@
 				minView: "year",
 				minViewMode: "years",
 				language: 'es',
-				endDate:''+(new Date().getFullYear()+1)
+				endDate:''+(new Date().getFullYear()+1),
+				startDate: ''+(new Date().getFullYear()-50)
 			});
 
 			$("#departamento").change(function () {

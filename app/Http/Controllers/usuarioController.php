@@ -226,7 +226,7 @@ class usuarioController extends Controller
         }catch (\Exception $e){
 
             DB::rollBack();
-            $data=["estado"=>false,"mensaje"=>"error en la transaccion, intentar nuevamente.".$e->getMessage()];
+            $data=["estado"=>false,"mensaje"=>"error en la transaccion, intentar nuevamente."];
         }
 
         return $data;

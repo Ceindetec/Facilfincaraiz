@@ -77,7 +77,10 @@ Route::post('mail','MailController@enviar')->name('enviar');
 Route::get("binmuebles","busquedasController@buscarinmuebles")->name("binmuebles");
 Route::get("vehiculos","busquedasController@buscarVehiculos")->name("buscarVehiculos");
 Route::post('marcas','usuarioController@getMarcas')->name('marcas');
+
 Route::post('filtroVehiculos','busquedasController@getVehiculos')->name('getVehiculos');
+Route::get("filtroVehiculos","busquedasController@buscarVehiculos")->name("buscarVehiculos");
+
 
 Route::get('password/email', 'Auth\PasswordController@getEmail')->name('getEmail');
 Route::post('password/email', 'Auth\PasswordController@postEmail')->name('postEmail');
