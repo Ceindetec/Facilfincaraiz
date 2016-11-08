@@ -15,8 +15,6 @@
 @endsection
 
 @section('content')
-
-
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="index.html">Home</a></li>
@@ -74,7 +72,6 @@
         </div>
         {!! Form::close() !!}
     </div>
-
 @endsection
 
 @section('scripts')

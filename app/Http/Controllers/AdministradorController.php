@@ -2,6 +2,7 @@
 
 namespace facilfincaraiz\Http\Controllers;
 
+use facilfincaraiz\Galeria;
 use facilfincaraiz\Inmueble;
 use facilfincaraiz\Municipio;
 use facilfincaraiz\Publicacion;
@@ -117,15 +118,23 @@ class AdministradorController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Elimina una imagen de una publicacion.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Request $request
+     * @return string
      */
-    public function update(Request $request, $id)
+    public function deleteImgPublic(Request $request)
     {
-        //
+        $galeria = Galeria::find($request->id);
+        $ruta= $galeria->ruta;
+        $affectedRows = $galeria->delete();
+
+        if ($affectedRows){
+            unlink('images/publicaciones/'.utf8_decode($ruta));
+            return "exito";
+        }else{
+            return "error";
+        }
     }
 
     /**
@@ -358,26 +367,31 @@ class AdministradorController extends Controller
             $inmueble->adicionales=trim($string, ',');
             $inmueble->save();
         }
+        if($request->imagenes)
+        foreach ($request->imagenes as $index => $imagene){
 
+            $type=explode("/", $imagene->getMimeType());
 
+            $archivo = $imagene->getClientOriginalName();
+            $trozos = explode(".", $archivo);
+            $extension = end($trozos);
+            if($type[0]=="image"){
+                $nombre = time().$index.".".strtolower($extension);
+                $imagene->move('images/publicaciones', utf8_decode($nombre));
+
+                $galeria = new Galeria();
+                $galeria->publicacion_id=$publicacion->id;
+                $galeria->ruta = $nombre;
+                $galeria->mimeType=$type[1];
+                $galeria->save();
+            }
+
+        }
+        $galerias=$publicacion->getGaleria;
+        $this->insertarmarcadeagua($galerias);
         return $publicacion;
     }
 
-    /**
-     * @return string
-     */
-    public function subirPublicInmueble(Request $request)
-    {
-        return $request->all();
-    }
-
-    /**
-     * @return string
-     */
-    public function subirPublicTerreno(Request $request)
-    {
-        return $request->all();
-    }
 
     function insertarmarcadeagua($galerias){
 
@@ -418,6 +432,56 @@ class AdministradorController extends Controller
             imagedestroy($im);
 
         }
+    }
+
+
+    /**
+     * @return string
+     */
+    public function marcaDeAgua(){
+        return view('Administrador.marcaDeAgua');
+    }
+    /**
+     *
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array $arrayUsuarios
+     */
+    public function autoCompleUsuarios(Request $request)
+    {
+        $usuarios = User::where("email","like","%".$request->input("nombre")."%")->where('rol','usuario')->get();
+
+        $arrayUsuarios = array();
+        foreach ($usuarios as $usuario){
+            $arrayUsuarios[]=$usuario->email;
+        }
+        return $arrayUsuarios;
+    }
+
+    /**
+     * esta funcion se encarga de retornar la informacion de un usuario con su corespondiente marca de agua
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function infoUsuario(Request $request){
+
+        $usuarios = User::select("id","nombres","apellidos","email","telefono")->where("email",$request->input("nombre"))->first();
+
+       // dd($usuarios);
+
+        if($usuarios!=null) {
+            $data["nombres"] = $usuarios->nombres . " " . $usuarios->apellidos;
+            $data["email"] = $usuarios->email;
+            $data["telefono"] = $usuarios->telefono;
+            $data["ruta"] = $usuarios->getMarcaDeAgua->ruta;
+            $data["bandera"] = true;
+        }else{
+            $data["bandera"] = false;
+        }
+
+        return $data;
+
     }
 
 

@@ -3,6 +3,9 @@
 @section('style')
     {!!Html::style('plugins/ceindetecFileInput/css/ceindetecFileInput.css')!!}
     <style>
+        .popover-content {
+            width: 125px;
+        }
         #map {
             width: 100%;
             height: 200px;
@@ -193,7 +196,7 @@
                                 <img src="../images/publicaciones/{{$imagene->ruta}}" class="img-responsive imagen" alt="">
 
                                 <div class="conteEliminar">
-                                    <i data-id="{{$imagene->id}}" class="fa fa-trash eliminarImage" aria-hidden="true"></i>
+                                    <i data-id="{{$imagene->id}}" class="fa fa-trash eliminarImage" aria-hidden='true' data-toggle='confirmation' data-popout="true" data-placement='top' title='Eliminar?' data-btn-ok-label="Si" data-btn-cancel-label="No"></i>
                                 </div>
 
                             </div>
@@ -479,7 +482,8 @@
 
 @section('scripts')
 
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA1AUmEiXssHdvD3yAjE4VTh_pWQENfNUM&sensor=true"></script>
+    {!!Html::script('plugins/bootstrapConfirmation/bootstrap-confirmation.min.js')!!}
+    {!!Html::script('http://maps.google.com/maps/api/js?key=AIzaSyA1AUmEiXssHdvD3yAjE4VTh_pWQENfNUM&sensor=true')!!}
     <script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
     {!!Html::script('plugins/ceindetecFileInput/js/ceindetecFileInput.js')!!}
     {!!Html::script('js/gmaps.js')!!}
@@ -489,6 +493,14 @@
         var geolocalizacion;
         var banderaMunu = true;
         $(function(){
+            $("#liPublicaciones").addClass("active");
+            $(".eliminarImage").each(function(){
+                $(this).confirmation({
+                    onConfirm: function () {
+                        ajaxEliminarImagen($(this).data("id"));
+                    }
+                });
+            });
             geolocalizacion="{{$data["geolocalizacion"]}}";
             $(".imagen").click(function () {
                 $('#myModal').css("display","block");
@@ -678,11 +690,21 @@
             $("#alert").append(html)
         }
 
-        $("#galeria").on("click",".eliminarImage",function () {
-
-            console.log($(this).data("id"));
-            $("#"+$(this).data("id")).remove();
-        });
+        function  ajaxEliminarImagen(id) {
+            $.ajax({
+                type:"POST",
+                context: document.body,
+                url: '{{route('deleteImgPublic')}}',
+                data: {"id":id},
+                success: function(data){
+                    if (data == "exito"){
+                        $("#"+id).remove();
+                    }
+                },
+                error: function(data){
+                }
+            });
+        }
     </script>
     <div id="myModal" class="modal">
         <span class="cerrar">×</span>

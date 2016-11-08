@@ -78,6 +78,11 @@
                             // Closure to capture the file information.
                             reader.onload = (function (theFile) {
                                 return function (e) {
+                                    var imagen = new Image();
+                                    imagen.onload = function () {
+                                        console.log(this.width)
+                                    }
+                                    imagen.src = e.target.result;
                                     // Render thumbnail.
                                     var divPreview = document.createElement('div');
                                     $(divPreview).addClass("div-preview-inpufile");

@@ -199,10 +199,10 @@ h1.b1,h2.b2,h3.b3 {
   width:63%;
   margin: 1% auto 0;
   display: block;
-  float: left;
+  float: right;
 }
 .skyblue{
-	float:left;
+	float:right;
 }
 /*----*/
 .banner{
@@ -1252,9 +1252,9 @@ line-height: 1.7em;
 	margin:0;
 }
 label {
-	display: block;
-	margin-bottom: 0;
-	font-weight: normal;
+	/*! display: block; */
+	/*! margin-bottom: 0; */
+	/*! font-weight: normal; */
 }
 .registration_form input[type="text"],.registration_form input[type="email"],.registration_form input[type="tel"],.registration_form input[type="password"]{
 	padding: 8px;

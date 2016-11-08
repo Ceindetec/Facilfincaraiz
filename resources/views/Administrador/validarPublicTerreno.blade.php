@@ -3,6 +3,9 @@
 @section('style')
     {!!Html::style('plugins/ceindetecFileInput/css/ceindetecFileInput.css')!!}
     <style>
+        .popover-content {
+            width: 125px;
+        }
         #map {
             width: 100%;
             height: 200px;
@@ -189,7 +192,7 @@
                                 <img src="../images/publicaciones/{{$imagene->ruta}}" class="img-responsive imagen" alt="">
 
                                 <div class="conteEliminar">
-                                    <i data-id="{{$imagene->id}}" class="fa fa-trash eliminarImage" aria-hidden="true"></i>
+                                    <i data-id="{{$imagene->id}}" class="fa fa-trash eliminarImage" aria-hidden='true' data-toggle='confirmation' data-popout="true" data-placement='top' title='Eliminar?' data-btn-ok-label="Si" data-btn-cancel-label="No"></i>
                                 </div>
 
                             </div>
@@ -429,8 +432,9 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyA1AUmEiXssHdvD3yAjE4VTh_pWQENfNUM&sensor=true"></script>
-    <script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
+    {!!Html::script('plugins/bootstrapConfirmation/bootstrap-confirmation.min.js')!!}
+    {!!Html::script('http://maps.google.com/maps/api/js?key=AIzaSyA1AUmEiXssHdvD3yAjE4VTh_pWQENfNUM&sensor=true')!!}
+    {!!Html::script('https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js')!!}
     {!!Html::script('plugins/ceindetecFileInput/js/ceindetecFileInput.js')!!}
     {!!Html::script('js/gmaps.js')!!}
     <script charset="utf-8">
@@ -438,6 +442,16 @@
         var geolocalizacion;
         var banderaMunu = true;
         $(function(){
+            $("#liPublicaciones").addClass("active");
+            $(".eliminarImage").each(function(){
+                $(this).confirmation({
+                    onConfirm: function () {
+                        ajaxEliminarImagen($(this).data("id"));
+                        //console.log($(this).data("id"));
+                        //$("#"+$(this).data("id")).remove();
+                    }
+                });
+            });
 
             geolocalizacion="{{$data["geolocalizacion"]}}";
             $(".imagen").click(function () {
@@ -506,7 +520,6 @@
                                 $("#municipio_id").val({{$data["municipio_id"]}});
                                 banderaMunu = false;
                             }
-
                         },
                         error: function (data) {
                         }
@@ -625,10 +638,6 @@
                         if(result.estado){
                             $("#submit").attr("disabled", true);
                             alert("success","Perfecto","La publicación fue publicada con exito","<i class='fa fa-check' aria-hidden='true'></i>");
-                            setTimeout(function(){
-                                window.location="../publicar";
-                            }, 3000);
-
 
                         }else{
                             alert("danger","Ups","algo salio mal por favor intentar nuevamente","<i class='fa fa-ban' aria-hidden='true'></i>");
@@ -661,11 +670,21 @@
                     "</div>";
             $("#alert").append(html)
         }
-        $("#galeria").on("click",".eliminarImage",function () {
-
-            console.log($(this).data("id"));
-            $("#"+$(this).data("id")).remove();
-        });
+        function  ajaxEliminarImagen(id) {
+            $.ajax({
+                type:"POST",
+                context: document.body,
+                url: '{{route('deleteImgPublic')}}',
+                data: {"id":id},
+                success: function(data){
+                    if (data == "exito"){
+                        $("#"+id).remove();
+                    }
+                },
+                error: function(data){
+                }
+            });
+        }
     </script>
     <div id="myModal" class="modal">
         <span class="cerrar">×</span>

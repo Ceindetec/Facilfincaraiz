@@ -63,7 +63,7 @@
 <div class="login_sec">
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="index.html">Home</a></li>
+            <li><a href="{{route("home")}}">Inicio</a></li>
             <li class="active">Administrar</li>
         </ol>
         <h2>Banner Principal</h2>

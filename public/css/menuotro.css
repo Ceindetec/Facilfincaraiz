@@ -11,7 +11,7 @@ header nav {
     background:#FFF;
     z-index:1000;
     max-width: 1000px;
-    width:95%;
+    width:100%;
     margin:20px auto;
 }
 
@@ -25,9 +25,17 @@ header nav ul li {
 }
 
 header nav ul li:hover {
-    /*background:#E6344A;*/
     text-decoration: none;
-    color:#ff5d56;
+    color:#ff5d56 !important;
+}
+
+header nav ul li a:hover {
+    text-decoration: none;
+    color:#ff5d56 !important;
+}
+
+header nav ul li a:active{
+    text-decoration: none;
 }
 
 header nav ul li a {
@@ -38,7 +46,7 @@ header nav ul li a {
     font-weight:600;
     font-size:15px;
     text-decoration: none;
-    padding: 17px;
+    padding: 8px;
     transition:color .4s ease-in-out;
 }
 
@@ -59,6 +67,7 @@ header nav ul li .children {
     background:#fff;
     position: absolute;
     width: 150%;
+   /* padding: 0 10px;*/
     z-index:1000;
 }
 
@@ -131,7 +140,7 @@ header nav .Temporalesmenu{
         position: fixed;
         top:0;
         z-index: 500;
-        background:#E6344A;
+        background: #e8573e;
     }
 
     .menu_bar .bt-menu {
@@ -179,6 +188,10 @@ header nav .Temporalesmenu{
 
     header nav ul li .children li a {
         margin-left:20px;
+    }
+
+    header nav ul li .children li a:active {
+       text-decoration: none;
     }
 
     header nav ul li .prueba {

@@ -34,7 +34,7 @@
 			<div class="content-grid l-grids">
 				<a href="{{route("publicarXCategoria","Terrenos")}}">
 					<figure class="effect-bubba">
-						<img src="images/b1.jpg" alt=""/>
+						<img src="images/b2.jpg" alt=""/>
 						<figcaption>
 							<h4>Terrenos </h4>
 							<p>In sit amet sapien eros Integer in tincidunt labore et dolore magna aliqua</p>

@@ -77,7 +77,7 @@
 						<div class="form-group">
 							<label for="valor" class="col-sm-4 control-label">Precio</label>
 							<div class="col-sm-8">
-                                {!!Form::text('precio',null,['class'=>'form-control','placeholder'=>"precio del inmueble", 'required' , 'onkeypress'=>'return justNumbers(event)'])!!}
+								{!!Form::text('precio',null,['class'=>'form-control','placeholder'=>"precio del inmueble", 'required' , 'onkeypress'=>'return justNumbers(event)',"onkeyup"=>"format(this)" ,"onchange"=>"format(this)"])!!}
 							</div>
 						</div>
 					</div>
@@ -288,10 +288,11 @@
 	{!!Html::script('plugins/ceindetecFileInput/js/ceindetecFileInput.js')!!}
 	<script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
 	{!!Html::script('js/gmaps.js')!!}
+	{!!Html::script('js/publicaciones.js')!!}
 	<script charset="utf-8">
 		var map;
 		$(function(){
-
+			$("#liPublicar").addClass("active");
 			$("#files").inputFileImage({
 				maxlength:8,
 				width:120,
@@ -359,7 +360,7 @@
 			});
 
             $("#categorias").change(function () {
-console.log($("#categorias option:selected").text());
+//console.log($("#categorias option:selected").text());
 
 
                 if($("#categorias option:selected").text()=='Moto'||$("#categorias option:selected").text()=='Moto-Carro'||$("#categorias option:selected").text()=='Cuatrimoto'){
@@ -417,43 +418,6 @@ console.log($("#categorias option:selected").text());
 				});
 
 			});
-
-            {{--var formulario = $("#formVehiculo");--}}
-            {{--formulario.submit(function(e){--}}
-                {{--e.preventDefault();--}}
-				{{--var contenido = encodeURIComponent(CKEDITOR.instances.infoAdicional.getData().split("\n").join(""));--}}
-                {{--$.ajax({--}}
-                    {{--type:"POST",--}}
-                    {{--context: document.body,--}}
-                    {{--url: '{{route('publicarVehiculo')}}',--}}
-					{{--data:formulario.serialize()+"&descripcion="+contenido,--}}
-                    {{--success: function(data){--}}
-                        {{--console.log(data);--}}
-                        {{--if (data=="exito") {--}}
-
-                        {{--}--}}
-                        {{--else {--}}
-
-                        {{--}--}}
-                    {{--},--}}
-                    {{--error: function(data){--}}
-                        {{--var respuesta =JSON.parse(data.responseText);--}}
-                        {{--var arr = Object.keys(respuesta).map(function(k) { return respuesta[k] });--}}
-                        {{--var error='<ul>';--}}
-                        {{--for (var i=0; i<arr.length; i++)--}}
-                            {{--error += "<li>"+arr[i][0]+"</li>";--}}
-                        {{--error += "</ul>";--}}
-                        {{--$("#error").html('<div class="alert alert-danger">' +--}}
-                                {{--'<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +--}}
-                                {{--'<strong>Error!</strong> Corrige los siguientes errores para continuar el registro:' +--}}
-                                {{--'<p>'+error+'</p>' +--}}
-                                {{--'</div>');--}}
-                    {{--}--}}
-                {{--});--}}
-            {{--});--}}
-
-
-
 
 		});
 

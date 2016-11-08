@@ -69,18 +69,9 @@ class busquedasController extends Controller
      */
     public function getVehiculos(Request $request){
         $publicacion = new Publicacion();
-        $data["categoria"] = $request->categorias;
-        $data["marca"] = $request->marca;
-        $data["modelo"] = $request->modelo;
-        $data["departamento"] = $request->departamento;
-        $data["municipio"] = $request->municipio_id;
-        $infoAdicional = $this->obtenerInfoVistaVehiculos();
-        $data["arrayDepartamento"] = $infoAdicional["arrayDepartamento"];
-        $data["arrayCategorias"] = $infoAdicional["arrayCategorias"];
-
-
-        if ($request->ajax) {
-            $consultas = $publicacion->filtrarVehiculos($request->categorias, $request->marca, $request->modelo, $request->departamento, $request->municipio_id, $request->pagina);
+        if ($request->ajax()) {
+            $precio =  str_replace("$", '',str_replace(".", '', $request->precioMin)) . "-" . str_replace("$", '',str_replace(".", '', $request->precioMax));
+            $consultas = $publicacion->filtrarVehiculos($request->categorias, $request->marca, $request->modelo, $request->departamento, $request->municipio_id, $request->pagina, $request->cilindraje, $precio);
             $data["cantidad"] = $consultas["cantidad"];
             $data["publicaciones"] = $consultas["resultados"];
             $data["mensaje"] = $consultas["mensaje"];
@@ -88,12 +79,19 @@ class busquedasController extends Controller
             return $data;
         }
         else {
-            $consultas = $publicacion->filtrarVehiculos($request->categorias, $request->marca, $request->modelo, $request->departamento, $request->municipio_id, 1);
+            $consultas = $publicacion->filtrarVehiculos($request->categorias, $request->marca, $request->modelo, $request->departamento, $request->municipio_id, 1, "", "");
             $data["cantidad"] = $consultas["cantidad"];
             $data["publicaciones"] = $consultas["resultados"];
             $data["mensaje"] = $consultas["mensaje"];
-            $data["pagina"] = 1;
-//            dd($data);
+
+            $data["categoria"] = $request->categorias;
+            $data["marca"] = $request->marca;
+            $data["modelo"] = $request->modelo;
+            $data["departamento"] = $request->departamento;
+            $data["municipio"] = $request->municipio_id;
+            $infoAdicional = $this->obtenerInfoVistaVehiculos();
+            $data["arrayDepartamento"] = $infoAdicional["arrayDepartamento"];
+            $data["arrayCategorias"] = $infoAdicional["arrayCategorias"];
             return view('busquedas.Vehiculos.listado', $data);
         }
     }

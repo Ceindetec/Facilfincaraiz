@@ -2,7 +2,7 @@
 
 @section('style')
     {!!Html::style('plugins/datepicker/datepicker3.css')!!}
-    {!!Html::style('css\jquery-ui.css')!!}
+    {!!Html::style('plugins\jQueryUI\jquery-ui.css')!!}
     <style>
         .filtro{
             padding-top: 8px;
@@ -53,8 +53,8 @@
             height: 100%;
         }
         .bordered{
-            border: solid 1px #040604;
-            border-radius: 5px;
+            border: solid 2px #f5f5f5;
+            /*border-radius: 5px;*/
         }
         @media (max-width: 600px) {
             .conteFoto{
@@ -69,11 +69,11 @@
             }
         }
         .tiraPublicacion { transition: all .2s ease-out; }
-        .tiraPublicacion:hover { transform: scale(1.05); }
+        .tiraPublicacion:hover { box-shadow: 1px 3px 10px #373737;transform: scale(1.05); }
         .destacado{
             background: #e8573e;
             color: white;
-            margin-bottom: 5px;
+            margin-bottom: 7px;
         }
     </style>
 
@@ -94,7 +94,7 @@
                         <div class="row tiraPublicacion bordered puntero" data-id="{{$publicacion->id}}">
                             <div class="col-xs-3 conteFoto">
                                 <div class="foto">
-                                    <img class="img-rounded img-responsive bordered" src='images/publicaciones/{{$publicacion->ruta}}' alt='' style="height: 100%; width: 100%">
+                                    <img class="img-rounded img-responsive" src='images/publicaciones/{{$publicacion->ruta}}' alt='' style="height: 100%; width: 100%">
                                 </div>
                             </div>
                             <div class="col-xs-6">
@@ -103,18 +103,20 @@
                                         Destacado
                                     </div>
                                 @endif
-                                <b><h3>{{$publicacion->titulo}}</h3></b><br>
-                                <p>
-                                    {{$publicacion->modelo}} - <span class="enmascarar">{{$publicacion->kilometraje}}</span>&nbsp;km
-                                    <br>
-                                    @if($mensaje == "sugerencias")
-                                        Tipo: {{$publicacion->tipo}}<br>
-                                        Marca: {{$publicacion->marca}}
-                                    @endif
-                                </p>
-                                <p>
-                                    en {{$publicacion->municipio}},&nbsp;{{$publicacion->departamento}}
-                                </p>
+                                <div class="col-xs-12">
+                                    <b><h3>{{ucwords($publicacion->titulo)}}</h3></b><br>
+                                    <p>
+                                        {{$publicacion->modelo}} - <span class="enmascarar">{{$publicacion->kilometraje}}</span>&nbsp;km
+                                        <br>
+                                        @if($mensaje == "sugerencias")
+                                            Tipo: {{$publicacion->tipo}}<br>
+                                            Marca: {{$publicacion->marca}}
+                                        @endif
+                                    </p>
+                                    <p class="conver">
+                                        en {{$publicacion->municipio}},&nbsp;{{$publicacion->departamento}}
+                                    </p>
+                                </div>
                             </div>
                             <div class="col-xs-3">
                                 <div class="text-right">
@@ -127,18 +129,36 @@
                         </div>
                     @endforeach
                 </div>
-                <div id="paginacion">
-
+                <div id="paginacion" class="text-center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="disabled">
+                                <a href="#" onclick="return false" aria-label="Previous" class="anterior">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            @for($i=1; $i<=ceil($cantidad/10); $i++)
+                                <li class="{{($i == 1)?'active':''}}">
+                                    <a href="#" data-page="{{$i}}" onclick="return false" class="pagina"><span>{{$i}} <span class="sr-only">(current)</span></span></a>
+                                </li>
+                            @endfor
+                            <li class="{{($cantidad/10 == 1)?'disabled':''}}">
+                                <a href="#" onclick="return false" aria-label="Next" class="sgte">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
 
             <div class="rsidebar span_1_of_left">
-                {!!Form::open(['route'=>'getVehiculos','id'=>'formVehiculo','autocomplete'=>'off'])!!}
+                {!!Form::open(['id'=>'formVehiculo','autocomplete'=>'off'])!!}
                 <section class="sky-form">
                     <h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Ubicación</h4>
                     <div class="filtro">
-                        {!!Form::select('departamento', $arrayDepartamento, $departamento, ['class'=>"form-control", 'id' => 'departamento'])!!}
-                        {!!Form::select('municipio_id', [], null, ['class'=>"form-control",'placeholder' => 'Cualquier Municipio', 'id'=>'municipio_id'])!!}
+                        {!!Form::select('departamento', $arrayDepartamento, $departamento, ['class'=>"form-control cambio", 'id' => 'departamento'])!!}
+                        {!!Form::select('municipio_id', [], null, ['class'=>"form-control cambio",'placeholder' => 'Cualquier Municipio', 'id'=>'municipio_id'])!!}
                     </div>
 
                 </section>
@@ -146,9 +166,9 @@
                 <section class="sky-form">
                     <h4><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Artículo</h4>
                     <div class="filtro">
-                        {!!Form::select('categorias',$arrayCategorias, $categoria, ['id'=>'categorias','class'=>"form-control",'placeholder' => 'Selecciona una categoria', 'required'])!!}
-                        {!!Form::select('marca',[], null, ['id'=>'marca','class'=>"form-control",'placeholder' => 'Cualquier marca'])!!}
-                        {!!Form::select('cilindraje',['1'=>'0 a 99 cc','2'=>'100 a 199 cc','3'=>'200 a 299 cc','4'=>'300 a 399 cc','5'=>'400 a 699 cc','6'=>'700 a 999 cc','7'=>'1000 a 1299 cc','8'=>'más de 1300 cc'], null, ['id'=>'cilindraje','class'=>"form-control", 'placeholder' => 'Cualquier cilindraje'])!!}
+                        {!!Form::select('categorias',$arrayCategorias, $categoria, ['id'=>'categorias','class'=>"form-control cambio",'placeholder' => 'Selecciona una categoria', 'required'])!!}
+                        {!!Form::select('marca',[], null, ['id'=>'marca','class'=>"form-control cambio",'placeholder' => 'Cualquier marca'])!!}
+                        {!!Form::select('cilindraje',['1'=>'0 a 99 cc','2'=>'100 a 199 cc','3'=>'200 a 299 cc','4'=>'300 a 399 cc','5'=>'400 a 699 cc','6'=>'700 a 999 cc','7'=>'1000 a 1299 cc','8'=>'más de 1300 cc'], null, ['id'=>'cilindraje','class'=>"form-control cambio", 'placeholder' => 'Cualquier cilindraje'])!!}
                     </div>
                 </section>
 
@@ -159,8 +179,8 @@
                         <div class="col-xs-7 col-sm-7 col-md-9 col-lg-9">
                             {!!Form::text('modelo', null, ['id'=>'modelo','class'=>"form-control text-right", 'style'=>'border: 0; font-weight: NORMAL', 'readonly'])!!}
                         </div>
-                        <div class="col-xs-5 col-sm-5 col-md-3 col-lg-3 text-left derecha texto puntero confirm" id="confirModelo" data-toggle="tooltip" title="Filtrar este rango de modelos">
-                            <i class="fa fa-check-circle-o fa-2x" aria-hidden="true"></i>
+                        <div class="col-xs-5 col-sm-5 col-md-3 col-lg-3 text-left derecha texto puntero" data-toggle="tooltip" title="Filtrar este rango de modelos">
+                            <i class="fa fa-check-circle-o fa-2x confir" aria-hidden="true"></i>
                         </div>
                     </div>
 
@@ -171,14 +191,14 @@
                     <div id="slider-precio"></div>
                     <div class="row">
                         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 izquierda">
-                            {!!Form::text('precioMin', null, ['id'=>'precioMin','class'=>"izquierda form-control text-right", 'style'=>'border: 0; font-weight: NORMAL', 'onkeypress' => 'return justNumbers(event)', 'maxlength'=>'9', 'data-toggle'=>"tooltip", 'title'=>'Minimo'])!!}
+                            {!!Form::text('precioMin', null, ['id'=>'precioMin','class'=>"izquierda form-control text-right", 'style'=>'border: 0; font-weight: NORMAL', 'onkeypress' => 'return justNumbers(event)', 'maxlength'=>'9', 'data-toggle'=>"tooltip", 'title'=>'Minimo',"data-placement"=>"left"])!!}
                         </div>
                         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center texto">-</div>
                         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 derecha" style='padding-right: 0'>
                             {!!Form::text('precioMax', null, ['id'=>'precioMax','class'=>"derecha form-control text-left", 'style'=>'border: 0; font-weight: NORMAL', 'onkeypress' => 'return justNumbers(event)', 'maxlength'=>'9', 'data-toggle'=>"tooltip", 'title'=>'Maximo'])!!}
                         </div>
-                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-left derecha texto puntero confirm" id="confirPrecios" data-toggle="tooltip" title="Filtrar este rango de precios">
-                            <i class="fa fa-check-circle-o fa-2x" aria-hidden="true"></i>
+                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-left derecha texto puntero" data-toggle="tooltip" title="Filtrar este rango de precios">
+                            <i class="fa fa-check-circle-o fa-2x confir" aria-hidden="true"></i>
                         </div>
                     </div>
                 </section>
@@ -190,25 +210,20 @@
 @endsection
 
 @section('scripts')
-    {!!Html::script('js\jquery-ui.min.js')!!}
-    {!!Html::script('plugins/jQueryInputMask/inputmask.js')!!}
-    {!!Html::script('plugins/jQueryInputMask/inputmask.numeric.extensions.js')!!}
-    {!!Html::script('plugins/jQueryInputMask/inputmask.phone.extensions.js')!!}
-    {!!Html::script('plugins/jQueryInputMask/inputmask.regex.extensions.js')!!}
-    {!!Html::script('plugins/jQueryInputMask/jquery.inputmask.js')!!}
+    {!!Html::script('plugins\jQueryUI\jquery-ui.min.js')!!}
     {!!Html::script('plugins/datepicker/bootstrap-datepicker.js')!!}
 
-
     <script>
+        var formulario;
+        var pagina;
         $(function(){
             llenarMunicipios();
-            var seleccionado = $("#categorias option:selected").text();
-            if( seleccionado=='Moto'||seleccionado=='Moto-Carro'||seleccionado=='Cuatrimoto')
-                llenarMarca("M");
-            else
-                llenarMarca('C');
+            cambiarTipo($("#categorias option:selected").text());
             enmascararPublicacion();
-//            $('[data-toggle="tooltip"]').tooltip();
+            convertirMayu();
+            $('[data-toggle="tooltip"]').tooltip();
+            pagina = 1;
+            $("#listado").prepend(generarAnuncio('{{$mensaje}}', '{{$cantidad}}'));
             var fecha = new Date();
             var modelo = '{{$modelo}}';
             if(modelo == "")
@@ -242,6 +257,77 @@
 
             if ('{{$marca}}' != "")
                 $('#marca').val('{{$marca}}');
+
+            formulario = $("#formVehiculo");
+        });
+
+        function generarAnuncio(mensaje, cantidad){
+            var resultados = "";
+            if (mensaje == "coincidencias exactas") {
+                resultados ='<div class="alert alert-success" role="alert">' +
+                        '<strong>Excelente!</strong> Tu búsqueda ha generado los siguientes '+cantidad+' resultados:' +
+                        '</div>';
+            }
+            else {
+                resultados = '<div class="alert alert-warning" role="alert"><strong>Lo sentimos!</strong> No hemos encontrado coincidencias exactas para tu busqueda.<br>';
+                if(mensaje == "solo dpto y categoria")
+                    resultados = resultados + "<strong>Espera:</strong> Hemos encontrado vehiculos del tipo que buscas, en el mismo departamento:";
+                else if(mensaje == "exacto sin dpto")
+                    resultados = resultados + "<strong>Espera:</strong >Hemos encontrado vehiculos del tipo que buscas, en todo Colombia:";
+                else if(mensaje == "solo categoria")
+                    resultados = resultados + "<strong>Espera:</strong> Hemos encontrado algunos vehiculos del tipo que buscas:";
+                else
+                    resultados = resultados + "<strong>Espera:</strong> Tambien puedes revisar nuestra lista de sugerencias:";
+                resultados = resultados + "</div>";
+            }
+            return resultados;
+        }
+
+        $("#categorias").change(function () {
+            cambiarTipo($("#categorias option:selected").text());
+        });
+
+        function cambiarTipo(seleccionado) {
+            if (seleccionado == 'Moto' || seleccionado == 'Moto-Carro' || seleccionado == 'Cuatrimoto') {
+                $("#cilindraje").removeClass('hidden');
+                llenarMarca("M");
+            }
+            else {
+                $("#cilindraje").addClass('hidden');
+                llenarMarca('C');
+            }
+        }
+
+        $(".confir").on('click', function(){
+            pagina = 1;
+            filtrar();
+        });
+
+        $(".cambio").on('change', function () {
+            pagina = 1;
+            filtrar();
+        });
+
+        $("#paginacion").on('click', '.pagina', function () {
+            if (!$(this).parent().hasClass("active")) {
+                pagina = $(this).attr("data-page");
+                filtrar();
+            }
+        });
+
+        $("#paginacion").on('click', '.anterior', function () {
+            if (!$(this).parent().hasClass("disabled")) {
+                pagina = pagina-1;
+                filtrar();
+            }
+        });
+
+        $("#paginacion").on('click', '.sgte', function () {
+            if (!$(this).parent().hasClass("disabled")) {
+                pagina = pagina+1;
+                console.log(pagina);
+                filtrar();
+            }
         });
 
         $("#precioMin").focus(function(){
@@ -279,6 +365,97 @@
         $("#departamento").change(function () {
             llenarMunicipios();
         });
+
+        function filtrar(){
+            $.ajax({
+                type:"POST",
+                context: document.body,
+                url: '{{route('getVehiculos')}}',
+                data: formulario.serialize()+"&pagina="+pagina,
+                success: function(data) {
+                    var resultados = generarAnuncio(data.mensaje, data.cantidad);
+                    data.publicaciones.forEach(function(entry){
+                        resultados = resultados + '<div class="row tiraPublicacion bordered puntero" data-id="'+entry.id+'">' +
+                                                        '<div class="col-xs-3 conteFoto">' +
+                                                            '<div class="foto">' +
+                                                                '<img class="img-rounded img-responsive" src="images/publicaciones/'+entry.ruta+'" style="height: 100%; width: 100%">' +
+                                                            '</div>' +
+                                                        '</div>' +
+                                                        '<div class="col-xs-6">';
+                        if(entry.destacado != "") {
+                            resultados = resultados +'<div class="col-xs-6 col-xs-offset-6 destacado bordered text-center">Destacado</div>';
+                        }
+                        resultados = resultados + '<div class="col-xs-12">' +
+                                                        '<b><h3 class="conver">'+entry.titulo+'</h3></b><br>'+
+                                                        '<p>'+entry.modelo+' - <span class="enmascarar">'+entry.kilometraje+'</span>&nbsp;km<br>';
+                        if(data.mensaje == "sugerencias") {
+                            resultados = resultados + 'Tipo: '+entry.tipo+'<br>'+
+                                                      'Marca: '+entry.marca;
+                        }
+                        resultados = resultados + '</p>' +
+                                                  '<p class="conver">en '+entry.municipio+',&nbsp;'+entry.departamento+'</p>'+
+                                                  '</div></div><div class="col-xs-3"><div class="text-right">'+entry.fecha+'</div><div style="margin-top: 40px"><b><h4>$<span class="enmascarar">'+entry.precio+'</span></h4></b></div></div></div>';
+                    });
+                    $("#listado").html(resultados);
+                    var active = (data.pagina==1)?'disabled':'';
+                    var paginacion = '<nav aria-label="Page navigation">' +
+                                        '<ul class="pagination">' +
+                                            '<li class="'+active+'">' +
+                                                '<a href="#" onclick="return false" aria-label="Previous" class="anterior">' +
+                                                    '<span aria-hidden="true">&laquo;</span>' +
+                                                '</a>' +
+                                            '</li>';
+                    for(var i=1; i<=Math.ceil(data.cantidad/10); i++) {
+                        active = (i==data.pagina)? 'active':'';
+                        paginacion = paginacion + '<li class="' + active + '">' +
+                                                        '<a href="#" data-page="'+i+'" onclick="return false" class="pagina">' +
+                                                            '<span>'+i+'<span class="sr-only">(current)</span></span>' +
+                                                        '</a>' +
+                                                    '</li>';
+                    }
+                    active = (data.pagina == Math.ceil(data.cantidad/10))?'disabled':'';
+                    paginacion = paginacion + '<li class="' +active+ '">' +
+                                                    '<a href="#" onclick="return false" aria-label="Next" class="sgte">' +
+                                                        '<span aria-hidden="true">&raquo;</span>' +
+                                                    '</a>' +
+                                                '</li>' +
+                                            '</ul>' +
+                                        '</nav>';
+                    $("#paginacion").html(paginacion);
+                    enmascararPublicacion();
+                    convertirMayu();
+                },
+                error: function (data) {
+                }
+            });
+        }
+
+        function convertirMayu(){
+            $(".conver").each(function(){
+                $(this).html(ucWords($(this).html()));
+            });
+        }
+
+        function ucWords(string){
+            var arrayWords;
+            var returnString = "";
+            var len;
+            arrayWords = string.split(" ");
+            len = arrayWords.length;
+            for(i=0;i < len ;i++){
+                if(i != (len-1)){
+                    returnString = returnString+ucFirst(arrayWords[i])+" ";
+                }
+                else{
+                    returnString = returnString+ucFirst(arrayWords[i]);
+                }
+            }
+            return returnString;
+        }
+
+        function ucFirst(string){
+            return string.substr(0,1).toUpperCase()+string.substr(1,string.length).toLowerCase();
+        }
 
         function llenarMunicipios(){
             $.ajax({
@@ -337,6 +514,8 @@
                 $(this).html(enmascarar($(this).html()));
             });
         }
+
+
 
         function desenmascarar(valor){
             valor = valor+'';

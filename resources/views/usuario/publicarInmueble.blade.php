@@ -75,7 +75,7 @@
 					<div class="form-group">
 						<label for="precio" class="col-sm-4 control-label">Precio</label>
 						<div class="col-sm-8">
-							{!!Form::text('precio',null,['class'=>'form-control','placeholder'=>"precio del inmueble", 'required' , 'onkeypress'=>'return justNumbers(event)'])!!}
+							{!!Form::text('precio',null,['class'=>'form-control','placeholder'=>"precio del inmueble", 'required' , 'onkeypress'=>'return justNumbers(event)',"onkeyup"=>"format(this)" ,"onchange"=>"format(this)"])!!}
 						</div>
 					</div>
 				</div>
@@ -298,11 +298,12 @@
 	<script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
 	{!!Html::script('plugins/ceindetecFileInput/js/ceindetecFileInput.js')!!}
 	{!!Html::script('js/gmaps.js')!!}
+	{!!Html::script('js/publicaciones.js')!!}
 
 	<script charset="utf-8">
 		var map;
 		$(function(){
-
+			$("#liPublicar").addClass("active");
 			$("#files").inputFileImage({
 				maxlength:8,
 				width:120,
@@ -455,16 +456,6 @@
 			}
 		});
 	}
-
-		function justNumbers(e)
-		{
-			var keynum = window.event ? window.event.keyCode : e.which;
-			if (keynum == 8)
-				return true;
-			return /\d/.test(String.fromCharCode(keynum));
-		}
-
-
 		function alert(tipo,titulo,mensaje,icono) {
 			$("#alert").empty();
 			var html ="<div class='alert alert-"+tipo+"'>"+

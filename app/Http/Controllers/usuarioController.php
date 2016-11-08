@@ -154,7 +154,7 @@ class usuarioController extends Controller
                 $trozos = explode(".", $archivo);
                 $extension = end($trozos);
                 if($type[0]=="image"){
-                    $nombre = time().$index.strtolower($extension);
+                    $nombre = time().$index.".".strtolower($extension);
                     $imagene->move('images/publicaciones', utf8_decode($nombre));
 
                     $galeria = new Galeria();
@@ -209,7 +209,7 @@ class usuarioController extends Controller
             $extension = end($trozos);
 
             if($type[0]=="image"){
-                $nombre = time().$index.strtolower($extension);
+                $nombre = time().$index.".".strtolower($extension);
                 $imagene->move('images/publicaciones', utf8_decode($nombre));
 
                 $galeria = new Galeria();

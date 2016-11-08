@@ -10,6 +10,7 @@ return array(
     'CreateGaleriaPortadasTable' => $baseDir . '/database/migrations/2016_10_11_104628_create_galeria_portadas_table.php',
     'CreateGaleriasTable' => $baseDir . '/database/migrations/2016_10_11_091759_create_galerias_table.php',
     'CreateInmueblesTable' => $baseDir . '/database/migrations/2016_10_11_090450_create_inmuebles_table.php',
+    'CreateMarcaDeAguasTable' => $baseDir . '/database/migrations/2016_11_02_155819_create_marca_de_aguas_table.php',
     'CreateMarcasTable' => $baseDir . '/database/migrations/2016_10_11_081353_create_marcas_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePublicacionesTable' => $baseDir . '/database/migrations/2016_10_11_091758_create_publicaciones_table.php',
