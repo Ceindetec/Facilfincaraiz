@@ -42,6 +42,11 @@
             $("#files").inputFileImage({
                 maxlength:20,
                 minType:['png', 'jpeg'],
+                maxfilesize: 5120,
+                minWidthImage: 100,
+                minHeightImage: 100,
+                maxWidthImage:5000,
+                maxHeightImage:5000,
             });
 
         });
