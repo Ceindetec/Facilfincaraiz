@@ -84,7 +84,7 @@ Route::post('marcas','usuarioController@getMarcas')->name('marcas');
 
 Route::post('filtroVehiculos','busquedasController@getVehiculos')->name('getVehiculos');
 Route::get("filtroVehiculos","busquedasController@buscarVehiculos")->name("buscarVehiculos");
-
+Route::get("articulo/{id}", 'busquedasController@getArticulo')->name('getArticulo');
 
 Route::get('password/email', 'Auth\PasswordController@getEmail')->name('getEmail');
 Route::post('password/email', 'Auth\PasswordController@postEmail')->name('postEmail');

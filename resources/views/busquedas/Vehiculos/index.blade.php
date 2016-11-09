@@ -17,7 +17,7 @@
 @section('content')
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="index.html">Home</a></li>
+            <li><a href="{{route('home')}}">Home</a></li>
             <li class="active">Buscar vehiculo</li>
         </ol>
         <div class="welcome-left col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center" style="margin-bottom: 2%">
@@ -72,6 +72,7 @@
         </div>
         {!! Form::close() !!}
     </div>
+    <br />
 @endsection
 
 @section('scripts')

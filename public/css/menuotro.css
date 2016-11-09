@@ -34,6 +34,10 @@ header nav ul li a:hover {
     color:#ff5d56 !important;
 }
 
+.active{
+    color:#ff5d56 !important;
+}
+
 header nav ul li a:active{
     text-decoration: none;
 }

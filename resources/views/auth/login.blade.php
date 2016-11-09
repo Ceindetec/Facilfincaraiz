@@ -12,14 +12,14 @@
 			 <li><a href="{{route("home")}}">Inicio</a></li>
 			<li class="active">Login</li>
 		</ol>
-		<h2>Login</h2>
+		<h2>Iniciar sesión</h2>
 		<div class="col-md-6 log">
-			<p>Welcome, please enter the folling to continue.</p>
-			<p>If you have previously Login with us, <span>click here</span></p>
+			<p>Bienvenido, porfavor ingrese sus datos para continuar.</p>
+			{{--<p>If you have previously Login with us, <span>click here</span></p>--}}
 			{!!Form::open(['route' => 'login'])!!}
 			<h5>Email:</h5>
 			{!!Form::email('email',null,[], 'required')!!}
-			<h5>Password:</h5>
+			<h5>Contraseña:</h5>
 			{!! Form::password('password',[], 'required')!!}
 			 @if (count($errors) > 0)
 				 <div class="alert alert-danger">

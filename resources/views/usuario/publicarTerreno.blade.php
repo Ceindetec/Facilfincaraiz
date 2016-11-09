@@ -69,7 +69,7 @@
 						<div class="form-group">
 							<label for="precio" class="col-sm-4 control-label">Precio</label>
 							<div class="col-sm-8">
-								{!!Form::text('precio',null,['class'=>'form-control','placeholder'=>"precio del inmueble", 'required' , 'onkeypress'=>'return justNumbers(event)',"onkeyup"=>"format(this)" ,"onchange"=>"format(this)"])!!}
+								{!!Form::text('precio',null,['id'=> 'precio', 'class'=>'form-control','placeholder'=>"precio del inmueble", 'required' , 'onkeypress'=>'return justNumbers(event)',"onkeyup"=>"format(this)" ,"onchange"=>"format(this)"])!!}
 							</div>
 						</div>
 					</div>
@@ -385,6 +385,8 @@
 				}
 				formData.append("descripcion", contenido);
 				formData.append("geolocalizacion", $("#geolocalizacion").val());
+				formData.append("precio", desenmascarar($("#precio").val()));
+
 				$.ajax({
 					url: "{!! route('publicarInmueble') !!}",
 					type: "POST",

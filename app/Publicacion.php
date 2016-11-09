@@ -125,11 +125,24 @@ class Publicacion extends Model
         return $this->belongsTo('facilfincaraiz\User',"user_id");
     }
 
+    public function getVehiculo()
+    {
+        return $this->belongsTo('facilfincaraiz\Vehiculo', 'articulo_id');
+    }
 
+    public function getInmueble()
+    {
+        return $this->belongsTo('facilfincaraiz\Inmueble', 'articulo_id');
+    }
 
     public function galeria()
     {
         return $this->hasMany('facilfincaraiz\Galeria');
+    }
+
+    public function getMunicipio()
+    {
+        return $this->belongsTo('facilfincaraiz\Municipio', 'municipio_id');
     }
 
 

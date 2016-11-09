@@ -77,7 +77,7 @@
 						<div class="form-group">
 							<label for="valor" class="col-sm-4 control-label">Precio</label>
 							<div class="col-sm-8">
-								{!!Form::text('precio',null,['class'=>'form-control','placeholder'=>"precio del inmueble", 'required' , 'onkeypress'=>'return justNumbers(event)',"onkeyup"=>"format(this)" ,"onchange"=>"format(this)"])!!}
+								{!!Form::text('precio',null,['id'=> 'precio', 'class'=>'form-control','placeholder'=>"precio del inmueble", 'required' , 'onkeypress'=>'return justNumbers(event)',"onkeyup"=>"format(this)" ,"onchange"=>"format(this)"])!!}
 							</div>
 						</div>
 					</div>
@@ -390,6 +390,7 @@
 					formData.append("imagenes[]", files[i]);
 				}
 				formData.append("descripcion", contenido);
+				formData.append("precio", desenmascarar($("#precio").val()));
 
 				$.ajax({
 					url: "{!! route('publicarVehiculo') !!}",
@@ -399,11 +400,11 @@
 					contentType: false,   // tell jQuery not to set contentType
 					success: function (result) {
 						if(result.estado){
-							$("#submit").attr("disabled", true);
-							alert("success","Perfecto","Su publicacion fue enviada con exito","<i class='fa fa-check' aria-hidden='true'></i>");
-							setTimeout(function(){
-								window.location="../publicar";
-							}, 3000);
+//							$("#submit").attr("disabled", true);
+//							alert("success","Perfecto","Su publicacion fue enviada con exito","<i class='fa fa-check' aria-hidden='true'></i>");
+//							setTimeout(function(){
+//								window.location="../publicar";
+//							}, 3000);
 
 
 						}else{

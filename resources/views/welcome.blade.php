@@ -89,14 +89,15 @@
         .destacado a {
             text-decoration: none;
         }
-        .destacado .interno{
+
+        .destacado .interno {
             /*border: 1px solid #ccc;*/
         }
 
-        .destacado .baner_destacado{
+        .destacado .baner_destacado {
             font-family: 'JosefinSans-Bold';
             position: absolute;
-            top:0;
+            top: 0;
             right: 0;
             color: #fff;
             display: block;
@@ -108,7 +109,7 @@
             box-shadow: 0px 5px 10px;
         }
 
-        .destacado .estrella{
+        .destacado .estrella {
             color: #f7ac15;
         }
     </style>
@@ -177,7 +178,7 @@
                 <div class="content-grid l-grids">
                     <a href="">
                         <figure class="effect-bubba">
-                    <img src="images/b2.jpg" alt=""/>
+                            <img src="images/b2.jpg" alt=""/>
                             <figcaption>
                                 <h4>Terrenos </h4>
                                 <p>Los mejores y cofiables terrenos</p>
@@ -190,7 +191,7 @@
             </div>
             <div class="col-md-4 bride-grid">
                 <div class="content-grid l-grids">
-                    <a href="">
+                    <a href="{{route("buscarVehiculos")}}">
                         <figure class="effect-bubba">
                             <img src="images/b3.jpg" alt=""/>
                             <figcaption>
@@ -210,16 +211,42 @@
     <div class="featured">
         <div class="container">
             <h3>Productos Destacados</h3>
-            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            @if(count($destacados)<=4)
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 ">
 
-                @foreach($destacados as $desta)
+                    @foreach($destacados as $desta)
+                        <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12 destacado">
+                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 interno">
+                                <a href="product.html"><img src="images/publicaciones/{{$desta->galeria[0]->ruta}}"
+                                                            alt=""
+                                                            height="180px" width="100%"/>
+                                    <div class="arrival-info">
+                                        <h4>{{$desta->titulo}}</h4>
+                                        <p>$ {{$desta->precio}}</p>
+                                        {{--<span class="pric1"><del>Rs 18000</del></span>--}}
+                                        {{--<span class="disc">[12% Off]</span>--}}
+                                    </div>
+                                </a>
+                                <div class="baner_destacado">
+                                    <i class="fa fa-star estrella" aria-hidden="true"></i> Destacado
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="clearfix"></div>
+                </div>
+        </div>
+        @else
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                @for($i=0;$i<4;$i++)
                     <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12 destacado">
                         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 interno">
-                            <a href="product.html"><img src="images/publicaciones/{{$desta->galeria[0]->ruta}}" alt=""
+                            <a href="product.html"><img src="images/publicaciones/{{$destacados[$i]->galeria[0]->ruta}}"
+                                                        alt=""
                                                         height="180px" width="100%"/>
                                 <div class="arrival-info">
-                                    <h4>{{$desta->titulo}}</h4>
-                                    <p>$ {{$desta->precio}}</p>
+                                    <h4>{{$destacados[$i]->titulo}}</h4>
+                                    <p>$ {{$destacados[$i]->precio}}</p>
                                     {{--<span class="pric1"><del>Rs 18000</del></span>--}}
                                     {{--<span class="disc">[12% Off]</span>--}}
                                 </div>
@@ -229,10 +256,30 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
-                <div class="clearfix"></div>
+                @endfor
             </div>
-        </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                @for($i=4;$i<count($destacados);$i++)
+                    <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12 destacado">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 interno">
+                            <a href="product.html"><img src="images/publicaciones/{{$destacados[$i]->galeria[0]->ruta}}"
+                                                        alt=""
+                                                        height="180px" width="100%"/>
+                                <div class="arrival-info">
+                                    <h4>{{$destacados[$i]->titulo}}</h4>
+                                    <p>$ {{$destacados[$i]->precio}}</p>
+                                    {{--<span class="pric1"><del>Rs 18000</del></span>--}}
+                                    {{--<span class="disc">[12% Off]</span>--}}
+                                </div>
+                            </a>
+                            <div class="baner_destacado">
+                                <i class="fa fa-star estrella" aria-hidden="true"></i> Destacado
+                            </div>
+                        </div>
+                    </div>
+                @endfor
+            </div>
+        @endif
     </div>
     <!---->
     <div class="arrivals">

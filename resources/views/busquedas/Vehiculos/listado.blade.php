@@ -83,8 +83,8 @@
     <div class="product-model">
         <div class="container">
             <ol class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html">Vehiculos</a></li>
+                <li><a href="{{route('home')}}">Home</a></li>
+                <li><a href="{{route('buscarVehiculos')}}">Vehiculos</a></li>
                 <li class="active">Filtrar</li>
             </ol>
 
@@ -191,11 +191,11 @@
                     <div id="slider-precio"></div>
                     <div class="row">
                         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 izquierda">
-                            {!!Form::text('precioMin', null, ['id'=>'precioMin','class'=>"izquierda form-control text-right", 'style'=>'border: 0; font-weight: NORMAL', 'onkeypress' => 'return justNumbers(event)', 'maxlength'=>'9', 'data-toggle'=>"tooltip", 'title'=>'Minimo',"data-placement"=>"left"])!!}
+                            {!!Form::text('precioMin', null, ['id'=>'precioMin','class'=>"izquierda form-control text-right", 'style'=>'border: 0; font-weight: NORMAL', 'onkeypress' => 'return justNumbers(event)',"onkeyup"=>"format(this)" ,"onchange"=>"format(this)", 'maxlength'=>'11', 'data-toggle'=>"tooltip", 'title'=>'Minimo',"data-placement"=>"left"])!!}
                         </div>
                         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-center texto">-</div>
                         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 derecha" style='padding-right: 0'>
-                            {!!Form::text('precioMax', null, ['id'=>'precioMax','class'=>"derecha form-control text-left", 'style'=>'border: 0; font-weight: NORMAL', 'onkeypress' => 'return justNumbers(event)', 'maxlength'=>'9', 'data-toggle'=>"tooltip", 'title'=>'Maximo'])!!}
+                            {!!Form::text('precioMax', null, ['id'=>'precioMax','class'=>"derecha form-control text-left", 'style'=>'border: 0; font-weight: NORMAL', 'onkeypress' => 'return justNumbers(event)',"onkeyup"=>"format(this)" ,"onchange"=>"format(this)", 'maxlength'=>'11', 'data-toggle'=>"tooltip", 'title'=>'Maximo'])!!}
                         </div>
                         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-left derecha texto puntero" data-toggle="tooltip" title="Filtrar este rango de precios">
                             <i class="fa fa-check-circle-o fa-2x confir" aria-hidden="true"></i>
@@ -211,6 +211,7 @@
 
 @section('scripts')
     {!!Html::script('plugins\jQueryUI\jquery-ui.min.js')!!}
+    {!!Html::script('js\publicaciones.js')!!}
     {!!Html::script('plugins/datepicker/bootstrap-datepicker.js')!!}
 
     <script>
@@ -308,6 +309,10 @@
             filtrar();
         });
 
+        $("#listado").on('click', '.tiraPublicacion', function () {
+            window.location="articulo/"+$(this).data("id");
+        });
+
         $("#paginacion").on('click', '.pagina', function () {
             if (!$(this).parent().hasClass("active")) {
                 pagina = $(this).attr("data-page");
@@ -325,21 +330,21 @@
         $("#paginacion").on('click', '.sgte', function () {
             if (!$(this).parent().hasClass("disabled")) {
                 pagina = pagina+1;
-                console.log(pagina);
                 filtrar();
             }
         });
 
         $("#precioMin").focus(function(){
             $(this).val(desenmascarar($(this).val()));
+            format($("#precioMin")[0]);
         });
 
         $("#precioMin").blur(function(){
             var sliderElement = $("#slider-precio");
-            var valor = $(this).val()/1000;
+            var valor = desenmascarar($(this).val())/1000;
             if (valor >= sliderElement.slider("option")['min'] && valor <= sliderElement.slider("option")['max']){
                 sliderElement.slider("values", 0, valor);
-                $(this).val("$"+enmascarar($(this).val()));
+                $(this).val("$"+enmascarar(valor*1000));
             }
             else{
                 $(this).val("$"+enmascarar(sliderElement.slider("values", 0)*1000));
@@ -348,14 +353,16 @@
 
         $("#precioMax").focus(function(){
             $(this).val(desenmascarar($(this).val()));
+            format($("#precioMax")[0]);
         });
 
         $("#precioMax").blur(function(){
             var sliderElement = $("#slider-precio");
-            var valor = $(this).val()/1000;
+            var valor = desenmascarar($(this).val())/1000;
+            console.log(valor);
             if (valor >= sliderElement.slider("option")['min'] && valor <= sliderElement.slider("option")['max'] && valor >= sliderElement.slider("values", 0)){
                 sliderElement.slider("values", 1, valor);
-                $(this).val("$"+enmascarar($(this).val()));
+                $(this).val("$"+enmascarar(valor*1000));
             }
             else{
                 $(this).val("$"+enmascarar(sliderElement.slider("values", 1)*1000));
@@ -436,27 +443,6 @@
             });
         }
 
-        function ucWords(string){
-            var arrayWords;
-            var returnString = "";
-            var len;
-            arrayWords = string.split(" ");
-            len = arrayWords.length;
-            for(i=0;i < len ;i++){
-                if(i != (len-1)){
-                    returnString = returnString+ucFirst(arrayWords[i])+" ";
-                }
-                else{
-                    returnString = returnString+ucFirst(arrayWords[i]);
-                }
-            }
-            return returnString;
-        }
-
-        function ucFirst(string){
-            return string.substr(0,1).toUpperCase()+string.substr(1,string.length).toLowerCase();
-        }
-
         function llenarMunicipios(){
             $.ajax({
                 type: "POST",
@@ -495,40 +481,10 @@
             });
         }
 
-        function enmascarar(valor){
-            valor = valor+'';
-            var configurado = "";
-            var i= valor.length;
-            do{
-                i=i-3;
-                if (i>0)
-                    configurado = "." + valor.substring(i, i+3)+configurado;
-                else
-                    configurado = valor.substring(i, i+3)+configurado;
-            }while(i>0);
-            return(configurado);
-        }
-
         function enmascararPublicacion(){
             $(".enmascarar").each(function(){
                 $(this).html(enmascarar($(this).html()));
             });
-        }
-
-
-
-        function desenmascarar(valor){
-            valor = valor+'';
-            valor = valor.replace(/[.]/gi, "");
-            valor = valor.replace("$","");
-            return valor;
-        }
-
-        function justNumbers(e){
-            var keynum = window.event ? window.event.keyCode : e.which;
-            if (keynum == 8)
-                return true;
-            return /\d/.test(String.fromCharCode(keynum));
         }
     </script>
 

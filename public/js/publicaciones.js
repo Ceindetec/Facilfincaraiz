@@ -9,10 +9,58 @@ function format(input){
     }
 }
 
-function justNumbers(e)
-{
+function justNumbers(e) {
     var keynum = window.event ? window.event.keyCode : e.which;
     if (keynum == 8)
         return true;
     return /\d/.test(String.fromCharCode(keynum));
+}
+
+function enmascarar(valor){
+    valor = valor+'';
+    var configurado = "";
+    var i= valor.length;
+    do{
+        i=i-3;
+        if (i>0)
+            configurado = "." + valor.substring(i, i+3)+configurado;
+        else
+            configurado = valor.substring(i, i+3)+configurado;
+    }while(i>0);
+    return(configurado);
+}
+
+function desenmascarar(valor){
+    valor = valor+'';
+    valor = valor.replace(/[.]/gi, "");
+    valor = valor.replace("$","");
+    return valor;
+}
+
+function ucWords(string){
+    var arrayWords;
+    var returnString = "";
+    var len;
+    arrayWords = string.split(" ");
+    len = arrayWords.length;
+    for(i=0;i < len ;i++){
+        if(i != (len-1)){
+            returnString = returnString+ucFirst(arrayWords[i])+" ";
+        }
+        else{
+            returnString = returnString+ucFirst(arrayWords[i]);
+        }
+    }
+    return returnString;
+}
+
+function ucFirst(string){
+    return string.substr(0,1).toUpperCase()+string.substr(1,string.length).toLowerCase();
+}
+
+function justletters(e) {
+    var keynum = window.event ? window.event.keyCode : e.which;
+    patron =/[A-Za-zñÑ\s]/;
+    te = String.fromCharCode(keynum);
+    return patron.test(te);
 }

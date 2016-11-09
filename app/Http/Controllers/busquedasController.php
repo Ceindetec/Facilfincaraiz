@@ -96,5 +96,32 @@ class busquedasController extends Controller
         }
     }
 
+    public function getArticulo($id){
+        $publicacion = Publicacion::find($id);
+        if ($publicacion != null){
+            $publicacion->galeria;
+            $publicacion->municipio = $publicacion->getMunicipio;
+            $publicacion->departamento = $publicacion->municipio->getDepartamento->departamento;
+
+            if($publicacion->tipo == "V"){
+                $publicacion->vehiculo = $publicacion->getVehiculo;
+                $publicacion->vehiculo->tipo = $publicacion->vehiculo->getTipo->tipo;
+                $publicacion->vehiculo->marca = $publicacion->vehiculo->getMarca->marca;
+            }
+            elseif($publicacion->tipo == "I"){
+
+            }
+            else{
+
+            }
+//            dd($publicacion);
+            $data['publicacion'] = $publicacion;
+            return view('busquedas.Vehiculos.detalleArticulo', $data);
+        }
+        else
+            return redirect()->back();
+
+    }
+
 
 }
