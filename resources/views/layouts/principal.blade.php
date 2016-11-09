@@ -85,7 +85,7 @@
                         <li class="submenu"><a href="#" onclick="return false;">Administrar <span
                                         class="prueba fa fa-sort-desc"></span></a>
                             <ul class="children">
-                                <li class="center-block"><a href="{{route("adminBanner")}}">Banner</a></li>
+                                <li class="center-block"><a href="{{route("adminBanner")}}">Banner/portadas</a></li>
                                 <li class="center-block"><a href="{{route("marcaDeAgua")}}">Marca de agua</a></li>
 
                             </ul>

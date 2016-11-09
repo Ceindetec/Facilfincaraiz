@@ -222,7 +222,7 @@
                                                             height="180px" width="100%"/>
                                     <div class="arrival-info">
                                         <h4>{{$desta->titulo}}</h4>
-                                        <p>$ {{$desta->precio}}</p>
+                                        <p class="preciovalor">{{$desta->precio}}</p>
                                         {{--<span class="pric1"><del>Rs 18000</del></span>--}}
                                         {{--<span class="disc">[12% Off]</span>--}}
                                     </div>
@@ -246,7 +246,7 @@
                                                         height="180px" width="100%"/>
                                 <div class="arrival-info">
                                     <h4>{{$destacados[$i]->titulo}}</h4>
-                                    <p>$ {{$destacados[$i]->precio}}</p>
+                                    <p class="preciovalor">{{$destacados[$i]->precio}}</p>
                                     {{--<span class="pric1"><del>Rs 18000</del></span>--}}
                                     {{--<span class="disc">[12% Off]</span>--}}
                                 </div>
@@ -267,7 +267,7 @@
                                                         height="180px" width="100%"/>
                                 <div class="arrival-info">
                                     <h4>{{$destacados[$i]->titulo}}</h4>
-                                    <p>$ {{$destacados[$i]->precio}}</p>
+                                    <p class="preciovalor">{{$destacados[$i]->precio}}</p>
                                     {{--<span class="pric1"><del>Rs 18000</del></span>--}}
                                     {{--<span class="disc">[12% Off]</span>--}}
                                 </div>
@@ -294,7 +294,7 @@
                                         alt="" height="180"/>
                                 <div class="arrival-info">
                                     <h4>{!! $ultimasPublicaciones[$i]->titulo !!}</h4>
-                                    <p>$ {!! $ultimasPublicaciones[$i]->precio !!}</p>
+                                    <p class="preciovalor">{!! $ultimasPublicaciones[$i]->precio !!}</p>
                                     {{--<span class="pric1"><del>Rs 18000</del></span>--}}
                                     {{--<span class="disc">[12% Off]</span>--}}
                                 </div>
@@ -399,7 +399,27 @@
                     }
                 }
             });
+
+            $(".preciovalor").each(function () {
+                var texto = $(this).text();
+                texto = enmascarar(texto);
+                $(this).text(texto);
+            })
         });
+
+        function enmascarar(valor){
+            valor = valor+'';
+            var configurado = "";
+            var i= valor.length;
+            do{
+                i=i-3;
+                if (i>0)
+                    configurado = "." + valor.substring(i, i+3)+configurado;
+                else
+                    configurado = valor.substring(i, i+3)+configurado;
+            }while(i>0);
+            return("$ "+configurado);
+        }
     </script>
 
 @endsection

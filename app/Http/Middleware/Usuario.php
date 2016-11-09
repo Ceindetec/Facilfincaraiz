@@ -29,7 +29,7 @@ class Usuario
                 return redirect('superAdmin');
                 break;
             case 'admin':
-                return redirect('administrador');
+                return redirect('/');
                 break;
             case 'usuario':
                 //return redirect('/');
