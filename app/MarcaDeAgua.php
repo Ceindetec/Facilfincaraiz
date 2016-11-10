@@ -10,4 +10,10 @@ class MarcaDeAgua extends Model
 
     protected $fillable = ['user_id', 'ruta'];
 
+    public function getUsuario()
+    {
+        return $this->belongsTo('facilfincaraiz\User',"user_id");
+    }
+
+
 }

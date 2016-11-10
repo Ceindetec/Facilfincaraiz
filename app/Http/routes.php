@@ -58,6 +58,12 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     Route::get('marcaDeAgua', 'AdministradorController@marcaDeAgua')->name('marcaDeAgua');
     Route::post('autoCompleUsuarios','AdministradorController@autoCompleUsuarios')->name('autoCompleUsuarios');
     Route::post('infoUsuario','AdministradorController@infoUsuario')->name('infoUsuario');
+    Route::post('eliminaMarcaDA', 'AdministradorController@eliminaMarcaDA')->name('eliminaMarcaDA');
+    Route::post('subirMarcaDA', 'AdministradorController@subirMarcaDA')->name('subirMarcaDA');
+
+
+
+
 
 });
 
@@ -74,17 +80,17 @@ Route::group(['middleware' => ['auth', 'usuario']], function () {
 });
 
 Route::post('mail','MailController@enviar')->name('enviar');
-
-
-
-
-Route::get("binmuebles","busquedasController@buscarinmuebles")->name("binmuebles");
-Route::get("vehiculos","busquedasController@buscarVehiculos")->name("buscarVehiculos");
 Route::post('marcas','usuarioController@getMarcas')->name('marcas');
 
+//Busqueda de vehiculos
+Route::get("vehiculos","busquedasController@buscarVehiculos")->name("buscarVehiculos");
 Route::post('filtroVehiculos','busquedasController@getVehiculos')->name('getVehiculos');
 Route::get("filtroVehiculos","busquedasController@buscarVehiculos")->name("buscarVehiculos");
-Route::get("articulo/{id}", 'busquedasController@getArticulo')->name('getArticulo');
+
+//Busqueda de inmuebles
+Route::get("inmuebles","busquedasController@buscarinmuebles")->name("binmuebles");
+
+Route::get("publicacion/{id}", 'busquedasController@getPublicacion')->name('getPublicacion');
 
 Route::get('password/email', 'Auth\PasswordController@getEmail')->name('getEmail');
 Route::post('password/email', 'Auth\PasswordController@postEmail')->name('postEmail');

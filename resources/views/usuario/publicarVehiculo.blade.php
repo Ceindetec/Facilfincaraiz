@@ -48,7 +48,7 @@
 					<div class="form-group">
 						<label for="titulo" class="col-sm-2 control-label">Imagenes</label>
 						<div class="col-sm-10">
-							<input type="file" id="files" name="files[]"  multiple  required />
+							<input type="file" id="files" name="files[]"  multiple  required style="width: 200px; height: 35px;"/>
 						</div>
 					</div>
 				</div>
@@ -77,7 +77,7 @@
 						<div class="form-group">
 							<label for="valor" class="col-sm-4 control-label">Precio</label>
 							<div class="col-sm-8">
-								{!!Form::text('precio',null,['id'=> 'precio', 'class'=>'form-control','placeholder'=>"precio del inmueble", 'required' , 'onkeypress'=>'return justNumbers(event)',"onkeyup"=>"format(this)" ,"onchange"=>"format(this)"])!!}
+								{!!Form::text('precio',null,['id'=> 'precio', 'class'=>'form-control','placeholder'=>"precio del Vehículo", 'required' , 'onkeypress'=>'return justNumbers(event)',"onkeyup"=>"format(this)" ,"onchange"=>"format(this)"])!!}
 							</div>
 						</div>
 					</div>
@@ -115,7 +115,7 @@
                                     <div class="input-group-addon">
 										<i class="fa fa-calendar" aria-hidden="true"></i>
                                     </div>
-                                    <input type="text" name="modelo" class="form-control pull-right" id="modelo" placeholder="Selecciona una fecha..." readonly required>
+                                    <input type="text" name="modelo" class="form-control pull-right" id="modelo" placeholder="Selecciona el modelo" required onkeypress="return false;" />
                                 </div>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
 						<div class="form-group">
 							<label for="kilometraje" class="col-sm-4 control-label">Kilometraje</label>
 							<div class="col-sm-8">
-								{!!Form::text('kilometraje',null,['class'=>'form-control','placeholder'=>"precio del inmueble", 'onkeypress'=>'return justNumbers(event)'])!!}
+								{!!Form::text('kilometraje',null,['class'=>'form-control','placeholder'=>"Kilometraje del vehículo", 'onkeypress'=>'return justNumbers(event)'])!!}
 							</div>
 						</div>
 					</div>
@@ -134,7 +134,7 @@
 						<div class="form-group">
 							<label for="color" class="col-sm-4 control-label">Color</label>
 							<div class="col-sm-8">
-								{!!Form::text('color',null,['id'=>'color','class'=>'form-control','placeholder'=>"precio del inmueble", 'required'])!!}
+								{!!Form::text('color',null,['id'=>'color','class'=>'form-control','placeholder'=>"Color del vehículo", 'required'])!!}
 							</div>
 						</div>
 					</div>
@@ -168,7 +168,7 @@
 						<div class="form-group">
 							{!! Form::label('departamento', 'Departamento (*)',['class'=>'col-sm-4 control-label']) !!}
 							<div class="col-sm-8">
-								{!!Form::select('departamento', $arrayDepartamento, null, ['class'=>"form-control",'placeholder' => 'Seleccione un Departamento'])!!}
+								{!!Form::select('departamento', $arrayDepartamento, null, ['class'=>"form-control",'placeholder' => 'Seleccione un Departamento','required'])!!}
 							</div>
 						</div>
 					</div>
@@ -177,7 +177,7 @@
 						<div class="form-group" id="divMinucipio">
 							{!! Form::label('municipio_id', 'Municipio (*)',['class'=>'col-sm-4 control-label']) !!}
 							<div class="col-sm-8">
-								{!!Form::select('municipio_id', [], null, ['class'=>"form-control",'placeholder' => 'Selecionar un Municipio'])!!}
+								{!!Form::select('municipio_id', [], null, ['class'=>"form-control",'placeholder' => 'Selecionar un Municipio','required'])!!}
 							</div>
 						</div>
 					</div>
@@ -259,7 +259,7 @@
 
 
 				<div class="row">
-					<textarea id='infoAdicional' name='infoAdicional' rows='10' cols='30' style='height:440px'></textarea>
+					<textarea id='infoAdicional' name='infoAdicional' rows='10' cols='30' style='height:440px' required></textarea>
 				</div>
 
 			<div class="row" style="margin-top: 20px;">
@@ -400,11 +400,11 @@
 					contentType: false,   // tell jQuery not to set contentType
 					success: function (result) {
 						if(result.estado){
-//							$("#submit").attr("disabled", true);
-//							alert("success","Perfecto","Su publicacion fue enviada con exito","<i class='fa fa-check' aria-hidden='true'></i>");
-//							setTimeout(function(){
-//								window.location="../publicar";
-//							}, 3000);
+							$("#submit").attr("disabled", true);
+							alert("success","Perfecto","Su publicacion fue enviada con exito","<i class='fa fa-check' aria-hidden='true'></i>");
+							setTimeout(function(){
+								window.location="../publicar";
+							}, 3000);
 
 
 						}else{
@@ -440,13 +440,6 @@
             });
         }
 
-		function justNumbers(e)
-		{
-			var keynum = window.event ? window.event.keyCode : e.which;
-			if (keynum == 8)
-				return true;
-			return /\d/.test(String.fromCharCode(keynum));
-		}
 		function alert(tipo,titulo,mensaje,icono) {
 			$("#alert").empty();
 			var html ="<div class='alert alert-"+tipo+"'>"+

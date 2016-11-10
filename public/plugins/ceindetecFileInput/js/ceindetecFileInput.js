@@ -14,7 +14,6 @@
             minType: [],
         }, option);
 
-
         this.each(function () {
 
             var elementoprimario = $(this);
@@ -120,14 +119,14 @@
                                             ullisError.appendChild(lierror);
                                             $(error).append(ullisError);
                                             $(contenPreviw).append(error);
-                                        }else if(this.width>=opc.maxWidthImage){
+                                        }else if(this.width > opc.maxWidthImage){
                                             $(divEliminar).trigger("click");
                                             var lierror = document.createElement("li");
                                             lierror.innerHTML = 'El ancho de la imagen "' + theFile.name + '" debe ser menor a ' + opc.maxWidthImage + 'px';
                                             ullisError.appendChild(lierror);
                                             $(error).append(ullisError);
                                             $(contenPreviw).append(error);
-                                        }else if(this.height>=opc.maxHeightImage){
+                                        }else if(this.height> opc.maxHeightImage){
                                             $(divEliminar).trigger("click");
                                             var lierror = document.createElement("li");
                                             lierror.innerHTML = 'El alto de la imagen "' + theFile.name + '" debe ser menor a ' + opc.maxHeightImage + 'px';

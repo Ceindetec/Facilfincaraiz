@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use facilfincaraiz\User;
 use facilfincaraiz\Departamento;
 use facilfincaraiz\Tipo;
+use facilfincaraiz\MarcaDeAgua;
 use facilfincaraiz\Http\Requests;
 use facilfincaraiz\Http\Controllers\Controller;
 use facilfincaraiz\GaleriaPortada;
@@ -64,8 +65,14 @@ class AdministradorController extends Controller
      */
     public function adminBanner()
     {
-        $imageSlider = GaleriaPortada::where('tipo', 'S')->get();
-        return view('Administrador/banner', compact('imageSlider'));
+        $data['imageSlider'] = GaleriaPortada::where('tipo', 'S')->get();
+        $data['imageInmuebles']= GaleriaPortada::where('tipo', 'I')->get();
+        $data['imageTerrenos']= GaleriaPortada::where('tipo', 'T')->get();
+        $data['imageVehiculos']= GaleriaPortada::where('tipo', 'V')->get();
+
+
+       // dd($data);
+        return view('Administrador/banner', $data);
     }
 
     /**
@@ -110,12 +117,40 @@ class AdministradorController extends Controller
             $galeria->ruta = $nombre;
             $galeria->tipo = $request->tipo;
             $galeria->save();
-
+            $this->scalarImgCategoria('images/admin/'.utf8_decode($nombre),$extension);
             return json_encode(array('ruta' => $nombre, 'id' => $galeria->id));
         }
         else
             return json_encode(array('error'=>'Archivo no permitido'));
     }
+
+
+    /**
+     * @param  string $ruta
+     */
+    private function scalarImgCategoria($ruta,$exten){
+
+        if($exten=="jpg"||$exten=="jpeg"){
+            $im = imagecreatefromjpeg($ruta);
+            //Creamos una imagen en blanco de tamaño $ancho_final  por $alto_final .
+            $tmp=imagecreatetruecolor(500,306);
+            //Ancho y alto de la imagen original
+            list($ancho,$alto)=getimagesize($ruta);
+            imagecopyresampled($tmp,$im,0,0,0,0,500, 306,$ancho,$alto);
+            imagejpeg($tmp, $ruta,100);
+            imagedestroy($im);
+        }elseif ($exten=="png"){
+            $im = imagecreatefrompng($ruta);
+            //Creamos una imagen en blanco de tamaño $ancho_final  por $alto_final .
+            $tmp=imagecreatetruecolor(500,306);
+            //Ancho y alto de la imagen original
+            list($ancho,$alto)=getimagesize($ruta);
+            imagecopyresampled($tmp,$im,0,0,0,0,500, 306,$ancho,$alto);
+            imagepng($tmp, $ruta,100);
+            imagedestroy($im);
+        }
+    }
+
 
     /**
      * Elimina una imagen de una publicacion.
@@ -207,12 +242,32 @@ class AdministradorController extends Controller
         $resultado["draw"] = isset($request->draw)? intval($request->draw): 0;
 
         $resultado["star"]=$request->start;
-        $resultado["data"] = Publicacion::skip($request->start)->take($request->length)
+         $publicaciones = Publicacion::skip($request->start)->take($request->length)
             ->where("estado",$estado)
             ->where('titulo', 'like', "%".$request->search["value"]."%")
             ->orderBy($request->columns[$request->order[0]["column"]]["data"], $request->order[0]["dir"])
             ->get();
 
+        foreach ($publicaciones as $publicacione){
+            switch ($publicacione->tipo){
+                case "I":$publicacione->tipo="Inmueble";
+                    break;
+                case "T":$publicacione->tipo="Terreno";
+                    break;
+                case "V":$publicacione->tipo="Vehículo";
+                    break;
+            }
+            switch ($publicacione->accion){
+                case "V":$publicacione->accion="Vender";
+                    break;
+                case "P":$publicacione->accion="Permutar";
+                    break;
+                case "A":$publicacione->accion="Arrendar";
+                    break;
+            }
+        }
+
+        $resultado["data"]= $publicaciones;
         $resultado["recordsTotal"]= count(Publicacion::where("estado",$estado)->get());
 
         $resultado["recordsFiltered"]= count(Publicacion::where("estado",$estado)->where('titulo', 'like', "%".$request->search["value"]."%")->get());
@@ -253,7 +308,7 @@ class AdministradorController extends Controller
         $data["imagenes"]=$galerias;
         $data["user"]=$publicacion->getUsuario()->select('id', "nombres", "apellidos","email","telefono")->get()[0];
 
-        $this->insertarmarcadeagua($galerias);
+        //$this->insertarmarcadeagua($galerias,$publicacion->user_id);
 
         //dd($data);
         return view('Administrador.validarPublicVehiculo',$data);
@@ -292,7 +347,7 @@ class AdministradorController extends Controller
         $data["imagenes"]=$galerias;
         $data["user"]=$publicacion->getUsuario()->select('id', "nombres", "apellidos","email","telefono")->get()[0];
 
-        $this->insertarmarcadeagua($galerias);
+        //$this->insertarmarcadeagua($galerias,$publicacion->user_id);
 
         //dd($data);
 
@@ -331,7 +386,7 @@ class AdministradorController extends Controller
         $data["imagenes"]=$galerias;
         $data["user"]=$publicacion->getUsuario()->select('id', "nombres", "apellidos","email","telefono")->get()[0];
 
-        $this->insertarmarcadeagua($galerias);
+        //$this->insertarmarcadeagua($galerias,$publicacion->user_id);
         return view('Administrador.validarPublicTerreno',$data);
     }
 
@@ -388,18 +443,25 @@ class AdministradorController extends Controller
 
         }
         $galerias=$publicacion->getGaleria;
-        $this->insertarmarcadeagua($galerias);
+        $this->insertarmarcadeagua($galerias,$publicacion->user_id);
         return $publicacion;
     }
 
 
-    function insertarmarcadeagua($galerias){
+    function insertarmarcadeagua($galerias,$user_id){
+
+
+        $marcaDA = MarcaDeAgua::where("user_id",$user_id)->first();
 
         foreach ($galerias as $galeria){
             // dd($galeria);
             //$this->insertarmarcadeagua('images/publicaciones/'.$galeria->ruta,'images/marcaAgua.png',10);
             // Cargar la estampa y la foto para aplicarle la marca de agua
-            $estampa = imagecreatefrompng('images/marcaAgua.png');
+
+            if($marcaDA==null)
+                $estampa = imagecreatefrompng('images/logo.png');
+            else
+                $estampa = imagecreatefrompng('images/marcasDeAgua/'.$marcaDA->ruta);
 
             // Establecer los márgenes para la estampa y obtener el alto/ancho de la imagen de la estampa
             $margen_dcho = 10;
@@ -438,8 +500,15 @@ class AdministradorController extends Controller
     /**
      * @return string
      */
-    public function marcaDeAgua(){
-        return view('Administrador.marcaDeAgua');
+    public function marcaDeAgua(Request $request){
+
+        $marcaDA = MarcaDeAgua::paginate(10);
+
+        if($request->ajax()){
+            return response()->json(view('Administrador.usuariosMarcaDA',compact("marcaDA"))->render());
+        }
+
+        return view('Administrador.marcaDeAgua',compact("marcaDA"));
     }
     /**
      *
@@ -468,13 +537,18 @@ class AdministradorController extends Controller
 
         $usuarios = User::select("id","nombres","apellidos","email","telefono")->where("email",$request->input("nombre"))->first();
 
-       // dd($usuarios);
+        //dd($usuarios);
 
         if($usuarios!=null) {
             $data["nombres"] = $usuarios->nombres . " " . $usuarios->apellidos;
             $data["email"] = $usuarios->email;
             $data["telefono"] = $usuarios->telefono;
-            $data["ruta"] = $usuarios->getMarcaDeAgua->ruta;
+            if($usuarios->getMarcaDeAgua!=null){
+                $marcaDA=$usuarios->getMarcaDeAgua;
+                $data["ruta"] = $marcaDA->ruta;
+                $data["id_ruta"] = $marcaDA->id;
+            }else
+                $data["ruta"]=null;
             $data["bandera"] = true;
         }else{
             $data["bandera"] = false;
@@ -483,6 +557,67 @@ class AdministradorController extends Controller
         return $data;
 
     }
+
+    /**
+     * @return string
+     */
+    public function eliminaMarcaDA(Request $request)
+    {
+        return $this->removeMarcaDA($request->id);
+    }
+
+    /**
+     * @return string
+     */
+    private function removeMarcaDA($id){
+
+        $marcaDA = MarcaDeAgua::find($id);
+        $ruta= $marcaDA->ruta;
+        $affectedRows = $marcaDA->delete();
+
+        if ($affectedRows){
+            unlink('images/marcasDeAgua/'.utf8_decode($ruta));
+            return ["estado"=>true];
+        }else{
+            return ["estado"=>false];
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function subirMarcaDA(Request $request){
+
+        $usuarios = User::select("id")->where("email",$request->input("email"))->first();
+
+        if($request->imagenes)
+            foreach ($request->imagenes as $index => $imagene){
+
+                $type=explode("/", $imagene->getMimeType());
+
+                $archivo = $imagene->getClientOriginalName();
+                $trozos = explode(".", $archivo);
+                $extension = end($trozos);
+                if($type[0]=="image"){
+                    $nombre = time().$index.".".strtolower($extension);
+                    $imagene->move('images/marcasDeAgua', utf8_decode($nombre));
+
+                    if($usuarios->getMarcaDeAgua==null){
+                        $marcaDA = new MarcaDeAgua();
+                        $marcaDA->user_id=$usuarios->id;
+                    }else{
+                        $marcaDA = MarcaDeAgua::where("user_id",$usuarios->id)->first();
+                        unlink('images/marcasDeAgua/'.utf8_decode($marcaDA->ruta));
+                    }
+                        $marcaDA->ruta = $nombre;
+                        $marcaDA->save();
+                }
+
+            }
+            return ["estado"=>true];
+    }
+
+
 
 
 }

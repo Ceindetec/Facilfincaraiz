@@ -12,60 +12,23 @@ use facilfincaraiz\Departamento;
 
 class busquedasController extends Controller
 {
-
     /////////////////////////////////////////////////////////////////////////////////
     ///////////////////////// BUSQUEDA DE VEHICULOS /////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * @return retorna bista inicial de los filtros de busquedas para los inmuebles
-     */
-    public function buscarinmuebles()
-    {
-
-        $datas = Departamento::all(["id","departamento"]);
-
-        $items = array();
-        foreach ($datas as $data)
-        {
-            $items[$data->id] = $data->departamento;
-        }
-        return view("busquedas.Inmuebles.index", compact("items"));
-    }
-
     /**
      * Obtiene listado de departamentos y tipos de vehiculos, devuelve vista para buscar vehiculos
      * @return vista inicial de los filtros de busquedas para los VEHICULOS
      */
     public function buscarVehiculos()
     {
-        $info = $this->obtenerInfoVistaVehiculos();
-        $data["arrayDepartamento"] = $info["arrayDepartamento"];
-        $data["arrayCategorias"] = $info["arrayCategorias"];
-
+        $data["arrayDepartamento"] = $this->listarDepartamentos();
+        $data["arrayCategorias"] = $this->listarTiposCategoria('V');
         return view('busquedas.Vehiculos.index', $data);
-    }
-
-    public function obtenerInfoVistaVehiculos(){
-        $departamentos= Departamento::select('id','departamento')->get();
-        $arrayDepartamento = array();
-        foreach ($departamentos as $departamento){
-            $arrayDepartamento[$departamento->id]= $departamento->departamento;
-        }
-        $data["arrayDepartamento"]=$arrayDepartamento;
-
-        $tipos= Tipo::select("id","tipo")->where("categoria","V")->get();
-        $arrayCategorias = array();
-        foreach ($tipos as $tipo){
-            $arrayCategorias[$tipo->id]= $tipo->tipo;
-        }
-        $data["arrayCategorias"]=$arrayCategorias;
-        return $data;
     }
 
     /**
      * Obtiene listado de vehiculos filtrandolos por criterios ingresados en vista de filtro de vehiculos
-     * @return vista
+     * @return vista con listado de vehiculos o solo listado (data)
      */
     public function getVehiculos(Request $request){
         $publicacion = new Publicacion();
@@ -89,14 +52,36 @@ class busquedasController extends Controller
             $data["modelo"] = $request->modelo;
             $data["departamento"] = $request->departamento;
             $data["municipio"] = $request->municipio_id;
-            $infoAdicional = $this->obtenerInfoVistaVehiculos();
-            $data["arrayDepartamento"] = $infoAdicional["arrayDepartamento"];
-            $data["arrayCategorias"] = $infoAdicional["arrayCategorias"];
+            $data["arrayDepartamento"] = $this->listarDepartamentos();
+            $data["arrayCategorias"] = $this->listarTiposCategoria('V');
             return view('busquedas.Vehiculos.listado', $data);
         }
     }
 
-    public function getArticulo($id){
+
+    /////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////// BUSQUEDA DE INMUEBLES /////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+    /** Obtiene listado de departamentos y categorias, devuelve vista para busqueda de inmuebles
+     * @return vista inicial de los filtros de busquedas para los INMUEBLES
+     */
+    public function buscarinmuebles()
+    {
+        $data["arrayDepartamento"] = $this->listarDepartamentos();
+        $data["arrayCategorias"] = $this->listarTiposCategoria('I');
+        return view("busquedas.Inmuebles.index", $data);
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////// OTRAS FUNCIONES ///////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Obtiene publicacion solicitado por id
+     * @param $id int id correspondiente a la publicacion a detallar
+     * @return vista respectiva (vehiculo, terreno o inmueble) con descripcion completa de la publicacion
+     */
+    public function getPublicacion($id){
         $publicacion = Publicacion::find($id);
         if ($publicacion != null){
             $publicacion->galeria;
@@ -107,6 +92,8 @@ class busquedasController extends Controller
                 $publicacion->vehiculo = $publicacion->getVehiculo;
                 $publicacion->vehiculo->tipo = $publicacion->vehiculo->getTipo->tipo;
                 $publicacion->vehiculo->marca = $publicacion->vehiculo->getMarca->marca;
+                $data['publicacion'] = $publicacion;
+                return view('busquedas.Vehiculos.detalleVehiculo', $data);
             }
             elseif($publicacion->tipo == "I"){
 
@@ -115,12 +102,38 @@ class busquedasController extends Controller
 
             }
 //            dd($publicacion);
-            $data['publicacion'] = $publicacion;
-            return view('busquedas.Vehiculos.detalleArticulo', $data);
+
         }
         else
             return redirect()->back();
 
+    }
+
+    /**
+     * Obtiene listado de tipos de Categoria solicitada (Vehiculo, Inmueble, Terreno)
+     * @param $categoria string sigla de categoria solicitada (I,V,T)
+     * @return array con tipos de vehiculo
+     */
+    public function listarTiposCategoria($categoria){
+        $tipos= Tipo::select("id","tipo")->where("categoria",$categoria)->get();
+        $arrayCategorias = array();
+        foreach ($tipos as $tipo){
+            $arrayCategorias[$tipo->id]= $tipo->tipo;
+        }
+        return $arrayCategorias;
+    }
+
+    /**
+     * Obtiene listado de departamentos
+     * @return array con departamentos
+     */
+    public function listarDepartamentos(){
+        $departamentos= Departamento::select('id','departamento')->get();
+        $arrayDepartamento = array();
+        foreach ($departamentos as $departamento){
+            $arrayDepartamento[$departamento->id]= $departamento->departamento;
+        }
+        return $arrayDepartamento;
     }
 
 

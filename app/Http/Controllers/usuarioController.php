@@ -14,6 +14,7 @@ use facilfincaraiz\Departamento;
 use facilfincaraiz\Municipio;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use facilfincaraiz\GaleriaPortada;
 
 use facilfincaraiz\Http\Requests;
 use facilfincaraiz\Http\Controllers\Controller;
@@ -42,7 +43,27 @@ class usuarioController extends Controller
 
     public function publicar()
     {
-        return view("usuario.publicar");
+        $imgInmueble=GaleriaPortada::where('tipo', 'I')->get();
+        if(!$imgInmueble->isEmpty())
+            $datos['imageInmueble']="images/admin/".$imgInmueble->random(1)->ruta;
+        else
+            $datos['imageInmueble']="images/imgInmueble.jpg";
+
+
+        $imgTerreno=GaleriaPortada::where('tipo', 'T')->get();
+        if(!$imgTerreno->isEmpty())
+            $datos['imageTerreno']="images/admin/".$imgTerreno->random(1)->ruta;
+        else
+            $datos['imageTerreno']="images/imagTerreno.jpg";
+
+
+        $imgVehiculo=GaleriaPortada::where('tipo', 'V')->get();
+        if(!$imgVehiculo->isEmpty())
+            $datos['imageVehiculo']="images/admin/".$imgVehiculo->random(1)->ruta;
+        else
+            $datos['imageVehiculo']="images/imagVehiculo.jpg";
+
+        return view("usuario.publicar",$datos);
     }
 
     public function publicarXCategoria($categoria)
@@ -166,6 +187,7 @@ class usuarioController extends Controller
 
             }
             DB::commit();
+            $this->enviarCorreoPublic($publicacion->tipo,$publicacion->id);
             $data=["estado"=>true,"mensaje"=>"exito"];
         }catch (\Exception $e){
             DB::rollBack();
@@ -221,6 +243,7 @@ class usuarioController extends Controller
 
         }
             DB::commit();
+        $this->enviarCorreoPublic($publicacion->tipo,$publicacion->id);
         $data=["estado"=>true,"mensaje"=>"exito"];
 
         }catch (\Exception $e){
@@ -232,5 +255,25 @@ class usuarioController extends Controller
         return $data;
 
     }
+
+    private function enviarCorreoPublic($tipo,$id){
+
+        if($tipo=="I"){
+            $ruta= "validarPublicInmueble/".$id;
+        }else if($tipo=="V"){
+            $ruta= "validarPublicVehiculo/".$id;
+        }else{
+            $ruta= "validarPublicTerreno/".$id;
+        }
+
+        $data["email"]= Auth::user()->email;
+        $data["usuario"]= Auth::user();
+        $data["ruta"]= $ruta;
+        //dd($data);
+        MailController::sePublico($data);
+
+
+    }
+
 
 }

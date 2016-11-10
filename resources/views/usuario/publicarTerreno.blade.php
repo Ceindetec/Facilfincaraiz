@@ -132,7 +132,7 @@
 						<div class="form-group" style="margin-top: 20px;">
 							{!! Form::label('departamento', 'Departamento (*)',['class'=>'col-sm-4 control-label']) !!}
 							<div class="col-sm-8">
-								{!!Form::select('departamento', $arrayDepartamento, null, ['class'=>"form-control",'placeholder' => 'Seleccione un Departamento'])!!}
+								{!!Form::select('departamento', $arrayDepartamento, null, ['class'=>"form-control",'placeholder' => 'Seleccione un Departamento','required'])!!}
 							</div>
 						</div>
 						<div class="form-group" id="divMinucipio">

@@ -47,24 +47,28 @@
             margin: 0 8px 4px 8px;
         }
         .conteFoto{
-            height: 150px;
+            height: 180px;
         }
         .foto{
             height: 100%;
         }
         .bordered{
             border: solid 2px #f5f5f5;
-            /*border-radius: 5px;*/
+        }
+        .ubic{
+            color: #8c8c8c;
         }
         @media (max-width: 600px) {
-            .conteFoto{
+            .conteFoto {
                 padding: 0;
                 height: 130px;;
             }
-            .tiraPublicacion{
+
+            .tiraPublicacion {
                 margin: 0 0 4px 0;
             }
-            #seccionResultados{
+
+            #seccionResultados {
                 padding: 0;
             }
         }
@@ -74,6 +78,14 @@
             background: #e8573e;
             color: white;
             margin-bottom: 7px;
+            max-width: 200px;
+            min-width: 120px;
+        }
+        .precio{
+            color:#e8573e;
+        }
+        .marginBot10{
+            margin-bottom: 10px
         }
     </style>
 
@@ -92,38 +104,50 @@
                 <div id="listado">
                     @foreach($publicaciones as $publicacion)
                         <div class="row tiraPublicacion bordered puntero" data-id="{{$publicacion->id}}">
-                            <div class="col-xs-3 conteFoto">
+                            <div class="col-xs-4 conteFoto">
                                 <div class="foto">
                                     <img class="img-rounded img-responsive" src='images/publicaciones/{{$publicacion->ruta}}' alt='' style="height: 100%; width: 100%">
                                 </div>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-xs-8">
                                 @if($publicacion->destacado != "")
-                                    <div class="col-xs-6 col-xs-offset-6 destacado bordered text-center">
-                                        Destacado
+                                    <div class="col-xs-9 col-xs-offset-2 text-center">
+                                        <div class="destacado bordered">
+                                            Destacado
+                                        </div>
                                     </div>
                                 @endif
                                 <div class="col-xs-12">
-                                    <b><h3>{{ucwords($publicacion->titulo)}}</h3></b><br>
-                                    <p>
-                                        {{$publicacion->modelo}} - <span class="enmascarar">{{$publicacion->kilometraje}}</span>&nbsp;km
-                                        <br>
-                                        @if($mensaje == "sugerencias")
-                                            Tipo: {{$publicacion->tipo}}<br>
-                                            Marca: {{$publicacion->marca}}
-                                        @endif
-                                    </p>
-                                    <p class="conver">
-                                        en {{$publicacion->municipio}},&nbsp;{{$publicacion->departamento}}
+                                    <b><h3>{{ucwords($publicacion->titulo)}}</h3></b>
+                                    <p class="marginBot10">
+                                        <i class="fa fa-map-marker"></i>
+                                        <span class="conver ubic"> {{$publicacion->municipio.", ".$publicacion->departamento}}</span>
                                     </p>
                                 </div>
-                            </div>
-                            <div class="col-xs-3">
-                                <div class="text-right">
+                                <div class="hidden-sm hidden-md hidden-lg">
+                                    <br>&nbsp;
+                                </div>
+                                <div class="col-xs-12 precio marginBot10">
+                                    <b><h3>$<span class="enmascarar">{{$publicacion->precio}}</span></h3></b>
+                                </div>
+                                <div class="hidden-xs marginBot10">
+                                    <div class="col-xs-5">
+                                        <b>Modelo: </b>{{$publicacion->modelo}}
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <b>Kilometraje: </b><span class="enmascarar">{{$publicacion->kilometraje}}</span>&nbsp;km
+                                    </div>
+                                    @if($mensaje != "coincidencias exactas")
+                                        <div class="col-xs-5">
+                                            <b>Tipo: </b>{{$publicacion->tipo}}
+                                        </div>
+                                        <div class="col-xs-5">
+                                            <b>Marca: </b>{{$publicacion->marca}}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="col-xs-12 text-right" style="margin-top: 10px; padding: 0">
                                     {{$publicacion->fecha}}
-                                </div>
-                                <div style="margin-top: 40px">
-                                    <b><h4>$<span class="enmascarar">{{$publicacion->precio}}</span></h4></b>
                                 </div>
                             </div>
                         </div>
@@ -310,7 +334,7 @@
         });
 
         $("#listado").on('click', '.tiraPublicacion', function () {
-            window.location="articulo/"+$(this).data("id");
+            window.location="publicacion/"+$(this).data("id");
         });
 
         $("#paginacion").on('click', '.pagina', function () {
@@ -383,25 +407,52 @@
                     var resultados = generarAnuncio(data.mensaje, data.cantidad);
                     data.publicaciones.forEach(function(entry){
                         resultados = resultados + '<div class="row tiraPublicacion bordered puntero" data-id="'+entry.id+'">' +
-                                                        '<div class="col-xs-3 conteFoto">' +
+                                                        '<div class="col-xs-4 conteFoto">' +
                                                             '<div class="foto">' +
                                                                 '<img class="img-rounded img-responsive" src="images/publicaciones/'+entry.ruta+'" style="height: 100%; width: 100%">' +
                                                             '</div>' +
                                                         '</div>' +
-                                                        '<div class="col-xs-6">';
+                                                        '<div class="col-xs-8">';
                         if(entry.destacado != "") {
-                            resultados = resultados +'<div class="col-xs-6 col-xs-offset-6 destacado bordered text-center">Destacado</div>';
+                            resultados = resultados +'<div class="col-xs-9 col-xs-offset-2 text-center">' +
+                                                            '<div class="destacado bordered">' +
+                                                                'Destacado' +
+                                                            '</div>' +
+                                                        '</div>';
                         }
                         resultados = resultados + '<div class="col-xs-12">' +
-                                                        '<b><h3 class="conver">'+entry.titulo+'</h3></b><br>'+
-                                                        '<p>'+entry.modelo+' - <span class="enmascarar">'+entry.kilometraje+'</span>&nbsp;km<br>';
-                        if(data.mensaje == "sugerencias") {
-                            resultados = resultados + 'Tipo: '+entry.tipo+'<br>'+
-                                                      'Marca: '+entry.marca;
+                                                        '<b><h3 class="conver">'+entry.titulo+'</h3></b>'+
+                                                        '<p class="marginBot10">' +
+                                                            '<i class="fa fa-map-marker"></i> '+
+                                                            '<span class="conver ubic">'+entry.municipio+', '+entry.departamento+'</span>' +
+                                                        '</p>' +
+                                                    '</div>' +
+                                                 '<div class="hidden-sm hidden-md hidden-lg">' +
+                                                    '<br>&nbsp;' +
+                                                 '</div>' +
+                                                 '<div class="col-xs-12 precio marginBot10">' +
+                                                    '<b><h3>$<span class="enmascarar">'+entry.precio+'</span></h4></b>' +
+                                                 '</div>' +
+                                                 '<div class="hidden-xs marginBot10">' +
+                                                    '<div class="col-xs-5">' +
+                                                        '<b>Modelo: </b>' + entry.modelo +
+                                                    '</div>' +
+                                                    '<div class="col-xs-7">' +
+                                                        '<b>Kilometraje: </b><span class="enmascarar">' + entry.kilometraje + '</span>&nbsp;km' +
+                                                    '</div>';
+                        if(data.mensaje != "coincidencias exactas") {
+                            resultados = resultados + '<div class="col-xs-5">' +
+                                                            '<b>Tipo: </b>' + entry.tipo+
+                                                      '</div>' +
+                                                      '<div class="col-xs-5">' +
+                                                            '<b>Marca: </b>' + entry.marca +
+                                                      '</div>';
                         }
-                        resultados = resultados + '</p>' +
-                                                  '<p class="conver">en '+entry.municipio+',&nbsp;'+entry.departamento+'</p>'+
-                                                  '</div></div><div class="col-xs-3"><div class="text-right">'+entry.fecha+'</div><div style="margin-top: 40px"><b><h4>$<span class="enmascarar">'+entry.precio+'</span></h4></b></div></div></div>';
+                        resultados = resultados + '</div>' +
+                                                  '<div class="col-xs-12 text-right" style="margin-top: 10px; padding: 0">' +
+                                                        entry.fecha +
+                                                  '</div></div></div>';
+
                     });
                     $("#listado").html(resultados);
                     var active = (data.pagina==1)?'disabled':'';

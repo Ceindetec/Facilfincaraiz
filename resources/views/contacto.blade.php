@@ -32,8 +32,8 @@
 					<p>22-56-2-9 Sit Amet, Lorem,</p>--}}
 					<p>Colombia</p>
 					<p>Telefono: 3107536126 - 3214430862</p>
-					<p>Email: <a href="mailto:info@example.com">ventas@facilfincaraiz.com</a></p>
-					<p>Siguenos en: <a href="#">Facebook</a>, <a href="#">Twitter</a></p>
+					<p>Email: <a href="mailto:ventas@facilfincaraiz.com">ventas@facilfincaraiz.com</a></p>
+					<p>Siguenos en: <a href="https://www.facebook.com/www.facilfincaraiz/" target="_blank">Facebook</a>, <a href="#">Twitter</a></p>
 					{{--<p>Fax: (000) 000 00 00 0</p>--}}
 					<h4>Horario de atención</h4>
 					<p>Lunes - viernes: 8:00 am a 6:00 pm</p>

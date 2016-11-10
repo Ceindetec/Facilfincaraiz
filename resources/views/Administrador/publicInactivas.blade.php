@@ -76,18 +76,13 @@
         $("#tablaPublicaciones").on("click",".validar",function () {
 
             var publicacion= table.row( $(this).parents('tr') );
-
-            console.log(publicacion.data()["id"]);
-
-            if(publicacion.data()["tipo"]=="I"){
+            if(publicacion.data()["tipo"]=="Inmueble"){
                 window.location= "validarPublicInmueble/"+publicacion.data()["id"];
-            }else if(publicacion.data()["tipo"]=="V"){
+            }else if(publicacion.data()["tipo"]=="Vehículo"){
                 window.location= "validarPublicVehiculo/"+publicacion.data()["id"];
             }else{
                 window.location= "validarPublicTerreno/"+publicacion.data()["id"];
             }
-
-
         });
 
 

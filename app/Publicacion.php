@@ -41,7 +41,7 @@ class Publicacion extends Model
             $data["cantidad"]=$cantidadP[0]->total;
             $from = $from .", galerias g, marcas mar, tipos t";
             $where = $where . " AND  p.id=g.publicacion_id AND v.marca_id=mar.id AND v.tipo_id=t.id";
-            $listado = \DB::select(\DB::raw("Select p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
+            $listado = \DB::select(\DB::raw("Select p.accion, p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
             $data["resultados"]=$listado;
             $data["mensaje"]="coincidencias exactas";
         }
@@ -54,7 +54,7 @@ class Publicacion extends Model
                 $data["cantidad"]=$cantidadP[0]->total;
                 $from = $from .", galerias g, marcas mar, tipos t";
                 $where = $where . " AND  p.id=g.publicacion_id AND v.marca_id=mar.id AND v.tipo_id=t.id";
-                $listado = \DB::select(\DB::raw("Select p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
+                $listado = \DB::select(\DB::raw("Select p.accion, p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
                 $data["resultados"]=$listado;
                 $data["mensaje"]="solo dpto y categoria";
             }
@@ -83,7 +83,7 @@ class Publicacion extends Model
                     $data["cantidad"]=$cantidadP[0]->total;
                     $from = $from .", galerias g, departamentos d , municipios m, marcas mar, tipos t";
                     $where = $where . " AND p.id=g.publicacion_id AND d.id=m.id_dpto AND m.id=p.municipio_id AND v.marca_id=mar.id AND v.tipo_id=t.id";
-                    $listado = \DB::select(\DB::raw("Select p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
+                    $listado = \DB::select(\DB::raw("Select p.accion, p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
                     $data["resultados"]=$listado;
                     $data["mensaje"]="exacto sin dpto";
                 }
@@ -95,16 +95,16 @@ class Publicacion extends Model
                         $data["cantidad"]=$cantidadP[0]->total;
                         $from = $from .", galerias g, departamentos d , municipios m, marcas mar, tipos t";
                         $where = $where . " AND  p.id=g.publicacion_id AND d.id=m.id_dpto AND m.id=p.municipio_id";
-                        $listado = \DB::select(\DB::raw("Select p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
+                        $listado = \DB::select(\DB::raw("Select p.accion, p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
                         $data["resultados"]=$listado;
                         $data["mensaje"]="solo categoria";
                     }
                     else{
                         $from = " FROM publicaciones p, vehiculos v, galerias g, departamentos d , municipios m, marcas mar, tipos t";
                         $where = " WHERE p.tipo='V' AND p.estado='A' AND p.articulo_id=v.id AND  p.id=g.publicacion_id AND d.id=m.id_dpto AND m.id=p.municipio_id AND v.marca_id=mar.id AND v.tipo_id=t.id";
-                        $listado = \DB::select(\DB::raw("Select p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC"));
+                        $listado = \DB::select(\DB::raw("Select p.accion, p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC"));
                         $data["cantidad"] = count($listado);
-                        $listado = \DB::select(\DB::raw("Select p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
+                        $listado = \DB::select(\DB::raw("Select p.accion, p.id, p.titulo, p.destacado, d.departamento, m.municipio, v.modelo, p.precio, v.cilindraje, v.kilometraje, g.ruta, mar.marca, t.tipo, p.fecha".$from.$where." GROUP BY p.id ORDER BY p.destacado DESC, p.fecha DESC LIMIT ".($pagina-1)*10 . ",10"));
                         $data["resultados"] = $listado;
                         $data["mensaje"]="descarte";
                     }

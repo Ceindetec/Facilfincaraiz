@@ -15,18 +15,35 @@ class MailController extends Controller
     /**
      * @return string
      */
-    public function enviar(Request $request)
-    {
+    public function enviar(Request $request){
         global  $email;
         $email = $request->email;
         Mail::send("emails.contacto",$request->all(),function ($msj){
             global  $email;
-            $msj->subject("contacto enFutbol");
-            $msj->to("informacion.enfutbol.co@gmail.com");
+            $msj->subject("Contacto");
+            $msj->to("ventas@facilfincaraiz.com");
             $msj->replyTo($email, $name = null);
-
         });
         //Session::flash('message','Mensaje fue enviado correctamente');
         return "exito";
     }
+
+
+    /**
+     * @return string
+     */
+    public static function sePublico($request){
+
+        global  $email;
+        $email = $request["email"];
+        Mail::send("emails.publicaciones",$request,function ($msj){
+            global  $email;
+            $msj->subject("Publicaciones");
+            $msj->to("ventas@facilfincaraiz.com");
+            $msj->replyTo($email, $name = null);
+        });
+        return "exito";
+    }
+
+
 }

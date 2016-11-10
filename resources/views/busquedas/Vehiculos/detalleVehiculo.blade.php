@@ -127,7 +127,7 @@
                 </div>
                 <div class="single-right">
                     <h3 class="conver">{{$publicacion->titulo}}</h3>
-                    <i class="fa fa-map-marker"></i><span class="conver location"> {{$publicacion->municipio->municipio.",".$publicacion->departamento}}</span>
+                    <i class="fa fa-map-marker"></i><span class="conver location"> {{$publicacion->municipio->municipio.", ".$publicacion->departamento}}</span>
                     {{--<div class="id"><h4>ID: SB2379</h4></div>--}}
                     {{--<form action="" class="sky-form">--}}
                         {{--<fieldset>--}}

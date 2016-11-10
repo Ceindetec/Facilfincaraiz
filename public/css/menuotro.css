@@ -34,7 +34,7 @@ header nav ul li a:hover {
     color:#ff5d56 !important;
 }
 
-.active{
+li.active, a.active{
     color:#ff5d56 !important;
 }
 

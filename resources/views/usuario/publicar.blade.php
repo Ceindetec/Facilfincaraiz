@@ -19,7 +19,7 @@
 			<div class="content-grid l-grids">
 				<a href="{{route("publicarXCategoria","Inmuebles")}}">
 					<figure class="effect-bubba">
-						<img src="images/b1.jpg" alt=""/>
+						<img src="{{$imageInmueble}}" alt=""/>
 						<figcaption>
 							<h4>Inmuebles </h4>
 							<p>In sit amet sapien eros Integer in tincidunt labore et dolore magna aliqua</p>
@@ -34,7 +34,7 @@
 			<div class="content-grid l-grids">
 				<a href="{{route("publicarXCategoria","Terrenos")}}">
 					<figure class="effect-bubba">
-						<img src="images/b2.jpg" alt=""/>
+						<img src="{{$imageTerreno}}" alt=""/>
 						<figcaption>
 							<h4>Terrenos </h4>
 							<p>In sit amet sapien eros Integer in tincidunt labore et dolore magna aliqua</p>
@@ -49,7 +49,7 @@
 			<div class="content-grid l-grids">
 				<a href="{{route("publicarXCategoria","Vehiculos")}}">
 					<figure class="effect-bubba">
-						<img src="images/b3.jpg" alt=""/>
+						<img src="{{$imageVehiculo}}" alt=""/>
 						<figcaption>
 							<h4>Vehículos </h4>
 							<p>In sit amet sapien eros Integer in tincidunt labore et dolore magna aliqua</p>
