@@ -108,7 +108,6 @@
                     $("#municipio_id").empty();
                     $("#municipio_id").append("<option value=''>Selecciona un municipio</option>");
                 }else{
-                    //alert("el id es "+$("#departamento").val());
                     $.ajax({
                         type: "POST",
                         context: document.body,

@@ -166,7 +166,7 @@
                                     <a href="#" data-page="{{$i}}" onclick="return false" class="pagina"><span>{{$i}} <span class="sr-only">(current)</span></span></a>
                                 </li>
                             @endfor
-                            <li class="{{($cantidad/10 == 1)?'disabled':''}}">
+                            <li class="{{(ceil($cantidad/10) == 1)?'disabled':''}}">
                                 <a href="#" onclick="return false" aria-label="Next" class="sgte">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>

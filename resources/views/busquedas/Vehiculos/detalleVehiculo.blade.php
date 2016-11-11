@@ -11,53 +11,68 @@
             margin: 0 auto;
             height: 100%;
         }
+
         .flexslider {
             margin: 0 0 20px;
         }
+
         .sofaset-info {
             margin: 1em 0;
         }
+
         .single-bottom1 h6 {
             margin-top: 1.5em;
         }
+
         .sofaset-info h4 {
             margin-bottom: 0.5em;
         }
-        .det{
+
+        .det {
             margin-top: 0;
         }
-        .sofaset-info{
+
+        .sofaset-info {
             border-bottom: 1px solid black;
             margin: 0;
             padding: 0 0 2em 0;
         }
+
         .product-table {
             border-top: 0;
             padding-top: 0;
         }
-        .item-sec h4{
+
+        .item-sec h4 {
             margin-top: 0;
         }
+
         ul.place li {
             padding: 4px 6px;
         }
+
         ul.place li span, .location {
             color: #8c8c8c;;
         }
+
         .item-sec {
             padding: 1em 0 2em 0;
-            margin-top:0;
+            margin-top: 0;
         }
-        .m_2{
+
+        .m_2 {
             margin-bottom: 1em;
         }
-        #adicionales, .obj{
+
+        #adicionales, .obj {
             padding: 0 15px;
         }
-        textarea{
+
+        textarea {
             resize: none;
         }
-        .single-right h3{
+
+        .single-right h3 {
             margin-bottom: 0.2em;
         }
 
@@ -66,41 +81,140 @@
                 height: 200px !important;
             }
         }
+
         @media (min-width: 481px) and (max-width: 800px) {
             .flexslider .slides > li {
                 height: 180px !important;
             }
+
             .rsidebar {
                 padding-left: 15px;
                 padding-right: 3em;
             }
         }
-        @media (min-width: 801px){
+
+        @media (min-width: 801px) {
             .flexslider .slides > li {
                 height: 180px !important;
             }
-            .flexslider .slides img{
+
+            .flexslider .slides img {
                 padding: 0 15px;
                 margin: 0 auto;
             }
         }
+
         @media (min-width: 801px) and (max-width: 991px) {
             .rsidebar {
                 padding-left: 15px;
                 padding-right: 3em;
             }
         }
-        @media (min-width: 992px){
+
+        @media (min-width: 992px) {
             .rsidebar {
                 margin: 0;
             }
-            .sofaset-info{
+
+            .sofaset-info {
                 border-bottom: 0;
             }
-            .obj{
+
+            .obj {
                 padding: 0 0px;
             }
         }
+
+
+
+
+
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 100000; /* Sit on top */
+            padding-top: 10%; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+
+        /* Modal Content (image) */
+        .modal-content {
+            position: relative;
+            margin: auto;
+            display: block;
+            z-index: 100001;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        /* Caption of Modal Image */
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        /* Add Animation */
+        .modal-content, #caption {
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+            from {-webkit-transform:scale(0)}
+            to {-webkit-transform:scale(1)}
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)}
+            to {transform:scale(1)}
+        }
+
+        /* The Close Button */
+        /* The Close Button */
+        .cerrar {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .cerrar:hover,
+        .cerrar:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px){
+            .modal-content {
+                width: 100%;
+            }
+        }
+.imagen{
+    cursor: zoom-in;
+}
+
+
     </style>
 @endsection
 
@@ -119,7 +233,7 @@
                         <ul class="slides">
                             @foreach($publicacion->galeria as $galeria)
                                 <li data-thumb="../images/publicaciones/{{$galeria->ruta}}" class="reducir">
-                                    <img src="../images/publicaciones/{{$galeria->ruta}}" />
+                                    <img class="imagen" src="../images/publicaciones/{{$galeria->ruta}}"/>
                                 </li>
                             @endforeach
                         </ul>
@@ -127,56 +241,18 @@
                 </div>
                 <div class="single-right">
                     <h3 class="conver">{{$publicacion->titulo}}</h3>
-                    <i class="fa fa-map-marker"></i><span class="conver location"> {{$publicacion->municipio->municipio.", ".$publicacion->departamento}}</span>
-                    {{--<div class="id"><h4>ID: SB2379</h4></div>--}}
-                    {{--<form action="" class="sky-form">--}}
-                        {{--<fieldset>--}}
-                            {{--<section>--}}
-                                {{--<div class="rating">--}}
-                                    {{--<input type="radio" name="stars-rating" id="stars-rating-5">--}}
-                                    {{--<label for="stars-rating-5"><i class="icon-star"></i></label>--}}
-                                    {{--<input type="radio" name="stars-rating" id="stars-rating-4">--}}
-                                    {{--<label for="stars-rating-4"><i class="icon-star"></i></label>--}}
-                                    {{--<input type="radio" name="stars-rating" id="stars-rating-3">--}}
-                                    {{--<label for="stars-rating-3"><i class="icon-star"></i></label>--}}
-                                    {{--<input type="radio" name="stars-rating" id="stars-rating-2">--}}
-                                    {{--<label for="stars-rating-2"><i class="icon-star"></i></label>--}}
-                                    {{--<input type="radio" name="stars-rating" id="stars-rating-1">--}}
-                                    {{--<label for="stars-rating-1"><i class="icon-star"></i></label>--}}
-                                    {{--<div class="clearfix"></div>--}}
-                                {{--</div>--}}
-                            {{--</section>--}}
-                        {{--</fieldset>--}}
-                    {{--</form>--}}
+                    <i class="fa fa-map-marker"></i><span
+                            class="conver location"> {{$publicacion->municipio->municipio.", ".$publicacion->departamento}}</span>
                     <div class="cost">
                         <div class="prdt-cost">
                             <ul>
-                                {{--<li>MRP: <del>Rs 55000</del></li>--}}
                                 <li>Precio:</li>
                                 <li class="active">$<span class="number">{{$publicacion->precio}}</span></li>
                                 <a href="#">CONTACTAR</a>
                             </ul>
                         </div>
-                        {{--<div class="check">--}}
-                            {{--<p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>Enter pin code for delivery & availability</p>--}}
-                            {{--<form class="navbar-form navbar-left" role="search">--}}
-                                {{--<div class="form-group">--}}
-                                    {{--<input type="text" class="form-control" placeholder="Enter Pin code">--}}
-                                {{--</div>--}}
-                                {{--<button type="submit" class="btn btn-default">Verify</button>--}}
-                            {{--</form>--}}
-                        {{--</div>--}}
                         <div class="clearfix"></div>
                     </div>
-                    {{--<div class="item-list">--}}
-                        {{--<ul>--}}
-                            {{--<li>Material: Silver,Gold</li>--}}
-                            {{--<li>Color: Red</li>--}}
-                            {{--<li>Type: Earring & Pendant Set</li>--}}
-                            {{--<li>Brand: American Diamond</li>--}}
-                            {{--<li><a href="#">Click here for more details</a></li>--}}
-                        {{--</ul>--}}
-                    {{--</div>--}}
                     <div class="single-bottom1">
                         <h6>Detalles</h6>
                         <p class="prod-desc">{!!$publicacion->descripcion!!}</p>
@@ -207,7 +283,7 @@
                             </tr>
                             <tr class="moto">
                                 <td><p>Cilindraje</p></td>
-                                <td><p><span class="number">{{$publicacion->vehiculo->cilindraje}}</span></p></td>
+                                <td><p><span class="number" id="cil"></span></p></td>
                             </tr>
                             <tr>
                                 <td><p>Color</p></td>
@@ -233,82 +309,40 @@
             </div>
 
             <div class="rsidebar span_1_of_left">
-                <section  class="sky-form">
+                <section class="sky-form">
                     <div class="product_right">
                         <h4 class="m_2"><span class="fa fa-comments" aria-hidden="true"></span> Contactar Vendedor</h4>
                         <div class="obj">
                             {!!Form::open(['id'=>'formContacto','autocomplete'=>'off'])!!}
-                                <div class="form-group">
-                                    <label for="nombre">Nombre:</label>
-                                    {!!Form::text('nombre', null, ['id'=>'nombre','class'=>"form-control",'placeholder' => 'Tu nombre...', 'onkeypress' => 'return justletters(event)', 'required'])!!}
+                            <div class="form-group">
+                                <label for="nombre">Nombre:</label>
+                                {!!Form::text('nombre', null, ['id'=>'nombre','class'=>"form-control",'placeholder' => 'Tu nombre...', 'onkeypress' => 'return justletters(event)', 'required'])!!}
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3">Correo:</label>
+                                {!!Form::email('email', null, ['id'=>'email','class'=>"form-control",'placeholder' => 'E-mail...', 'required'])!!}
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3">Teléfono:</label>
+                                {!!Form::text('telefono', null, ['id'=>'telefono','class'=>"form-control",'placeholder' => 'Telefono...', 'onkeypress' => 'return justNumbers(event)', 'required'])!!}
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3">Mensaje:</label>
+                                {!!Form::textarea('mensaje', null, ['id'=>'mensaje','class'=>"form-control",'placeholder' => 'Escibe tu mensaje al vendedor...', 'rows'=>4, 'maxlength'=>500, 'required'])!!}
+                            </div>
+                            <div id="alertContacto" class="form-group ">
+
+
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 text-center">
+                                    <button class="btn btn-default" type="submit" id="submitForm">Enviar <i
+                                                class="fa fa-spinner fa-pulse fa-3x fa-fw cargando hidden"></i>
+                                        <span class="sr-only">Loading...</span></button>
                                 </div>
-                                <div class="form-group">
-                                    <label for="inputPassword3">Correo:</label>
-                                    {!!Form::email('correo', null, ['id'=>'correo','class'=>"form-control",'placeholder' => 'E-mail...', 'required'])!!}
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword3">Teléfono:</label>
-                                    {!!Form::text('telefono', null, ['id'=>'telefono','class'=>"form-control",'placeholder' => 'Telefono...', 'onkeypress' => 'return justNumbers(event)', 'required'])!!}
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPassword3">Mensaje:</label>
-                                    {!!Form::textarea('mensaje', null, ['id'=>'mensaje','class'=>"form-control",'placeholder' => 'Escibe tu mensaje al vendedor...', 'rows'=>4, 'maxlength'=>500, 'required'])!!}
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xs-12 text-center">
-                                        <button type="submit" class="btn btn-default">Enviar</button>
-                                    </div>
-                                </div>
+                            </div>
                             {!!Form::close()!!}
                         </div>
-                        {{--<div>--}}
-                            {{--<ul class="place">--}}
-                                {{--<li class="sort"><b>Tipo: </b>{{$publicacion->vehiculo->tipo}}</li>--}}
-                                {{--<div class="clearfix"> </div>--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
-                        {{--<div>--}}
-                            {{--<ul class="place">--}}
-                                {{--<li class="sort"><b>Marca: </b>{{$publicacion->vehiculo->marca}}</li>--}}
-                                {{--<div class="clearfix"> </div>--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
-                        {{--<div>--}}
-                            {{--<ul class="place">--}}
-                                {{--<li class="sort"><b>Modelo: </b>{{$publicacion->vehiculo->modelo}}</li>--}}
-                                {{--<div class="clearfix"> </div>--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
-                        {{--<div>--}}
-                            {{--<ul class="place">--}}
-                                {{--<li class="sort"><b>Kilometraje: </b><span class="number">{{$publicacion->vehiculo->kilometraje}}</span></li>--}}
-                                {{--<div class="clearfix"> </div>--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
-                        {{--<div class="moto">--}}
-                            {{--<ul class="place">--}}
-                                {{--<li class="sort"><b>Cilindraje: </b><span class="number">{{$publicacion->vehiculo->cilindraje}}</span></li>--}}
-                                {{--<div class="clearfix"> </div>--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
-                        {{--<div>--}}
-                            {{--<ul class="place">--}}
-                                {{--<li class="sort"><b>Color: </b><span class="conver">{{$publicacion->vehiculo->color}}</span></li>--}}
-                                {{--<div class="clearfix"> </div>--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
-                        {{--<div class="carro">--}}
-                            {{--<ul class="place">--}}
-                                {{--<li class="sort"><b># Puertas: </b>{{$publicacion->vehiculo->cant_puertas}}</li>--}}
-                                {{--<div class="clearfix"> </div>--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
-                        {{--<div>--}}
-                            {{--<ul class="place">--}}
-                                {{--<li class="sort"><b>Combustible: </b><span id="combustible"></span></li>--}}
-                                {{--<div class="clearfix"> </div>--}}
-                            {{--</ul>--}}
-                        {{--</div>--}}
                     </div>
                 </section>
             </div>
@@ -322,39 +356,90 @@
     {!!Html::script('js/jquery.flexslider.js')!!}
     {!!Html::script('js/publicaciones.js')!!}
     <script>
-        $(function(){
+        $(function () {
             $('.flexslider').flexslider({
                 animation: "slide",
                 controlNav: "thumbnails"
             });
-            $(".conver").each(function(){
+            $(".conver").each(function () {
                 $(this).html(ucWords($(this).html()));
             });
-            $(".number").each(function(){
+            $(".number").each(function () {
                 $(this).html(enmascarar($(this).html()));
             });
             $("#adicionales").append(cargarAdicionales());
             validarTipo();
+
+            var formContacto = $("#formContacto");
+            formContacto.submit(function (e) {
+                e.preventDefault();
+                $(".cargando").removeClass("hidden");
+                //console.log(formContacto.serialize());
+                $.ajax({
+                    type: "POST",
+                    context: document.body,
+                    url: '{{route('interesXpublicacion')}}',
+                    data: formContacto.serialize()+"&ruta=validarPublicVehiculo/{{$publicacion->id}}",
+                    success: function (data) {
+                        if (data == "exito") {
+                            $(".cargando").addClass("hidden");
+                            $("#alertContacto").empty();
+
+                            html = '<div class="alert alert-success">' +
+                                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' +
+                                    '<strong>Perfecto!</strong> el mensaje fue enviado' +
+                                    '</div>';
+
+
+                            $("#alertContacto").append(html);
+
+                        }
+                        else {
+                            //alert("Se genero un error Interno");
+                        }
+                    },
+                    error: function () {
+                        console.log('ok');
+                    }
+                });
+
+            });
+            $(".imagen").click(function () {
+                $('#myModal').css("display","block");
+                // modal.style.display = "block";
+                $("#img01").attr( "src", this.src );
+                //modalImg.src = this.src;
+                //captionText.innerHTML = this.alt;
+            });
+            $(".close").click(function () {
+                $('#myModal').css("display","none");
+            });
+            $("#myModal").click(function () {
+                $('#myModal').css("display","none");
+            });
+
         });
 
-        function validarTipo(){
+        function validarTipo() {
             var tipo = '{{$publicacion->vehiculo->tipo}}';
             $("#combustible").html(traducirCombustible('{{$publicacion->vehiculo->combustible}}'));
-            if (tipo == 'Moto' || tipo == 'Moto-Carro' || tipo == 'Cuatrimoto')
+            if (tipo == 'Moto' || tipo == 'Moto-Carro' || tipo == 'Cuatrimoto') {
                 $(".carro").addClass("hidden");
+                $("#cil").html(traducirCilindraje('{{$publicacion->vehiculo->cilindraje}}'));
+            }
             else
                 $(".moto").addClass("hidden");
 
         }
 
-        function cargarAdicionales(){
+        function cargarAdicionales() {
             var adicionales = '{{$publicacion->vehiculo->adicionales}}';
             var arrayAdicionales = adicionales.split(',');
             adicionales = '';
-            var columna = (Math.ceil(arrayAdicionales.length/3) == 3)?4:6;
-            for (var i=0; i<Math.ceil(arrayAdicionales.length/3); i++){
-                adicionales = adicionales + '<div class="col-xs-12 col-sm-'+columna+' col-md-'+columna+' col-lg-'+columna+'"><ul>';
-                for(var j=i*3; j<(i*3)+3; j++){
+            var columna = (Math.ceil(arrayAdicionales.length / 3) == 3) ? 4 : 6;
+            for (var i = 0; i < Math.ceil(arrayAdicionales.length / 3); i++) {
+                adicionales = adicionales + '<div class="col-xs-12 col-sm-' + columna + ' col-md-' + columna + ' col-lg-' + columna + '"><ul>';
+                for (var j = i * 3; j < (i * 3) + 3; j++) {
                     var traducido = traducirAdicional(arrayAdicionales[j]);
                     if (traducido != '')
                         adicionales = adicionales + '<li>' + traducido + '</li>';
@@ -364,9 +449,9 @@
             return adicionales;
         }
 
-        function traducirAdicional(valor){
+        function traducirAdicional(valor) {
             var traducido = '';
-            switch (valor){
+            switch (valor) {
                 case 'edicion_especial':
                     traducido = 'Edición Especial';
                     break;
@@ -398,9 +483,9 @@
             return traducido;
         }
 
-        function traducirCombustible(nombre){
+        function traducirCombustible(nombre) {
             traducido = '';
-            switch (nombre){
+            switch (nombre) {
                 case 'Gal':
                     traducido = "Gasolina";
                     break;
@@ -425,6 +510,47 @@
             }
             return traducido;
         }
+
+        function traducirCilindraje(dato){
+            traducido = '';
+            switch (dato){
+                case '1':
+                    traducido = "0 a 99 cc";
+                    break;
+                case '2':
+                    traducido = "100 a 199 cc";
+                    break;
+                case '3':
+                    traducido = "200 a 299 cc";
+                    break;
+                case '4':
+                    traducido = "300 a 399 cc";
+                    break;
+                case '5':
+                    traducido = "400 a 699 cc";
+                    break;
+                case '6':
+                    traducido = "700 a 999 cc";
+                    break;
+                case '7':
+                    traducido = "1000 a 1299 cc";
+                    break;
+                case '8':
+                    traducido = "más de 1300 cc";
+                    break;
+            }
+            return traducido;
+        }
     </script>
+
+
+
+    <div id="myModal" class="modal">
+        <span class="cerrar">×</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+
+
 @endsection
 

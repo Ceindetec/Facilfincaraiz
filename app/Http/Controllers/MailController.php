@@ -46,4 +46,21 @@ class MailController extends Controller
     }
 
 
+    /**
+     * @return string
+     */
+    public function interesXpublicacion(Request $request){
+        global  $email;
+        $email = $request->email;
+        Mail::send("emails.interesXpublicacion",$request->all(),function ($msj){
+            global  $email;
+            $msj->subject("Interes por una publicación");
+            $msj->to("ventas@facilfincaraiz.com");
+            $msj->replyTo($email, $name = null);
+        });
+        //Session::flash('message','Mensaje fue enviado correctamente');
+        return "exito";
+    }
+
+
 }

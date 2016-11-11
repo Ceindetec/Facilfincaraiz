@@ -319,7 +319,7 @@
 
 
 			$("#departamento").change(function () {
-
+				$("#geolocalizacion").val("");
 				if($("#departamento").val()==""){
 					//alert("el id es nulo");
 					$("#municipio_id").empty();
@@ -356,6 +356,7 @@
 					console.log($("#municipio_id option:selected").text()+" "+$("#departamento option:selected").text());
 					geoMapa($("#municipio_id option:selected").text()+" "+$("#departamento option:selected").text());
 				}
+				$("#geolocalizacion").val("");
 			});
 
 

@@ -15,7 +15,7 @@
             <h3>fácil, rápido y seguro</h3>
         </div>
 
-        {!!Form::open(['route'=>'getVehiculos','id'=>'formVehiculo','autocomplete'=>'off'])!!}
+        {!!Form::open(['route'=>'getInmuebles','id'=>'formVehiculo','autocomplete'=>'off'])!!}
         <div class="row">
             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4">
                 <div class="form-group">
@@ -25,7 +25,7 @@
 
             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4">
                 <div class="form-group">
-                    {!!Form::select('marca',[], null, ['id'=>'marca','class'=>"form-control",'placeholder' => 'Selecciona una marca'])!!}
+                    {!!Form::select('accion',['V'=>'En Venta','A'=>'En Arriendo','P'=>'En Permuta'], null, ['id'=>'accion','class'=>"form-control"])!!}
                 </div>
             </div>
 
@@ -33,9 +33,9 @@
                 <div class="form-group">
                     <div class="input-group date">
                         <div class="input-group-addon">
-                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            Estrato:
                         </div>
-                        {!!Form::text('modelo', null, ['id'=>'modelo','class'=>"form-control pull-right",'placeholder' => 'Selecciona un modelo', 'readonly'])!!}
+                        {!!Form::select('estrato',['1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5','6'=>'6'], null, ['id'=>'estrato','class'=>"form-control",  'style'=>"text-align:center;"])!!}
                     </div>
                 </div>
             </div>
@@ -65,6 +65,33 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $("#departamento").change(function () {
+            if($("#departamento").val()==""){
+                $("#municipio_id").empty();
+                $("#municipio_id").append("<option value=''>Selecciona un municipio</option>");
+            }else{
+                $.ajax({
+                    type: "POST",
+                    context: document.body,
+                    url: '{{route('municipios')}}',
+                    data: { 'id' : $("#departamento").val()},
+                    success: function (data) {
+
+                        $("#municipio_id").empty();
+                        $("#municipio_id").append("<option value=''>Cualquier municipio</option>");
+                        $.each(data,function (index,valor) {
+                            $("#municipio_id").append('<option value='+index+'>'+valor+'</option>');
+                        });
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            }
+
+        });
+    </script>
 
 
 @endsection

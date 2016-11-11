@@ -16,7 +16,7 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="{{route("home")}}">Inicio</a></li>
-            <li class="active">Registro</li>
+            <li class="active">Publicaciones Inactivas</li>
         </ol>
 
         <div class="row">
