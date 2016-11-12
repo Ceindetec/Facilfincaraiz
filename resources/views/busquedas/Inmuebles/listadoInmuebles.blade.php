@@ -3,16 +3,18 @@
         <strong>Excelente!</strong> Tu búsqueda ha generado los siguientes '+cantidad+' resultados:
     </div>
 @else
-    <div class="alert alert-warning" role="alert"><strong>Lo sentimos!</strong> No hemos encontrado coincidencias exactas para tu busqueda.<br>
-    @if($mensaje == "solo dpto y categoria")
-        <strong>Espera:</strong> Hemos encontrado vehiculos del tipo que buscas, en el mismo departamento:
-    @elseif($mensaje == "exacto sin dpto")
-        <strong>Espera:</strong >Hemos encontrado vehiculos del tipo que buscas, en todo Colombia:
-    @elseif($mensaje == "solo categoria")
-        <strong>Espera:</strong> Hemos encontrado algunos vehiculos del tipo que buscas:
-    @else
-        <strong>Espera:</strong> Tambien puedes revisar nuestra lista de sugerencias:
-    @endif
+    <div class="alert alert-warning" role="alert"><strong>Lo sentimos!</strong> No hemos encontrado coincidencias exactas para tu busqueda.<br><strong>Espera:</strong>
+        @if($mensaje == "solo dpto y categoria")
+            Hemos encontrado articulos del tipo que buscas, en el mismo departamento:
+        @elseif($mensaje == 'solo tipo, estrato, accion y departamento')
+            Hemos encontrado articulos de este tipo, estrato y opcion de compra, en el departamento que buscas:
+        @elseif($mensaje == "exacto sin dpto")
+            Hemos encontrado articulos del tipo que buscas, en todo Colombia:
+        @elseif($mensaje == "solo categoria")
+            Hemos encontrado algunos articulos del tipo que buscas:
+        @else
+            Tambien puedes revisar nuestra lista de sugerencias:
+        @endif
     </div>
 @endif
 
@@ -46,26 +48,28 @@
                 <b><h3>$<span class="enmascarar">{{$publicacion->precio}}</span></h3></b>
             </div>
             <div class="hidden-xs marginBot10">
-                <div class="col-xs-5">
-                    <b>Plantas: </b>{{$publicacion->cant_plantas}}
-                </div>
-                <div class="col-xs-7">
-                    <b>Habitaciones: </b>{{$publicacion->cant_habitaciones}}
-                </div>
-                <div class="col-xs-5">
-                    <b>Baños: </b>{{$publicacion->cant_banos}}
-                </div>
-                <div class="col-xs-7">
-                    <b>Garajes: </b>{{$publicacion->cant_garajes}}
+                <div class="inmuebles">
+                    <div class="col-xs-5">
+                        <b>Plantas: </b>{{$publicacion->cant_plantas}}
+                    </div>
+                    <div class="col-xs-7">
+                        <b>Habitaciones: </b>{{$publicacion->cant_habitaciones}}
+                    </div>
+                    <div class="col-xs-5">
+                        <b>Baños: </b>{{$publicacion->cant_banos}}
+                    </div>
+                    <div class="col-xs-7">
+                        <b>Garajes: </b>{{$publicacion->cant_garajes}}
+                    </div>
                 </div>
                 <div class="col-xs-5">
                     <b>Estrato: </b>{{$publicacion->estrato}}
                 </div>
                 <div class="col-xs-7">
-                    <b>Area: </b>{{$publicacion->area}}
+                    <b>Area: </b><span class="enmascarar">{{$publicacion->area}}</span> m<sup>2</sup>
                 </div>
                 @if($mensaje != "coincidencias exactas")
-                    <div class="col-xs-5">
+                    <div class="col-xs-10">
                         <b>Tipo: </b>{{$publicacion->tipo}}
                     </div>
                 @endif

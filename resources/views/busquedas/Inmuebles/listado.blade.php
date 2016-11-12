@@ -112,15 +112,17 @@
                         <strong>Excelente!</strong> Tu búsqueda ha generado los siguientes '+cantidad+' resultados:
                     </div>
                 @else
-                    <div class="alert alert-warning" role="alert"><strong>Lo sentimos!</strong> No hemos encontrado coincidencias exactas para tu busqueda.<br>
+                    <div class="alert alert-warning" role="alert"><strong>Lo sentimos!</strong> No hemos encontrado coincidencias exactas para tu busqueda.<br><strong>Espera:</strong>
                         @if($mensaje == "solo dpto y categoria")
-                            <strong>Espera:</strong> Hemos encontrado vehiculos del tipo que buscas, en el mismo departamento:
+                             Hemos encontrado articulos del tipo que buscas, en el mismo departamento:
+                        @elseif($mensaje == 'solo tipo, estrato, accion y departamento')
+                             Hemos encontrado articulos de este tipo, estrato y opcion de compra, en el departamento que buscas:
                         @elseif($mensaje == "exacto sin dpto")
-                            <strong>Espera:</strong >Hemos encontrado vehiculos del tipo que buscas, en todo Colombia:
+                             Hemos encontrado articulos del tipo que buscas, en todo Colombia:
                         @elseif($mensaje == "solo categoria")
-                            <strong>Espera:</strong> Hemos encontrado algunos vehiculos del tipo que buscas:
+                             Hemos encontrado algunos articulos del tipo que buscas:
                         @else
-                            <strong>Espera:</strong> Tambien puedes revisar nuestra lista de sugerencias:
+                             Tambien puedes revisar nuestra lista de sugerencias:
                         @endif
                     </div>
                 @endif
@@ -154,26 +156,28 @@
                                     <b><h3>$<span class="enmascarar">{{$publicacion->precio}}</span></h3></b>
                                 </div>
                                 <div class="hidden-xs marginBot10">
-                                    <div class="col-xs-5">
-                                        <b>Plantas: </b>{{$publicacion->cant_plantas}}
-                                    </div>
-                                    <div class="col-xs-7">
-                                        <b>Habitaciones: </b>{{$publicacion->cant_habitaciones}}
-                                    </div>
-                                    <div class="col-xs-5">
-                                        <b>Baños: </b>{{$publicacion->cant_banos}}
-                                    </div>
-                                    <div class="col-xs-7">
-                                        <b>Garajes: </b>{{$publicacion->cant_garajes}}
+                                    <div class="inmuebles">
+                                        <div class="col-xs-5">
+                                            <b>Plantas: </b>{{$publicacion->cant_plantas}}
+                                        </div>
+                                        <div class="col-xs-7">
+                                            <b>Habitaciones: </b>{{$publicacion->cant_habitaciones}}
+                                        </div>
+                                        <div class="col-xs-5">
+                                            <b>Baños: </b>{{$publicacion->cant_banos}}
+                                        </div>
+                                        <div class="col-xs-7">
+                                            <b>Garajes: </b>{{$publicacion->cant_garajes}}
+                                        </div>
                                     </div>
                                     <div class="col-xs-5">
                                         <b>Estrato: </b>{{$publicacion->estrato}}
                                     </div>
                                     <div class="col-xs-7">
-                                        <b>Area: </b>{{$publicacion->area}}
+                                        <b>Area: </b><span class="enmascarar">{{$publicacion->area}}</span> m<sup>2</sup>
                                     </div>
                                     @if($mensaje != "coincidencias exactas")
-                                        <div class="col-xs-5">
+                                        <div class="col-xs-10">
                                             <b>Tipo: </b>{{$publicacion->tipo}}
                                         </div>
                                     @endif
@@ -227,50 +231,52 @@
                     </div>
                 </section>
 
-                <section class="sky-form">
-                    <h4>Plantas</h4>
-                    <div class="text-center filtro pt5">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination pageFiltro plantas confir">
-                                <li><a onclick="return false;" href="#">0</a></li>
-                                <li><a onclick="return false;" href="#">1</a></li>
-                                <li><a onclick="return false;" href="#">2</a></li>
-                                <li><a onclick="return false;" href="#">3</a></li>
-                                <li><a onclick="return false;" href="#">4+</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </section>
+                <div class="inmuebles">
+                    <section class="sky-form">
+                        <h4>Plantas</h4>
+                        <div class="text-center filtro pt5">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination pageFiltro plantas confir">
+                                    <li><a onclick="return false;" href="#">0</a></li>
+                                    <li><a onclick="return false;" href="#">1</a></li>
+                                    <li><a onclick="return false;" href="#">2</a></li>
+                                    <li><a onclick="return false;" href="#">3</a></li>
+                                    <li><a onclick="return false;" href="#">4+</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </section>
 
-                <section class="sky-form">
-                    <h4>Habitaciones</h4>
-                    <div class="text-center filtro pt5">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination pageFiltro habitaciones confir">
-                                <li><a onclick="return false;" href="#">0</a></li>
-                                <li><a onclick="return false;" href="#">1</a></li>
-                                <li><a onclick="return false;" href="#">2</a></li>
-                                <li><a onclick="return false;" href="#">3</a></li>
-                                <li><a onclick="return false;" href="#">4+</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </section>
+                    <section class="sky-form">
+                        <h4>Habitaciones</h4>
+                        <div class="text-center filtro pt5">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination pageFiltro habitaciones confir">
+                                    <li><a onclick="return false;" href="#">0</a></li>
+                                    <li><a onclick="return false;" href="#">1</a></li>
+                                    <li><a onclick="return false;" href="#">2</a></li>
+                                    <li><a onclick="return false;" href="#">3</a></li>
+                                    <li><a onclick="return false;" href="#">4+</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </section>
 
-                <section class="sky-form">
-                    <h4>Baños</h4>
-                    <div class="text-center filtro pt5">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination pageFiltro banos confir">
-                                <li><a onclick="return false;" href="#">0</a></li>
-                                <li><a onclick="return false;" href="#">1</a></li>
-                                <li><a onclick="return false;" href="#">2</a></li>
-                                <li><a onclick="return false;" href="#">3</a></li>
-                                <li><a onclick="return false;" href="#">4+</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </section>
+                    <section class="sky-form">
+                        <h4>Baños</h4>
+                        <div class="text-center filtro pt5">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination pageFiltro banos confir">
+                                    <li><a onclick="return false;" href="#">0</a></li>
+                                    <li><a onclick="return false;" href="#">1</a></li>
+                                    <li><a onclick="return false;" href="#">2</a></li>
+                                    <li><a onclick="return false;" href="#">3</a></li>
+                                    <li><a onclick="return false;" href="#">4+</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </section>
+                </div>
 
                 <section class="sky-form filtro">
                     <h4>Estrato</h4>
@@ -332,6 +338,7 @@
     <script>
         var formulario;
         var pagina;
+        var tipoInmueble;
 
         var plantas="";
         var habitaciones = "";
@@ -389,6 +396,9 @@
                     banos = $(this).children('a').text().replace('+', '');
                 }
             });
+            tipoInmueble = '{{$inmueble}}';
+            if(tipoInmueble == "Terreno")
+                $(".inmuebles").addClass("hidden");
         });
 
         $(".confir").on('click', function(){
@@ -448,12 +458,14 @@
             $.ajax({
                 type:"POST",
                 context: document.body,
-                url: '{{route('getInmuebles')}}',
+                url: '{{route(($inmueble=="Inmueble")?'getInmuebles':'getTerrenos')}}',
                 data: formulario.serialize()+"&pagina="+pagina+"&plantas="+plantas+"&banos="+banos+"&habitaciones="+habitaciones,
                 success: function(data) {
                     $("#seccionResultados").html(data);
                     enmascararPublicacion();
                     convertirMayu();
+                    if(tipoInmueble == "Terreno")
+                        $(".inmuebles").addClass("hidden");
                 },
                 error: function (data) {
                 }

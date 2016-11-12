@@ -620,7 +620,9 @@
                 var contenido = CKEDITOR.instances.infoAdicional.getData().split("\n").join("");
                 //console.log($("#files").data("files"));
                 var formData = new FormData($(this)[0]);
+
                 var files = $("#files").data("files");
+                if(files)
                 for(i=0;i<files.length;i++){
                     formData.append("imagenes[]", files[i]);
                 }
@@ -638,7 +640,9 @@
                         if(result.estado){
                             $("#submit").attr("disabled", true);
                             alert("success","Perfecto","La publicación fue publicada con exito","<i class='fa fa-check' aria-hidden='true'></i>");
-
+                            setTimeout(function(){
+                                window.location="../publicPendientes";
+                            }, 3000);
                         }else{
                             alert("danger","Ups","algo salio mal por favor intentar nuevamente","<i class='fa fa-ban' aria-hidden='true'></i>");
                         }

@@ -92,6 +92,12 @@ Route::get("inmuebles","busquedasController@buscarInmuebles")->name("buscarInmue
 Route::post('filtroInmuebles','busquedasController@getInmuebles')->name('getInmuebles');
 Route::get("filtroInmuebles","busquedasController@buscarInmuebles")->name("buscarInmuebles");
 
+//Busqueda de terrenos
+Route::get("terrenos","busquedasController@buscarTerrenos")->name("buscarTerrenos");
+Route::post('filtroTerrenos','busquedasController@getTerrenos')->name('getTerrenos');
+Route::get("filtroTerrenos","busquedasController@buscarTerrenos")->name("buscarTerrenos");
+
+
 Route::get("publicacion/{id}", 'busquedasController@getPublicacion')->name('getPublicacion');
 Route::post('interes', 'MailController@interesXpublicacion')->name('interesXpublicacion');
 

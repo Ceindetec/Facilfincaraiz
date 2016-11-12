@@ -8,14 +8,14 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="{{route('home')}}">Home</a></li>
-            <li class="active">Buscar vehiculo</li>
+            <li class="active">{{(($inmueble=="getTerrenos")?"Buscar Terrenos":"Buscar Inmuebles")}}</li>
         </ol>
         <div class="welcome-left col-md-12 col-lg-12 col-xs-12 col-sm-12 text-center" style="margin-bottom: 2%">
             <h2>Encuetra lo que necesitas</h2>
             <h3>fácil, rápido y seguro</h3>
         </div>
 
-        {!!Form::open(['route'=>'getInmuebles','id'=>'formVehiculo','autocomplete'=>'off'])!!}
+        {!!Form::open(['route'=>$inmueble,'id'=>'formVehiculo','autocomplete'=>'off'])!!}
         <div class="row">
             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4">
                 <div class="form-group">

@@ -54,7 +54,7 @@
 						</div>
 						<div>
 							<span><label>Telefono</label></span>
-							<span><input name="telefono" type="text" class="textbox" required></span>
+							<span><input name="telefono" type="text" class="textbox" required onkeypress='return justNumbers(event)' maxlength="10"></span>
 						</div>
 						<div>
 							<span><label>Mensaje</label></span>
@@ -83,7 +83,7 @@
 @endsection
 
 @section('scripts')
-
+	{!!Html::script('js/publicaciones.js')!!}
 	<script>
 
 		$(function(){

@@ -161,7 +161,7 @@
         <div class="container">
             <div class="col-md-4 bride-grid">
                 <div class="content-grid l-grids">
-                    <a href="">
+                    <a href="{{route("buscarInmuebles")}}">
                         <figure class="effect-bubba">
                             <img src="{{$imageInmueble}}" alt=""/>
                             <figcaption>
@@ -176,7 +176,7 @@
             </div>
             <div class="col-md-4 bride-grid">
                 <div class="content-grid l-grids">
-                    <a href="">
+                    <a href="{{route("buscarTerrenos")}}">
                         <figure class="effect-bubba">
                     <img src="{{$imageTerreno}}" alt=""/>
                             <figcaption>

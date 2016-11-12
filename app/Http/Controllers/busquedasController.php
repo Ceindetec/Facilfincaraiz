@@ -70,6 +70,7 @@ class busquedasController extends Controller
     {
         $data["arrayDepartamento"] = $this->listarDepartamentos();
         $data["arrayCategorias"] = $this->listarTiposCategoria('I');
+        $data["inmueble"] = "getInmuebles";
         return view("busquedas.Inmuebles.index", $data);
     }
 
@@ -106,6 +107,60 @@ class busquedasController extends Controller
             $data["municipio"] = $request->municipio_id;
             $data["arrayDepartamento"] = $this->listarDepartamentos();
             $data["arrayCategorias"] = $this->listarTiposCategoria('I');
+            $data["inmueble"] = 'Inmueble';
+            return view('busquedas.Inmuebles.listado', $data);
+        }
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////// BUSQUEDA DE INMUEBLES /////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+    /** Obtiene listado de departamentos y categorias, devuelve vista para busqueda de terrenos
+     * @return vista inicial de los filtros de busquedas para los TERRENOS
+     */
+    public function buscarTerrenos()
+    {
+        $data["arrayDepartamento"] = $this->listarDepartamentos();
+        $data["arrayCategorias"] = $this->listarTiposCategoria('T');
+        $data["inmueble"] = "getTerrenos";
+        return view("busquedas.Inmuebles.index", $data);
+    }
+
+    /**
+     * Obtiene listado de inmuebles filtrandolos por criterios ingresados en vista de filtro de inmuebles
+     * @return vista con listado de inmuebles o solo listado (data)
+     */
+    public function getTerrenos(Request $request)
+    {
+        $publicacion = new Publicacion();
+        if ($request->ajax()) {
+//            dd($request->all());
+            //            $precio =  str_replace("$", '',str_replace(".", '', $request->precioMin)) . "-" . str_replace("$", '',str_replace(".", '', $request->precioMax));
+            $rangoArea = str_replace(".", '', $request->areaMin) . " - " . str_replace(".", '', $request->areaMax);
+            $rangoPrecio = str_replace(".", '', $request->precioMin) . " - " . str_replace(".", '', $request->precioMax);
+            $consultas = $publicacion->filtrarInmuebles('T', $request->categorias, $request->accion, $request->estrato, $request->habitaciones, $request->banos, $request->plantas, $rangoArea, $rangoPrecio, $request->departamento, $request->municipio_id, $request->pagina);
+            $data["cantidad"] = $consultas["cantidad"];
+            $data["publicaciones"] = $consultas["resultados"];
+            $data["mensaje"] = $consultas["mensaje"];
+            $data["pagina"] = $request->pagina;
+//            dd($data);
+            return response()->json(view('busquedas.Inmuebles.listadoInmuebles', $data)->render());
+        }
+        else {
+            $consultas = $publicacion->filtrarInmuebles('T', $request->categorias, $request->accion, $request->estrato, "", "", "", "", "", $request->departamento, $request->municipio_id, 1);
+            $data["cantidad"] = $consultas["cantidad"];
+            $data["publicaciones"] = $consultas["resultados"];
+            $data["mensaje"] = $consultas["mensaje"];
+//            dd($data);
+            $data["categoria"] = $request->categorias;
+            $data["accion"] = $request->accion;
+            $data["estrato"] =  $request->estrato;
+            $data["departamento"] = $request->departamento;
+            $data["municipio"] = $request->municipio_id;
+            $data["arrayDepartamento"] = $this->listarDepartamentos();
+            $data["arrayCategorias"] = $this->listarTiposCategoria('T');
+            $data["inmueble"] = 'Terreno';
             return view('busquedas.Inmuebles.listado', $data);
         }
     }
@@ -133,15 +188,14 @@ class busquedasController extends Controller
                 $data['publicacion'] = $publicacion;
                 return view('busquedas.Vehiculos.detalleVehiculo', $data);
             }
-            elseif($publicacion->tipo == "I"){
+            else{
                 $publicacion->inmueble = $publicacion->getInmueble;
                 $publicacion->inmueble->tipo = $publicacion->inmueble->getTipo->tipo;
                 $data['publicacion'] = $publicacion;
+                //dd($data);
                 return view('busquedas.Inmuebles.detalleInmueble', $data);
             }
-            else{
 
-            }
         }
         else
             return redirect()->back();

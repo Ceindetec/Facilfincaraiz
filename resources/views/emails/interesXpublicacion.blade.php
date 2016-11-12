@@ -12,7 +12,7 @@
 <p><strong>Telefono: </strong>{!! $telefono !!}</p>
 <p><strong>Mensaje: </strong>{!! $mensaje !!}</p>
 
-<p><strong>Publicacion</strong> <a href="https://facilfincaraiz.com/{{$ruta}}">Ir a la publicación de interes por  <b>{!! $nombre !!}</b></a></p>
+<p><strong>Publicacion</strong> <a href="http://facilfincaraiz.com/{{$ruta}}">Ir a la publicación de interes por  <b>{!! $nombre !!}</b></a></p>
 
 
 </body>

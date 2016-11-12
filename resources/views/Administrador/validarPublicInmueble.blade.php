@@ -655,7 +655,9 @@
                         if(result.estado){
                             $("#submit").attr("disabled", true);
                             alert("success","Perfecto","La publicación fue publicada con exito","<i class='fa fa-check' aria-hidden='true'></i>");
-
+                            setTimeout(function(){
+                                window.location="../publicPendientes";
+                            }, 3000);
                         }else{
                             alert("danger","Ups","algo salio mal por favor intentar nuevamente","<i class='fa fa-ban' aria-hidden='true'></i>");
                         }

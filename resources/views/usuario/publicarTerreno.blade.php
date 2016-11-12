@@ -384,6 +384,14 @@
 				for(i=0;i<files.length;i++){
 					formData.append("imagenes[]", files[i]);
 				}
+
+				if($("#umedida").val()=="h")
+					if($("#area")!=""){
+						var valor =$("#area").val();
+						formData.append("area", valor*10000);
+					}
+
+
 				formData.append("descripcion", contenido);
 				formData.append("geolocalizacion", $("#geolocalizacion").val());
 				formData.append("precio", desenmascarar($("#precio").val()));

@@ -2465,5 +2465,5 @@ a.add-cart {
 }
 }
 .cargando{
-	font-size: 16px;
+	font-size: 16px !important;
 }
