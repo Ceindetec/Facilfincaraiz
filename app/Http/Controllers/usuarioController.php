@@ -29,15 +29,25 @@ class usuarioController extends Controller
 
 
     public function registroUserPost(Request $request){
-        if($request->password==$request->cpassword){
-            $user = new User($request->all());
-            $user->password= bcrypt($request->password);
-            $user->rol="usuario";
-            $user->save();
-            return "exito";
-        }else{
-            return "noson iguales";
+        try{
+            $existe = User::where('email',$request->email)->first();
+            if(!isset($existe)) {
+                if ($request->password == $request->cpassword) {
+                    $user = new User($request->all());
+                    $user->password = bcrypt($request->password);
+                    $user->rol = "usuario";
+                    $user->save();
+                    return "exito";
+                } else {
+                    return "noson iguales";
+                }
+            }else{
+                return "existe";
+            }
+        }catch (\exception $e){
+            return $e->getMessage();
         }
+
     }
 
 

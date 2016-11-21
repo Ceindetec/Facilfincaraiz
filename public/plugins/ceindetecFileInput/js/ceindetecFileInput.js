@@ -5,7 +5,7 @@
         var opc = $.extend({
             width: 214,
             height: 250,
-            maxlength: 10,
+            maxlength: 6,
             maxfilesize: 5120,
             minWidthImage: 100,
             maxWidthImage:5000,
@@ -27,15 +27,54 @@
             var cargar = document.createElement("span");
             cargar.setAttribute("class", "cargar");
             cargar.setAttribute("data-element", $(this).attr("id"));
-            cargar.innerHTML = '<i class="fa fa-folder-open" aria-hidden="true"></i>';
+            cargar.innerHTML = '<i class="fa fa-folder-open" aria-hidden="true"></i> Explorar';
+
+            var conteArventencias = document.createElement("div");
+
+            texto = "Los foratos aceptados son ";
+
+            if(opc.minType.length > 0){
+                for(i=0;i<opc.minType.length;i++){
+                    if(i==opc.minType.length-1){
+                        texto += opc.minType[i]+".";
+                    }else{
+                        texto += opc.minType[i]+", ";
+                    }
+                }
+            }else{
+                texto +="jpg, png, gif. ";
+            }
+
+            texto +=" Maximo "+opc.maxlength+ " imagenes. ";
+
+            texto +="El tamaño maximo permitido para las imagenes es "+(opc.maxfilesize/1024)+" MB";
+
+            conteArventencias.innerHTML = texto;
+
+            conteArventencias.style.fontWeight ="bold";
+            conteArventencias.style.color = "#646464";
+            conteArventencias.style.fontSize="13px";
 
             $(customInput).append(elementoprimario);
             $(customInput).append(inputtextlabel);
             $(customInput).append(cargar);
             $(customInput).before(contenedorTotal);
             $(contenedorTotal).append(customInput);
+            $(contenedorTotal).append(conteArventencias);
 
             cargar.addEventListener("click", simulaclick);
+
+
+            $(elementoprimario).data("files", []);
+            $(elementoprimario).parent(".custom-input-file").siblings(".div-contenPreviw-inputfile").remove();
+            var contenPreviw = document.createElement("output");
+            contenPreviw.setAttribute("class", "div-contenPreviw-inputfile");
+            $(elementoprimario).parent(".custom-input-file").before(contenPreviw);
+            contenPreviw.innerHTML = "";
+
+            for( i = 0; i < 4; i++){
+                precargas(opc.width, opc.height, contenPreviw);
+            }
 
             $(this).change(function (evt) {
                 var files = evt.target.files; // FileList object
@@ -96,12 +135,17 @@
                                         $(divPreview).append('<img class="img-thumb-preview-inpufile" src="' + e.target.result + '" title="' + theFile.name + '" width="100%" height="' + altoImagen + '"/>');
                                         var divAcciones = document.createElement('div');
                                         divAcciones.setAttribute("class", "div-acciones-preview-inpufile")
+                                        var spantitulo = document.createElement('span');
+                                        spantitulo.innerHTML = theFile.name;
+                                        spantitulo.style.float = "left";
+                                        spantitulo.style.fontSize = "11px"
                                         var divEliminar = document.createElement('div');
                                         divEliminar.setAttribute("class", "div-elimnar-preview-inpufile");
                                         divEliminar.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
                                         divEliminar.addEventListener("click", eliminarImagen);
                                         divEliminar.setAttribute("data-key", theFile.key);
                                         divEliminar.setAttribute("data-padreId", theFile.elemento);
+                                        divAcciones.appendChild(spantitulo);
                                         divAcciones.appendChild(divEliminar);
                                         divPreview.appendChild(divAcciones);
                                         contenPreviw.appendChild(divPreview);
@@ -192,6 +236,29 @@
     function simulaclick() {
         var fileinput = $(this).data("element");
         $("#" + fileinput).trigger('click');
+    }
+
+
+    function precargas( opcancho, opcalto, contenPreviw) {
+        opcancho = 128;
+        opcalto = 150;
+        console.log(opcancho, opcalto);
+        var divPreview = document.createElement('div');
+        $(divPreview).addClass("div-preview-inpufile");
+        $(divPreview).width(opcancho);
+        $(divPreview).height(opcalto);
+        var altoImagen = opcalto - 44;
+
+        imagen = new Image();
+        imagen.src = "/images/temporalimagen.jpg";
+        imagen.setAttribute("class", "img-thumb-preview-inpufile");
+        imagen.width = "100%";
+        imagen.height = altoImagen;
+        $(divPreview).append(imagen);
+        var divAcciones = document.createElement('div');
+        divAcciones.setAttribute("class", "div-acciones-preview-inpufile")
+        divPreview.appendChild(divAcciones);
+        contenPreviw.appendChild(divPreview);
     }
 
 })(jQuery);

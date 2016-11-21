@@ -256,7 +256,7 @@
 				maxlength:8,
 				width:120,
 				height: 140,
-				maxfilesize:1024
+				maxfilesize:2048
 			});
 
 

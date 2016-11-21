@@ -72,8 +72,8 @@
                 @if(!Auth::guest())
                     @if(Auth::user()->rol=="superAdmin")
                         <li><a href="{{route("registroAdmins")}}">Registrar</a></li>
-
-                    @elseif(Auth::user()->rol=="admin"||Auth::user()->rol=="superAdmin")
+                    @endif
+                    @if(Auth::user()->rol=="admin"||Auth::user()->rol=="superAdmin")
                         <li class="submenu"><a href="#" onclick="return false;">Publicaciones <span
                                         class="prueba fa fa-sort-desc"></span></a>
                             <ul class="children">

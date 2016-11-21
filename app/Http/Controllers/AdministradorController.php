@@ -46,12 +46,16 @@ class AdministradorController extends Controller
      * @return array
      */
     public function registroAdminsPost(Request $request){
-
-        $user = new User($request->all());
-        $user->password= bcrypt($request->password);
-        $user->rol="admin";
-        $user->save();
-        return "exito";
+        $existe = User::where('email',$request->email)->first();
+        if(!isset($existe)) {
+            $user = new User($request->all());
+            $user->password = bcrypt($request->password);
+            $user->rol = "admin";
+            $user->save();
+            return "exito";
+        }else{
+            return "existe";
+        }
 
 
     }

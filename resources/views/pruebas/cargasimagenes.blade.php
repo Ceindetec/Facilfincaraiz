@@ -40,7 +40,7 @@
 
         $(function () {
             $("#files").inputFileImage({
-                maxlength:20,
+                maxlength:8,
                 minType:['png', 'jpeg'],
                 maxfilesize: 5120,
                 minWidthImage: 100,
