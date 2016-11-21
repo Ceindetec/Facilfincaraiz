@@ -214,7 +214,7 @@
 
     $(function () {
         var CURRENT_URL = window.location.href;
-        console.log(CURRENT_URL);
+       // console.log(CURRENT_URL);
         var contador = 1;
         if(CURRENT_URL.split("/")[3]=="")
             CURRENT_URL = CURRENT_URL.substring(0,CURRENT_URL.length-1);

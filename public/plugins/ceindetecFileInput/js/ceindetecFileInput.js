@@ -11,6 +11,7 @@
             maxWidthImage:5000,
             maxHeightImage:5000,
             minHeightImage: 100,
+            prepreview: false,
             minType: [],
         }, option);
 
@@ -31,7 +32,7 @@
 
             var conteArventencias = document.createElement("div");
 
-            texto = "Los foratos aceptados son ";
+            texto = "Los formatos aceptados son ";
 
             if(opc.minType.length > 0){
                 for(i=0;i<opc.minType.length;i++){
@@ -71,10 +72,14 @@
             contenPreviw.setAttribute("class", "div-contenPreviw-inputfile");
             $(elementoprimario).parent(".custom-input-file").before(contenPreviw);
             contenPreviw.innerHTML = "";
-
-            for( i = 0; i < 4; i++){
+            if(option.prepreview){
+                for( i = 0; i < 4; i++){
+                    precargas(opc.width, opc.height, contenPreviw);
+                }
+            }else{
                 precargas(opc.width, opc.height, contenPreviw);
             }
+
 
             $(this).change(function (evt) {
                 var files = evt.target.files; // FileList object
@@ -249,12 +254,21 @@
         $(divPreview).height(opcalto);
         var altoImagen = opcalto - 44;
 
-        imagen = new Image();
-        imagen.src = "/images/temporalimagen.jpg";
-        imagen.setAttribute("class", "img-thumb-preview-inpufile");
-        imagen.width = "100%";
-        imagen.height = altoImagen;
-        $(divPreview).append(imagen);
+
+        var CURRENT_URL = window.location.href;
+        console.log(CURRENT_URL.split("/"));
+        if(CURRENT_URL.split("/").length>4){
+            imagen = new Image();
+            imagen.src = "/images/temporalimagen.jpg";
+            imagen.setAttribute("class", "img-thumb-preview-inpufile");
+            imagen.width = "100%";
+            imagen.height = altoImagen;
+            $(divPreview).append(imagen);
+        }
+        else{$(divPreview).append('<img class="img-thumb-preview-inpufile" src="images/temporalimagen.jpg" title="" width="100%" height="' + altoImagen + '"/>');}
+          //  imagen.src = "images/temporalimagen.jpg";
+
+
         var divAcciones = document.createElement('div');
         divAcciones.setAttribute("class", "div-acciones-preview-inpufile")
         divPreview.appendChild(divAcciones);
