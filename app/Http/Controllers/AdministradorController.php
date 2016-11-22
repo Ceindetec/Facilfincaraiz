@@ -310,7 +310,7 @@ class AdministradorController extends Controller
 
         $galerias=$publicacion->getGaleria;
         $data["imagenes"]=$galerias;
-        $data["user"]=$publicacion->getUsuario()->select('id', "nombres", "apellidos","email","telefono")->get()[0];
+        $data["user"]=$publicacion->getUsuario()->select('id', "nombres", "apellidos","email","telefono","nit","razon","telefono2","usuario_tipo")->get()[0];
 
         //$this->insertarmarcadeagua($galerias,$publicacion->user_id);
 
@@ -349,7 +349,7 @@ class AdministradorController extends Controller
 
         $galerias=$publicacion->getGaleria;
         $data["imagenes"]=$galerias;
-        $data["user"]=$publicacion->getUsuario()->select('id', "nombres", "apellidos","email","telefono")->get()[0];
+        $data["user"]=$publicacion->getUsuario()->select('id', "nombres", "apellidos","email","telefono","nit","razon","telefono2","usuario_tipo")->get()[0];
 
         //$this->insertarmarcadeagua($galerias,$publicacion->user_id);
 
@@ -388,7 +388,7 @@ class AdministradorController extends Controller
 
         $galerias=$publicacion->getGaleria;
         $data["imagenes"]=$galerias;
-        $data["user"]=$publicacion->getUsuario()->select('id', "nombres", "apellidos","email","telefono")->get()[0];
+        $data["user"]=$publicacion->getUsuario()->select('id', "nombres", "apellidos","email","telefono","nit","razon","telefono2","usuario_tipo")->get()[0];
 
         //$this->insertarmarcadeagua($galerias,$publicacion->user_id);
         return view('Administrador.validarPublicTerreno',$data);
@@ -539,13 +539,17 @@ class AdministradorController extends Controller
      */
     public function infoUsuario(Request $request){
 
-        $usuarios = User::select("id","nombres","apellidos","email","telefono")->where("email",$request->input("nombre"))->first();
+        $usuarios = User::select('id', "nombres", "apellidos","email","telefono","nit","razon","telefono2","usuario_tipo")->where("email",$request->input("nombre"))->first();
 
         //dd($usuarios);
 
         if($usuarios!=null) {
             $data["nombres"] = $usuarios->nombres . " " . $usuarios->apellidos;
             $data["email"] = $usuarios->email;
+            $data["razon"] = $usuarios->razon;
+            $data["nit"] = $usuarios->nit;
+            $data["usuario_tipo"] = $usuarios->usuario_tipo;
+            $data["telefono2"] = $usuarios->telefono2;
             $data["telefono"] = $usuarios->telefono;
             if($usuarios->getMarcaDeAgua!=null){
                 $marcaDA=$usuarios->getMarcaDeAgua;

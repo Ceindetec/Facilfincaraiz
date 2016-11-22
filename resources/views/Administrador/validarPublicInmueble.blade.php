@@ -6,23 +6,28 @@
         .popover-content {
             width: 125px;
         }
+
         #map {
             width: 100%;
             height: 200px;
 
         }
+
         .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
             cursor: pointer;
 
         }
-        #galeria{
+
+        #galeria {
             margin: 20px 0px;
         }
-        .imagen{
+
+        .imagen {
             border-radius: 5px;
             cursor: pointer;
         }
-        .conteEliminar{
+
+        .conteEliminar {
             position: relative;
             margin-top: -29px;
             margin-right: 20px;
@@ -32,18 +37,17 @@
             background-color: #d8d7dc;
         }
 
-        .eliminarImage{
+        .eliminarImage {
             font-size: 16px;
             margin: 8px 8px;
             cursor: pointer;
         }
 
-        .eliminarImage:hover{
+        .eliminarImage:hover {
 
             color: #81161a;
             margin: 8px 8px;
         }
-
 
         /* The Modal (background) */
         .modal {
@@ -56,8 +60,8 @@
             width: 100%; /* Full width */
             height: 100%; /* Full height */
             overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
         }
 
         /* Modal Content (image) */
@@ -91,13 +95,21 @@
         }
 
         @-webkit-keyframes zoom {
-            from {-webkit-transform:scale(0)}
-            to {-webkit-transform:scale(1)}
+            from {
+                -webkit-transform: scale(0)
+            }
+            to {
+                -webkit-transform: scale(1)
+            }
         }
 
         @keyframes zoom {
-            from {transform:scale(0)}
-            to {transform:scale(1)}
+            from {
+                transform: scale(0)
+            }
+            to {
+                transform: scale(1)
+            }
         }
 
         /* The Close Button */
@@ -119,7 +131,7 @@
         }
 
         /* 100% Image Width on Smaller Screens */
-        @media only screen and (max-width: 700px){
+        @media only screen and (max-width: 700px) {
             .modal-content {
                 width: 100%;
             }
@@ -145,32 +157,74 @@
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><h3 class="h3Josefin text-center">Informacón del Usuario</h3></div>
+                        <div class="panel-heading"><h3 class="h3Josefin text-center">Informacón del Usuario - {{$user->usuario_tipo}}</h3></div>
                         <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="col-xs-2 text-right"><i class="fa fa-user" aria-hidden="true"></i></div>
-                                    <div class="col-xs-10">{{$user->nombres." ".$user->apellidos}}</div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="col-xs-2 text-right"><i class="fa fa-phone" aria-hidden="true"></i></div>
-                                    <div class="col-xs-10">{{$user->telefono}}</div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="col-xs-2 text-right"><i class="fa fa-envelope" aria-hidden="true"></i></div>
-                                    <div class="col-xs-10">{{$user->email}}</div>
-                                </div>
 
-                            </div>
+                            @if($user->usuario_tipo=="Inmobiliaria")
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="top" title="Razon Socia o Nombre"><i class="fa fa-university"
+                                                                            aria-hidden="true"></i></div>
+                                        <div class="col-xs-10">{{$user->razon}}</div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="top" title="Telefono 1"><i class="fa fa-phone" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-10">{{$user->telefono}}</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="left" title="NIT"><i class="fa fa-address-card-o"
+                                                                                                                                    aria-hidden="true"></i></div>
+                                        <div class="col-xs-10">{{$user->nit}}</div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="top" title="Telefono 2"><i class="fa fa-phone" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-10">{{$user->telefono2}}</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="left" title="Nombre"><i class="fa fa-user" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-10">{{$user->nombres." ".$user->apellidos}}</div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="top" title="Email"><i class="fa fa-envelope"
+                                                                            aria-hidden="true"></i></div>
+                                        <div class="col-xs-10">{{$user->email}}</div>
+                                    </div>
+
+                                </div>
+                            @else
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="left" title="Nombre"><i class="fa fa-user" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-10">{{$user->nombres." ".$user->apellidos}}</div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="top" title="Telefono"><i class="fa fa-phone" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-10">{{$user->telefono}}</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="left" title="Email"><i class="fa fa-envelope"
+                                                                            aria-hidden="true"></i></div>
+                                        <div class="col-xs-10">{{$user->email}}</div>
+                                    </div>
+                                </div>
+                            @endif
+
                         </div>
                     </div>
 
                 </div>
             </div>
-
-
 
 
             {!!Form::model($data,['id'=>'formInmueble','files' => true,'class'=>'form-horizontal','autocomplete'=>'off'])!!}
@@ -187,16 +241,20 @@
             </div>
             <div class="row">
                 <div class="col-sm-offset-2 col-sm-8">
-                    <h3 class="h3Josefin text-center" style="margin-bottom: 20px;">Las Imagenes de la publicación son.</h3>
+                    <h3 class="h3Josefin text-center" style="margin-bottom: 20px;">Las Imagenes de la publicación
+                        son.</h3>
 
                     <div id="galeria" class="row">
                         @foreach($imagenes as $imagene)
 
-                            <div  id="{{$imagene->id}}" class="col-xs-6 col-sm-4 col-md-3">
-                                <img src="../images/publicaciones/{{$imagene->ruta}}" class="img-responsive imagen" alt="">
+                            <div id="{{$imagene->id}}" class="col-xs-6 col-sm-4 col-md-3">
+                                <img src="../images/publicaciones/{{$imagene->ruta}}" class="img-responsive imagen"
+                                     alt="">
 
                                 <div class="conteEliminar">
-                                    <i data-id="{{$imagene->id}}" class="fa fa-trash eliminarImage" aria-hidden='true' data-toggle='confirmation' data-popout="true" data-placement='top' title='Eliminar?' data-btn-ok-label="Si" data-btn-cancel-label="No"></i>
+                                    <i data-id="{{$imagene->id}}" class="fa fa-trash eliminarImage" aria-hidden='true'
+                                       data-toggle='confirmation' data-popout="true" data-placement='top'
+                                       title='Eliminar?' data-btn-ok-label="Si" data-btn-cancel-label="No"></i>
                                 </div>
 
                             </div>
@@ -209,7 +267,7 @@
                     <div class="form-group">
                         <label for="titulo" class="col-sm-2 control-label">Imagenes</label>
                         <div class="col-sm-10">
-                            <input type="file" id="files" name="files[]"  multiple />
+                            <input type="file" id="files" name="files[]" multiple/>
                         </div>
                     </div>
                 </div>
@@ -431,7 +489,8 @@
 
 
             <div class="row">
-                <textarea id='infoAdicional' name='infoAdicional' rows='10' cols='30' style='height:440px'>{{$data["descripcion"]}}</textarea>
+                <textarea id='infoAdicional' name='infoAdicional' rows='10' cols='30'
+                          style='height:440px'>{{$data["descripcion"]}}</textarea>
             </div>
 
 
@@ -492,40 +551,43 @@
         var map;
         var geolocalizacion;
         var banderaMunu = true;
-        $(function(){
+        $(function () {
+
+            $('[data-toggle="tooltip"]').tooltip();
+
             $("#liPublicaciones").addClass("active");
-            $(".eliminarImage").each(function(){
+            $(".eliminarImage").each(function () {
                 $(this).confirmation({
                     onConfirm: function () {
                         ajaxEliminarImagen($(this).data("id"));
                     }
                 });
             });
-            geolocalizacion="{{$data["geolocalizacion"]}}";
+            geolocalizacion = "{{$data["geolocalizacion"]}}";
             $(".imagen").click(function () {
-                $('#myModal').css("display","block");
+                $('#myModal').css("display", "block");
                 // modal.style.display = "block";
-                $("#img01").attr( "src", this.src );
+                $("#img01").attr("src", this.src);
                 //modalImg.src = this.src;
                 //captionText.innerHTML = this.alt;
             });
             $(".close").click(function () {
-                $('#myModal').css("display","none");
+                $('#myModal').css("display", "none");
             });
             $("#myModal").click(function () {
-                $('#myModal').css("display","none");
+                $('#myModal').css("display", "none");
             });
 
-            var adicionales= "{{$data["adicionales"]}}";
+            var adicionales = "{{$data["adicionales"]}}";
 
             var arrayAdicionales;
             arrayAdicionales = adicionales.split(",");
             //console.log(adicionales);
 
-            $("input:checkbox").each(function(index,check){
+            $("input:checkbox").each(function (index, check) {
                 // console.log($(check).val());
-                $.each(arrayAdicionales, function( item, value ) {
-                    if($(check).val()==value){
+                $.each(arrayAdicionales, function (item, value) {
+                    if ($(check).val() == value) {
                         $(check).prop('checked', true);
                     }
                 });
@@ -533,43 +595,43 @@
 
 
             $("#files").inputFileImage({
-                maxlength:8,
-                width:120,
+                maxlength: 8,
+                width: 120,
                 height: 140,
-                maxfilesize:2048
+                maxfilesize: 2048
             });
 
 
-            CKEDITOR.replace('infoAdicional', {removeButtons:'Image'});
-/*            $("#tipoArticulo").change(function(){
-                console.log($(this).val());
-            });*/
+            CKEDITOR.replace('infoAdicional', {removeButtons: 'Image'});
+            /*            $("#tipoArticulo").change(function(){
+             console.log($(this).val());
+             });*/
 
 
             $("#id_dpto").change(function () {
 
-                if($("#id_dpto").val()==""){
+                if ($("#id_dpto").val() == "") {
                     //alert("el id es nulo");
                     $("#municipio_id").empty();
                     $("#municipio_id").append("<option value=''>Selecciona un Municipio</option>");
-                }else{
+                } else {
                     //alert("el id es "+$("#id_dpto").val());
                     $.ajax({
                         type: "POST",
                         context: document.body,
                         url: '{{route('municipios')}}',
-                        data: { 'id' : $("#id_dpto").val()},
+                        data: {'id': $("#id_dpto").val()},
                         success: function (data) {
 
                             $("#municipio_id").empty();
 
-                            $.each(data,function (index,valor) {
-                                $("#municipio_id").append('<option value='+index+'>'+valor+'</option>');
+                            $.each(data, function (index, valor) {
+                                $("#municipio_id").append('<option value=' + index + '>' + valor + '</option>');
 
                                 //console.log("la key es "+index+" y el valor es "+valor);
                             });
 
-                            if(banderaMunu){
+                            if (banderaMunu) {
                                 $("#municipio_id").val({{$data["municipio_id"]}});
                                 banderaMunu = false;
                             }
@@ -586,9 +648,9 @@
                 lat: -12.043333,
                 lng: -77.028333
             });
-            if(geolocalizacion!=""){
+            if (geolocalizacion != "") {
 
-                corde= geolocalizacion.split(",");
+                corde = geolocalizacion.split(",");
                 //console.log(corde[0]);
                 map.setCenter(corde[0], corde[1]);
                 map.removeMarkers();
@@ -596,11 +658,11 @@
                     lat: corde[0],
                     draggable: true,
                     lng: corde[1],
-                    dragend: function(e) {
+                    dragend: function (e) {
                         var lat = e.latLng.lat();
                         var lng = e.latLng.lng();
                         map.setCenter(lat, lng);
-                        document.getElementById("coords").value = lat+","+ lng;
+                        document.getElementById("coords").value = lat + "," + lng;
                         //alert('dragend '+lat+"->"+lng);
                         //console.log(e);
                     }
@@ -608,27 +670,25 @@
             }
 
 
-
             $("#frente").change(function () {
-                if(($(this).val()!=""&&$(this).val()>0)&&($("#fondo")!=""&&$("#fondo").val()>0)){
-                   // console.log($(this).val()*$("#fondo").val());
-                    $("#area").val($(this).val()*$("#fondo").val());
+                if (($(this).val() != "" && $(this).val() > 0) && ($("#fondo") != "" && $("#fondo").val() > 0)) {
+                    // console.log($(this).val()*$("#fondo").val());
+                    $("#area").val($(this).val() * $("#fondo").val());
                     $("#umedida").val("m");
                 }
             });
 
             $("#fondo").change(function () {
-                if(($(this).val()!=""&&$(this).val()>0)&&($("#frente")!=""&&$("#frente").val()>0)){
+                if (($(this).val() != "" && $(this).val() > 0) && ($("#frente") != "" && $("#frente").val() > 0)) {
                     //console.log($(this).val()*$("#frente").val());
-                    $("#area").val($(this).val()*$("#frente").val());
+                    $("#area").val($(this).val() * $("#frente").val());
                     $("#umedida").val("m");
                 }
             });
 
 
-
             var formulario = $("#formInmueble");
-            formulario.submit(function(e){
+            formulario.submit(function (e) {
                 e.preventDefault();
                 //var contenido = encodeURIComponent(CKEDITOR.instances.infoAdicional.getData().split("\n").join(""));
                 var contenido = CKEDITOR.instances.infoAdicional.getData().split("\n").join("");
@@ -636,10 +696,10 @@
                 var formData = new FormData($(this)[0]);
                 var files = $("#files").data("files");
 
-                if(files)
-                for(i=0;i<files.length;i++){
-                    formData.append("imagenes[]", files[i]);
-                }
+                if (files)
+                    for (i = 0; i < files.length; i++) {
+                        formData.append("imagenes[]", files[i]);
+                    }
                 formData.append("id", "{{$data["id"]}}");
                 formData.append("descripcion", contenido);
                 formData.append("geolocalizacion", $("#geolocalizacion").val());
@@ -652,19 +712,19 @@
                     contentType: false,   // tell jQuery not to set contentType
                     success: function (result) {
 
-                        if(result.estado){
+                        if (result.estado) {
                             $("#submit").attr("disabled", true);
-                            alert("success","Perfecto","La publicación fue publicada con exito","<i class='fa fa-check' aria-hidden='true'></i>");
-                            setTimeout(function(){
-                                window.location="../publicPendientes";
+                            alert("success", "Perfecto", "La publicación fue publicada con exito", "<i class='fa fa-check' aria-hidden='true'></i>");
+                            setTimeout(function () {
+                                window.location = "../publicPendientes";
                             }, 3000);
-                        }else{
-                            alert("danger","Ups","algo salio mal por favor intentar nuevamente","<i class='fa fa-ban' aria-hidden='true'></i>");
+                        } else {
+                            alert("danger", "Ups", "algo salio mal por favor intentar nuevamente", "<i class='fa fa-ban' aria-hidden='true'></i>");
                         }
 
                     },
                     error: function (error) {
-                        alert("danger","Ups","algo salio mal por favor intentar nuevamente","<i class='fa fa-ban' aria-hidden='true'></i>");
+                        alert("danger", "Ups", "algo salio mal por favor intentar nuevamente", "<i class='fa fa-ban' aria-hidden='true'></i>");
                         console.log(error);
                     }
                 });
@@ -674,8 +734,7 @@
             $("#id_dpto").trigger("change");
         });
 
-        function justNumbers(e)
-        {
+        function justNumbers(e) {
             var keynum = window.event ? window.event.keyCode : e.which;
             if (keynum == 8)
                 return true;
@@ -683,27 +742,27 @@
         }
 
 
-        function alert(tipo,titulo,mensaje,icono) {
+        function alert(tipo, titulo, mensaje, icono) {
             $("#alert").empty();
-            var html ="<div class='alert alert-"+tipo+"'>"+
-                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"+
-                    icono+"<strong>"+titulo+"!</strong> "+mensaje+
+            var html = "<div class='alert alert-" + tipo + "'>" +
+                    "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                    icono + "<strong>" + titulo + "!</strong> " + mensaje +
                     "</div>";
             $("#alert").append(html)
         }
 
-        function  ajaxEliminarImagen(id) {
+        function ajaxEliminarImagen(id) {
             $.ajax({
-                type:"POST",
+                type: "POST",
                 context: document.body,
                 url: '{{route('deleteImgPublic')}}',
-                data: {"id":id},
-                success: function(data){
-                    if (data == "exito"){
-                        $("#"+id).remove();
+                data: {"id": id},
+                success: function (data) {
+                    if (data == "exito") {
+                        $("#" + id).remove();
                     }
                 },
-                error: function(data){
+                error: function (data) {
                 }
             });
         }

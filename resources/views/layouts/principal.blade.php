@@ -13,20 +13,14 @@
     {!!Html::style('css/memenu.css')!!}
     {!!Html::style('css/menuotro.css')!!}
     {!!Html::style('css/font-awesome.min.css')!!}
-    @yield('style')
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="keywords" content="Wedding Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
     Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design"/>
     <meta name='csrf-param' content='authenticity_token'>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <style>
-
-
-    </style>
-
-
+    @yield('style')
 </head>
 <body>
 <!--header-->
