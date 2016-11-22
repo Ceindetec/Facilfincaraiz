@@ -118,7 +118,7 @@
                                     </div>
                                 @endif
                                 <div class="col-xs-12">
-                                    <b><h3>{{ucwords($publicacion->titulo)}}</h3></b>
+                                    <b><h3>{{($publicacion->accion == 'V')?"SE VENDE: ":($publicacion->accion == 'A')?"SE ALQUILA: ":"SE PERMUTA: "}}{{strtoupper($publicacion->titulo)}}</h3></b>
                                     <p class="marginBot10">
                                         <i class="fa fa-map-marker"></i>
                                         <span class="conver ubic"> {{$publicacion->municipio.", ".$publicacion->departamento}}</span>
@@ -421,8 +421,15 @@
                                                         '</div>';
                         }
                         resultados = resultados + '<div class="col-xs-12">' +
-                                                        '<b><h3 class="conver">'+entry.titulo+'</h3></b>'+
-                                                        '<p class="marginBot10">' +
+                                                        '<b><h3>';
+                        if (entry.accion == 'V')
+                            resultados = resultados + "SE VENDE: ";
+                        else if(entry.accion == 'A')
+                            resultados = resultados + "SE ALQUILA: ";
+                        else
+                            resultados = resultados + "SE PERMUTA: ";
+
+                        resultados = resultados + entry.titulo.toUpperCase() + '</h3></b><p class="marginBot10">' +
                                                             '<i class="fa fa-map-marker"></i> '+
                                                             '<span class="conver ubic">'+entry.municipio+', '+entry.departamento+'</span>' +
                                                         '</p>' +

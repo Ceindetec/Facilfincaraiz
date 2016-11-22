@@ -1,7 +1,7 @@
 @extends('layouts.principal')
 
 @section('style')
-    {!!Html::style('css/flexslider.css')!!}
+    {!!Html::style('css/slider.css')!!}
     <style>
         .flex-control-thumbs img {
             padding: 5%;
@@ -210,10 +210,12 @@
                 width: 100%;
             }
         }
-.imagen{
-    cursor: zoom-in;
-}
-
+        .imagen{
+            cursor: zoom-in;
+        }
+        .table-bordered > tbody > tr > td > p, .sofaset-info ul li {
+            color: #555555;
+        }
 
     </style>
 @endsection
@@ -228,37 +230,68 @@
             </ol>
 
             <div class="col-md-9 det">
-                <div class="single_left">
-                    <div class="flexslider">
-                        <ul class="slides">
+                <div style="margin-bottom: 15px">
+                    <h3>{{(($publicacion->accion=="V")?"Se Vende: ":(($publicacion->accion=="A")?"Se Alquila: ":"Se Permuta: "))}}</h3>
+                    <h3>{{strtoupper($publicacion->titulo)}}</h3>
+                    <i class="fa fa-map-marker"></i>
+                    <span class="conver location"> {{$publicacion->municipio->municipio.", ".$publicacion->departamento}}</span>
+                </div>
+                <div class="clearfix"></div>
+
+                <div style="margin-bottom: 15px">
+                    <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 800px; height: 456px; overflow: hidden; visibility: hidden; background-color: #24262e;">
+                        <!-- Loading Screen -->
+                        <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
+                            <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
+                            <div style="position:absolute;display:block;background:url('../images/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
+                        </div>
+                        <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 800px; height: 356px; overflow: hidden;">
                             @foreach($publicacion->galeria as $galeria)
-                                <li data-thumb="../images/publicaciones/{{$galeria->ruta}}" class="reducir">
-                                    <img class="imagen" src="../images/publicaciones/{{$galeria->ruta}}"/>
-                                </li>
+                                <div data-p="144.50">
+                                    <img data-u="image" src="../images/publicaciones/{{$galeria->ruta}}" />
+                                    <img data-u="thumb" src="../images/publicaciones/{{$galeria->ruta}}" />
+                                </div>
                             @endforeach
-                        </ul>
+                        </div>
+                        <!-- Thumbnail Navigator -->
+                        <div data-u="thumbnavigator" class="jssort01" style="position:absolute;left:0px;bottom:0px;width:800px;height:100px;" data-autocenter="1">
+                            <!-- Thumbnail Item Skin Begin -->
+                            <div data-u="slides" style="cursor: default;">
+                                <div data-u="prototype" class="p">
+                                    <div class="w">
+                                        <div data-u="thumbnailtemplate" class="t"></div>
+                                    </div>
+                                    <div class="c"></div>
+                                </div>
+                            </div>
+                            <!-- Thumbnail Item Skin End -->
+                        </div>
+                        <!-- Arrow Navigator -->
+                        <span data-u="arrowleft" class="jssora05l" style="top:158px;left:8px;width:40px;height:40px;"></span>
+                        <span data-u="arrowright" class="jssora05r" style="top:158px;right:8px;width:40px;height:40px;"></span>
                     </div>
                 </div>
-                <div class="single-right">
-                    <h3 class="conver">{{$publicacion->titulo}}</h3>
-                    <i class="fa fa-map-marker"></i><span
-                            class="conver location"> {{$publicacion->municipio->municipio.", ".$publicacion->departamento}}</span>
+                <div class="clearfix"></div>
+
+                <div class="single-bottom1">
                     <div class="cost">
                         <div class="prdt-cost">
                             <ul>
-                                <li>Precio:</li>
-                                <li class="active">$<span class="number">{{$publicacion->precio}}</span></li>
-                                <a href="#">CONTACTAR</a>
+                                <h4>Precio:</h4>
+                                <h4><b><li class="active">$<span class="number">{{$publicacion->precio}}</span></li></b></h4>
+                                <a href="#" id="contactar">CONTACTAR</a>
                             </ul>
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="single-bottom1">
-                        <h6>Detalles</h6>
-                        <p class="prod-desc">{!!$publicacion->descripcion!!}</p>
-                    </div>
+                </div>
+
+                <div class="single-bottom1">
+                    <h6>Detalles</h6>
+                    <p class="prod-desc">{!!$publicacion->descripcion!!}</p>
                 </div>
                 <div class="clearfix"></div>
+
                 <!---->
                 <div class="product-table">
                     <div class="item-sec">
@@ -266,35 +299,35 @@
                         <table class="table table-bordered">
                             <tbody>
                             <tr>
-                                <td><p>Tipo</p></td>
+                                <td><p><b>Tipo</b></p></td>
                                 <td><p>{{$publicacion->vehiculo->tipo}}</p></td>
                             </tr>
                             <tr>
-                                <td><p>Marca</p></td>
+                                <td><p><b>Marca</b></p></td>
                                 <td><p>{{$publicacion->vehiculo->marca}}</p></td>
                             </tr>
                             <tr>
-                                <td><p>Modelo</p></td>
+                                <td><p><b>Modelo</b></p></td>
                                 <td><p>{{$publicacion->vehiculo->modelo}}</p></td>
                             </tr>
                             <tr>
-                                <td><p>Kilometraje</p></td>
+                                <td><p><b>Kilometraje</b></p></td>
                                 <td><p><span class="number">{{$publicacion->vehiculo->kilometraje}}</span></p></td>
                             </tr>
                             <tr class="moto">
-                                <td><p>Cilindraje</p></td>
+                                <td><p><b>Cilindraje</b></p></td>
                                 <td><p><span class="number" id="cil"></span></p></td>
                             </tr>
                             <tr>
-                                <td><p>Color</p></td>
+                                <td><p><b>Color</b></p></td>
                                 <td><p><span class="conver">{{$publicacion->vehiculo->color}}</span></p></td>
                             </tr>
                             <tr class="carro">
-                                <td><p># Puertas</p></td>
+                                <td><p><b># Puertas</b></p></td>
                                 <td><p>{{$publicacion->vehiculo->cant_puertas}}</p></td>
                             </tr>
                             <tr>
-                                <td><p>Combustible</p></td>
+                                <td><p><b>Combustible</b></p></td>
                                 <td><p><span id="combustible"></span></p></td>
                             </tr>
                             </tbody>
@@ -353,14 +386,11 @@
 @endsection
 
 @section('scripts')
-    {!!Html::script('js/jquery.flexslider.js')!!}
     {!!Html::script('js/publicaciones.js')!!}
+    {!!Html::script('js/jssor.slider-21.1.6.mini.js')!!}
+    {!!Html::script('js/slider.js')!!}
     <script>
         $(function () {
-            $('.flexslider').flexslider({
-                animation: "slide",
-                controlNav: "thumbnails"
-            });
             $(".conver").each(function () {
                 $(this).html(ucWords($(this).html()));
             });

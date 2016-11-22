@@ -35,7 +35,12 @@
                 </div>
             @endif
             <div class="col-xs-12">
-                <b><h3>{{ucwords($publicacion->titulo)}}</h3></b>
+                <b>
+                    <h3>
+                        {{($publicacion->accion == 'V')?"SE VENDE:":($publicacion->accion == 'A')?"SE ARRIENDA:":"SE PERMUTA:"}}
+                        {{strtoupper ($publicacion->titulo)}}
+                    </h3>
+                </b>
                 <p class="marginBot10">
                     <i class="fa fa-map-marker"></i>
                     <span class="conver ubic"> {{$publicacion->municipio.", ".$publicacion->departamento}}</span>
