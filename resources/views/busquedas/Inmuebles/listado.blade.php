@@ -109,7 +109,7 @@
             <div class="col-xs-12 col-md-9 product-model-sec" id="seccionResultados">
                 @if ($mensaje == "coincidencias exactas")
                     <div class="alert alert-success" role="alert">
-                        <strong>Excelente!</strong> Tu búsqueda ha generado los siguientes '+cantidad+' resultados:
+                        <strong>Excelente!</strong> Tu búsqueda ha generado los siguientes resultados:
                     </div>
                 @else
                     <div class="alert alert-warning" role="alert"><strong>Lo sentimos!</strong> No hemos encontrado coincidencias exactas para tu busqueda.<br><strong>Espera:</strong>
@@ -143,7 +143,12 @@
                                     </div>
                                 @endif
                                 <div class="col-xs-12">
-                                    <b><h3>{{ucwords($publicacion->titulo)}}</h3></b>
+                                    <b>
+                                        <h3>
+                                            {{($publicacion->accion == 'V')?"SE VENDE:":($publicacion->accion == 'A')?"SE ARRIENDA:":"SE PERMUTA:"}}
+                                            {{strtoupper ($publicacion->titulo)}}
+                                        </h3>
+                                    </b>
                                     <p class="marginBot10">
                                         <i class="fa fa-map-marker"></i>
                                         <span class="conver ubic"> {{$publicacion->municipio.", ".$publicacion->departamento}}</span>

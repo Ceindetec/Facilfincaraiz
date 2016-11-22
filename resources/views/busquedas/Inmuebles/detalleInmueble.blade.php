@@ -1,7 +1,7 @@
 @extends('layouts.principal')
 
 @section('style')
-    {!!Html::style('css/flexslider.css')!!}
+    {!!Html::style('css/slider.css')!!}
     <style>
         .flex-control-thumbs img {
             padding: 5%;
@@ -208,9 +208,9 @@
         .imagen{
             cursor: zoom-in;
         }
-
-
-
+        .table-bordered > tbody > tr > td > p, .sofaset-info ul li {
+            color: #555555;
+        }
     </style>
 @endsection
 
@@ -224,36 +224,62 @@
             </ol>
 
             <div class="col-md-9 det">
-                <div class="single_left">
-                    <div class="flexslider">
-                        <ul class="slides">
+                <div style="margin-bottom: 15px">
+                    <h3>{{(($publicacion->accion=="V")?"Se Vende: ":(($publicacion->accion=="A")?"Se Alquila: ":"Se Permuta: "))}}</h3>
+                    <h3>{{strtoupper($publicacion->titulo)}}</h3>
+                    <i class="fa fa-map-marker"></i>
+                    <span class="conver location"> {{$publicacion->municipio->municipio.", ".$publicacion->departamento}}</span>
+                </div>
+                <div class="clearfix"></div>
+
+                <div style="margin-bottom: 15px">
+                    <div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 800px; height: 456px; overflow: hidden; visibility: hidden; background-color: #24262e;">
+                        <!-- Loading Screen -->
+                        <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
+                            <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
+                            <div style="position:absolute;display:block;background:url('../images/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
+                        </div>
+                        <div data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 800px; height: 356px; overflow: hidden;">
                             @foreach($publicacion->galeria as $galeria)
-                                <li data-thumb="../images/publicaciones/{{$galeria->ruta}}" class="reducir">
-                                    <img class="imagen" src="../images/publicaciones/{{$galeria->ruta}}"/>
-                                </li>
+                                <div data-p="144.50">
+                                    <img data-u="image" src="../images/publicaciones/{{$galeria->ruta}}" />
+                                    <img data-u="thumb" src="../images/publicaciones/{{$galeria->ruta}}" />
+                                </div>
                             @endforeach
-                        </ul>
+                        </div>
+                        <!-- Thumbnail Navigator -->
+                        <div data-u="thumbnavigator" class="jssort01" style="position:absolute;left:0px;bottom:0px;width:800px;height:100px;" data-autocenter="1">
+                            <!-- Thumbnail Item Skin Begin -->
+                            <div data-u="slides" style="cursor: default;">
+                                <div data-u="prototype" class="p">
+                                    <div class="w">
+                                        <div data-u="thumbnailtemplate" class="t"></div>
+                                    </div>
+                                    <div class="c"></div>
+                                </div>
+                            </div>
+                            <!-- Thumbnail Item Skin End -->
+                        </div>
+                        <!-- Arrow Navigator -->
+                        <span data-u="arrowleft" class="jssora05l" style="top:158px;left:8px;width:40px;height:40px;"></span>
+                        <span data-u="arrowright" class="jssora05r" style="top:158px;right:8px;width:40px;height:40px;"></span>
                     </div>
                 </div>
-                <div class="single-right">
-                    <h3 class="conver">{{(($publicacion->accion=="V")?"En venta ":(($publicacion->accion=="A")?"Se Arrienda ":"Se  alquila "))}}</h3>
-                    <h3 class="conver">{{$publicacion->titulo}}</h3>
-                    {{--<h3 class="conver">{{(($publicacion->accion=="V")?"(Venta) ":(($publicacion->accion=="A")?"(Arriendo) ":"(Alquiler) ")).$publicacion->titulo}}</h3>--}}
-                    <i class="fa fa-map-marker"></i><span
-                            class="conver location"> {{$publicacion->municipio->municipio.", ".$publicacion->departamento}}</span>
+                <div class="clearfix"></div>
+
+                <div class="single-bottom1">
                     <div class="cost">
                         <div class="prdt-cost">
                             <ul>
-                                <li>Precio:</li>
-                                <li class="active">$<span class="number">{{$publicacion->precio}}</span></li>
+                                <h4>Precio:</h4>
+                                <h4><b><li class="active">$<span class="number">{{$publicacion->precio}}</span></li></b></h4>
                                 <a href="#" id="contactar">CONTACTAR</a>
                             </ul>
                         </div>
                         <div class="clearfix"></div>
                     </div>
-
                 </div>
-                <div class="clearfix"></div>
+
                 <div class="single-bottom1">
                     <h6>Detalles</h6>
                     <p class="prod-desc">{!!$publicacion->descripcion!!}</p>
@@ -266,39 +292,39 @@
                         <table class="table table-bordered">
                             <tbody>
                             <tr>
-                                <td><p>Tipo</p></td>
+                                <td><p><b>Tipo</b></p></td>
                                 <td><p>{{$publicacion->inmueble->tipo}}</p></td>
                             </tr>
                             <tr>
-                                <td><p>Estrato</p></td>
+                                <td><p><b>Estrato</b></p></td>
                                 <td><p>{{$publicacion->inmueble->estrato}}</p></td>
                             </tr>
                             <tr>
-                                <td><p>Frente</p></td>
+                                <td><p><b>Frente</b></p></td>
                                 <td><p><span class="number">{{$publicacion->inmueble->frente}}</span> metros</p></td>
                             </tr>
                             <tr>
-                                <td><p>Fondo</p></td>
+                                <td><p><b>Fondo</b></p></td>
                                 <td><p><span class="number">{{$publicacion->inmueble->fondo}}</span> metros</p></td>
                             </tr>
                             <tr>
-                                <td><p>Area</p></td>
+                                <td><p><b>Area</b></p></td>
                                 <td><p id="pArea" ></p></td>
                             </tr>
                             <tr class="terreno">
-                                <td><p>Número de Plantas</p></td>
+                                <td><p><b>Número de Plantas</b></p></td>
                                 <td><p>{{$publicacion->inmueble->cant_plantas}}</p></td>
                             </tr>
                             <tr class="terreno">
-                                <td><p>Número de Habitaciones</p></td>
+                                <td><p><b>Número de Habitaciones</b></p></td>
                                 <td><p>{{$publicacion->inmueble->cant_habitaciones}}</p></td>
                             </tr>
                             <tr class="terreno">
-                                <td><p>Número de baños</p></td>
+                                <td><p><b>Número de baños</b></p></td>
                                 <td><p><span >{{$publicacion->inmueble->cant_banos}}</span></p></td>
                             </tr>
                             <tr class="terreno">
-                                <td><p>Número de garajes</p></td>
+                                <td><p><b>Número de garajes</b></p></td>
                                 <td><p><span >{{$publicacion->inmueble->cant_garajes}}</span></p></td>
                             </tr>
 
@@ -359,8 +385,9 @@
 @endsection
 
 @section('scripts')
-    {!!Html::script('js/jquery.flexslider.js')!!}
     {!!Html::script('js/publicaciones.js')!!}
+    {!!Html::script('js/jssor.slider-21.1.6.mini.js')!!}
+    {!!Html::script('js/slider.js')!!}
     <script>
         $(function () {
 
@@ -369,10 +396,6 @@
             if(tipoInmueble=="T")
                 $(".terreno").addClass("hidden");
 
-            $('.flexslider').flexslider({
-                animation: "slide",
-                controlNav: "thumbnails"
-            });
             $(".conver").each(function () {
                 $(this).html(ucWords($(this).html()));
             });
