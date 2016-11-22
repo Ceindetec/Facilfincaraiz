@@ -121,7 +121,10 @@ class AdministradorController extends Controller
             $galeria->ruta = $nombre;
             $galeria->tipo = $request->tipo;
             $galeria->save();
+
+            if($request->tipo!="S")
             $this->scalarImgCategoria('images/admin/'.utf8_decode($nombre),$extension);
+
             return json_encode(array('ruta' => $nombre, 'id' => $galeria->id));
         }
         else
