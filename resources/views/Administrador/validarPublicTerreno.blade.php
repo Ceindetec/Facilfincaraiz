@@ -142,25 +142,68 @@
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><h3 class="h3Josefin text-center">Informacón del Usuario</h3></div>
+                        <div class="panel-heading"><h3 class="h3Josefin text-center">Informacón del Usuario - {{$user->usuario_tipo}}</h3></div>
                         <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="col-xs-2 text-right"><i class="fa fa-user" aria-hidden="true"></i></div>
-                                    <div class="col-xs-10">{{$user->nombres." ".$user->apellidos}}</div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="col-xs-2 text-right"><i class="fa fa-phone" aria-hidden="true"></i></div>
-                                    <div class="col-xs-10">{{$user->telefono}}</div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="col-xs-2 text-right"><i class="fa fa-envelope" aria-hidden="true"></i></div>
-                                    <div class="col-xs-10">{{$user->email}}</div>
-                                </div>
 
-                            </div>
+                            @if($user->usuario_tipo=="Inmobiliaria")
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="top" title="Razon Socia o Nombre"><i class="fa fa-university" aria-hidden="true"></i></div>
+                                        <div class="col-xs-10">{{$user->razon}}</div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="top" title="Telefono 1"><i class="fa fa-phone" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-10">{{$user->telefono}}</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="left" title="NIT"><i class="fa fa-address-card-o"
+                                                                                                                                    aria-hidden="true"></i></div>
+                                        <div class="col-xs-10">{{$user->nit}}</div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="top" title="Telefono 2"><i class="fa fa-phone" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-10">{{$user->telefono2}}</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="left" title="Nombre"><i class="fa fa-user" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-10">{{$user->nombres." ".$user->apellidos}}</div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="top" title="Email"><i class="fa fa-envelope"
+                                                                                                                                     aria-hidden="true"></i></div>
+                                        <div class="col-xs-10">{{$user->email}}</div>
+                                    </div>
+
+                                </div>
+                            @else
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="left" title="Nombre"><i class="fa fa-user" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-10">{{$user->nombres." ".$user->apellidos}}</div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="top" title="Telefono"><i class="fa fa-phone" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="col-xs-10">{{$user->telefono}}</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="col-xs-2 text-right" data-toggle="tooltip" data-placement="left" title="Email"><i class="fa fa-envelope"
+                                                                                                                                      aria-hidden="true"></i></div>
+                                        <div class="col-xs-10">{{$user->email}}</div>
+                                    </div>
+                                </div>
+                            @endif
+
                         </div>
                     </div>
 

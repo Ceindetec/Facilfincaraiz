@@ -84,10 +84,14 @@
                             <div class="col-sm-10 col-sm-offset-1">
                                 <div class="panel panel-default">
                                     <div class="panel-heading"><h3 class="h3Josefin text-center">Informacón del
-                                            Usuario</h3></div>
+                                            Usuario </h3></div>
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-sm-6">
+                                                <div class="row">
+                                                    <div class="col-xs-2 text-right"><i class="fa fa-university" aria-hidden="true"></i></div>
+                                                    <div class="col-xs-10" id="usuario_tipo"> luis carlos pineda</div>
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-xs-2 text-right"><i class="fa fa-user"
                                                                                         aria-hidden="true"></i></div>
@@ -166,6 +170,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-8">
+                                                <div class="row">
+                                                    <div class="col-xs-2 text-right"><i class="fa fa-university" aria-hidden="true"></i></div>
+                                                    <div class="col-xs-10" id="usuario_tipo"> {{$item->getUsuario->usuario_tipo}}</div>
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-xs-2 text-right"><i class="fa fa-user"
                                                                                         aria-hidden="true"></i></div>
@@ -316,6 +324,7 @@
                     if (data.bandera) {
                         email=data.email;
                         $("#infUser").removeClass("hidden");
+                        $("#usuario_tipo").text(data.usuario_tipo);
                         $("#nombres").text(data.nombres);
                         $("#email").text(data.email);
                         $("#telefono").text(data.telefono);
